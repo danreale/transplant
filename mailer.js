@@ -5,7 +5,7 @@ dotenv.config();
 const nodemailer = require("nodemailer");
 
 const file = path.join(__dirname, "ModifiedWaitingList.csv");
-// console.log(file);
+console.log(file);
 const todaysDate = DateTime.now().toFormat("MM-dd-yyyy");
 
 const transporter = nodemailer.createTransport({
