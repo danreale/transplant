@@ -25,4 +25,4 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - name: Email Results
-        run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
+      run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
