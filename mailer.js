@@ -1,7 +1,6 @@
-const dotenv = require("dotenv");
+require("dotenv").config();
 const path = require("path");
 const { DateTime } = require("luxon");
-dotenv.config();
 const nodemailer = require("nodemailer");
 
 const file = path.join(__dirname, "..", "ModifiedWaitingList.csv");
