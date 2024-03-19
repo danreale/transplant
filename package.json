@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pw:open": "npx playwright test --ui",
+    "createFormattedFile": "node filer.js",
     "emailreport": "node mailer.js"
   },
   "keywords": [],

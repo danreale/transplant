@@ -24,5 +24,7 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - name: Format File
+      run: npm run createFormattedFile
     - name: Email Results
       run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
