@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import fs from "fs";
 
 test("Get Transplant Numbers", async ({ page }) => {
   await page.goto("/data/view-data-reports/build-advanced");
@@ -30,8 +31,16 @@ test("Get Transplant Numbers", async ({ page }) => {
   await page.waitForTimeout(5000);
 
   const rows = await page.locator("#reportData > tbody > tr").count();
-  console.log(rows);
+  console.log("Rows", rows);
   expect(rows).toBeGreaterThan(5);
+
+  const reportDate = await page.locator(".footnote").first().innerText();
+
+  const strParser = reportDate.split(" through ");
+  const endStr = strParser[1];
+  const dateStr = endStr.split(".");
+  const lastReportUpdate = dateStr[0];
+  console.log("Last Report Date", lastReportUpdate);
 
   const downloadPromise = page.waitForEvent("download");
   await page.locator("#tool_export").first().click();
@@ -39,4 +48,12 @@ test("Get Transplant Numbers", async ({ page }) => {
 
   // Wait for the download process to complete and save the downloaded file somewhere.
   await download.saveAs("WaitingList.csv");
+
+  fs.writeFile("LastReportDate.txt", lastReportUpdate, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log("Created new report date file successfully");
+    }
+  });
 });

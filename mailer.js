@@ -3,6 +3,22 @@ const path = require("path");
 const { DateTime } = require("luxon");
 const nodemailer = require("nodemailer");
 
+// get report date
+const lineByLine = require("n-readlines");
+const liner = new lineByLine("LastReportDate.txt");
+
+let line;
+let lineNumber = 0;
+
+let reportDate = "";
+
+while ((line = liner.next())) {
+  if (lineNumber === 0) {
+    reportDate = line.toString();
+  }
+  lineNumber++;
+}
+
 const file = path.join(__dirname, "..", "ModifiedWaitingList.csv");
 console.log(file);
 const todaysDate = DateTime.now().toFormat("MM-dd-yyyy");
@@ -19,7 +35,7 @@ const mailOptions = {
   from: process.env.EMAIL_FROM_ADDRESS,
   to: process.env.EMAIL_TO_ADDRESS,
   subject: `Transplant Waiting List ${todaysDate}`,
-  text: "Transplant Waiting List",
+  text: `Transplant Waiting List Data through ${reportDate}`,
   attachments: [
     {
       filename: "TransplantWaitingList.csv",
