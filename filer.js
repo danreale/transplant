@@ -1,6 +1,7 @@
 const lineByLine = require("n-readlines");
 const liner = new lineByLine("WaitingList.csv");
 const fs = require("fs");
+const path = require("path");
 
 let line;
 let lineNumber = 0;
@@ -30,5 +31,7 @@ fs.writeFile("ModifiedWaitingList.csv", fileContents.join("\n"), (err) => {
     console.error(err);
   } else {
     console.log("Created new file successfully");
+    const file = path.join(__dirname, "ModifiedWaitingList.csv");
+    console.log(file);
   }
 });
