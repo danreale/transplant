@@ -26,12 +26,13 @@ while ((line = liner.next())) {
 console.log("end of file reached");
 console.log(fileContents.join("\n"));
 
-fs.writeFile("ModifiedWaitingList.csv", fileContents.join("\n"), (err) => {
+const file = path.join(__dirname, "..", "ModifiedWaitingList.csv");
+console.log(file);
+
+fs.writeFile(file, fileContents.join("\n"), (err) => {
   if (err) {
     console.error(err);
   } else {
     console.log("Created new file successfully");
-    const file = path.join(__dirname, "ModifiedWaitingList.csv");
-    console.log(file);
   }
 });
