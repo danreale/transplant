@@ -1,0 +1,23 @@
+{
+  "name": "transplant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pw:open": "npx playwright test --ui",
+    "emailreport": "node mailer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.29"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "luxon": "^3.4.4",
+    "n-readlines": "^1.0.1",
+    "nodemailer": "^6.9.12"
+  }
+}
