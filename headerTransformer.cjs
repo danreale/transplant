@@ -2,6 +2,7 @@ const lineByLine = require("n-readlines");
 const liner = new lineByLine("ModifiedWaitingList.csv");
 const fs = require("fs");
 const path = require("path");
+const { cwd } = require("process");
 
 let line;
 let lineNumber = 0;
@@ -22,7 +23,7 @@ while ((line = liner.next())) {
 console.log("end of file reached");
 console.log(fileContents.join("\n"));
 
-const file = path.join(__dirname, "..", "TransformedWaitingListHeader.csv");
+const file = path.join(cwd(), "TransformedWaitingListHeader.csv");
 console.log(file);
 
 fs.writeFile(file, fileContents.join("\n"), (err) => {

@@ -2,6 +2,7 @@ const csv = require("csvtojson");
 const fs = require("fs");
 const path = require("path");
 const { DateTime } = require("luxon");
+const { cwd } = require("process");
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
@@ -47,7 +48,7 @@ async function transplantData() {
     }
   }
   // console.log(transformedData);
-  const file = path.join(__dirname, "..", "DatabaseWaitingList.json");
+  const file = path.join(cwd(), "DatabaseWaitingList.json");
   console.log(file);
 
   fs.writeFile(file, JSON.stringify(transformedData, null, 2), (err) => {
