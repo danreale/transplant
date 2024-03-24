@@ -26,5 +26,9 @@ jobs:
         retention-days: 30
     - name: Format File
       run: npm run createFormattedFile
+    - name: Format Header
+      run: npm run transformHeader
+    - name: Transform Data
+      run: npm run transformData
     - name: Email Results
       run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport

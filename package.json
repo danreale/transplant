@@ -6,7 +6,10 @@
   "scripts": {
     "pw:open": "npx playwright test --ui",
     "createFormattedFile": "node filer.js",
-    "emailreport": "node mailer.js"
+    "emailreport": "node mailer.js",
+    "transformHeader": "node headerTransformer.js",
+    "transformData": "node transformer.js",
+    "dailyDataETL":""
   },
   "keywords": [],
   "author": "",
@@ -16,6 +19,7 @@
     "@types/node": "^20.11.29"
   },
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
     "luxon": "^3.4.4",
     "n-readlines": "^1.0.1",
