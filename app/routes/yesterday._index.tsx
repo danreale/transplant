@@ -28,9 +28,10 @@ export default function Appointments() {
   return (
     <>
       <Header />
-      <h1 className="text-center text-4xl py-5">
-        Transplant Data {todaysDate}
-      </h1>
+      <h1 className="text-center text-4xl">Yesterday's Data</h1>
+      <h2 className="text-center text-4xl text-blue-500 italic pb-2">
+        {todaysDate}
+      </h2>
 
       {/* <h2 className="text-2xl text-center py-2">Region 2</h2>
       <div>
@@ -69,7 +70,7 @@ export async function loader({}: LoaderFunctionArgs) {
     .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
-  console.log("Loader Transplant Date", todaysDate);
+  //   console.log("Loader Transplant Date", todaysDate);
   const region1data = await getTransplantData("Region  1", todaysDate);
   const region2data = await getTransplantData("Region  2", todaysDate);
   const region3data = await getTransplantData("Region  3", todaysDate);

@@ -9,7 +9,7 @@ export async function getTransplantData(region: string, date: string) {
   //   .setZone("America/New_York")
   //   .toUTC()
   //   .toISO();
-  console.log("Server Transplant Date From Client", date);
+  // console.log("Server Transplant Date From Client", date);
   const transplantData = await getXataClient()
     .db.transplant_data.select([
       "blood_type",
@@ -29,7 +29,7 @@ export async function getTransplantData(region: string, date: string) {
 
 export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
   // const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toUTC().toISO();
-  console.log("Server Blood Type Date From Client", date);
+  // console.log("Server Blood Type Date From Client", date);
   const records = await getXataClient().db.transplant_data.aggregate(
     {
       sumWaitlist: {
