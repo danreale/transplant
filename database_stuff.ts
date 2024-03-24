@@ -33,6 +33,7 @@ const transplantData = JSON.parse(
 //   const dater = await xata.db.transplant_data.create(transplantData);
 //   console.log(dater);
 // }
+
 const dater = await xata.db.transplant_data.create(transplantData);
 
 console.log(dater);
