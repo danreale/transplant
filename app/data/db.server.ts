@@ -7,6 +7,7 @@ export async function getTransplantData(region: string, date: string) {
   //   .toFormat("yyyy-MM-dd");
   const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd")
     .setZone("America/New_York")
+    .toUTC()
     .toISO();
   console.log("Server Transplant Date", formattedDate);
   const transplantData = await getXataClient()
