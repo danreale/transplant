@@ -43,7 +43,7 @@ export async function getTransplantData(region: string, date: string) {
 // }
 
 export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
-  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toISO();
+  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toUTC().toISO();
   console.log("Server Blood Type Date", formattedDate);
   const records = await getXataClient().db.transplant_data.aggregate(
     {
