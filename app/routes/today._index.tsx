@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { bloodTypeTotals, getTransplantData } from "~/data/db.server";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigation } from "@remix-run/react";
 import RegionData from "~/components/RegionData";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
@@ -24,6 +24,9 @@ export default function Appointments() {
     bloodBTotal,
     bloodOTotal,
   } = useLoaderData<typeof loader>();
+
+  const transition = useNavigation();
+  const pageLoading = transition.state !== "idle";
   return (
     <>
       <Header />
@@ -32,6 +35,11 @@ export default function Appointments() {
         {todaysDate}
       </h2>
 
+      {pageLoading && (
+        <div className="flex justify-center items-center text-center text-yellow-400 text-3xl pb-5">
+          Transplant Data Loading.....
+        </div>
+      )}
       {/* <h2 className="text-2xl text-center py-2">Region 2</h2>
       <div>
         <ul className="">
