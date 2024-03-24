@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 
 // get report date
 const lineByLine = require("n-readlines");
+const { cwd } = require("process");
 const liner = new lineByLine("LastReportDate.txt");
 
 let line;
@@ -19,7 +20,7 @@ while ((line = liner.next())) {
   lineNumber++;
 }
 
-const file = path.join(__dirname, "..", "ModifiedWaitingList.csv");
+const file = path.join(cwd(), "ModifiedWaitingList.csv");
 console.log(file);
 const todaysDate = DateTime.now().toFormat("MM-dd-yyyy");
 

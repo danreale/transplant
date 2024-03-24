@@ -32,5 +32,5 @@ jobs:
       run: npm run transformData
     - name: Load Data
       run: XATA_BRANCH=${{secrets.XATA_BRANCH}} XATA_API_KEY=${{secrets.XATA_API_KEY}} npm run dailyDataETL
-    # - name: Email Results
-    #   run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
+    - name: Email Results
+      run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
