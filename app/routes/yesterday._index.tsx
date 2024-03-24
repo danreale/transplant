@@ -44,7 +44,9 @@ export default function Appointments() {
         </ul>
       </div> */}
       <RegionData transplantData={region1data} region="Region 1" />
-      <RegionData transplantData={region2data} region="Region 2" />
+      <div className="text-red-600 font-bold">
+        <RegionData transplantData={region2data} region="Region 2" />
+      </div>
       <RegionData transplantData={region3data} region="Region 3" />
       <RegionData transplantData={region4data} region="Region 4" />
       <RegionData transplantData={region5data} region="Region 5" />
