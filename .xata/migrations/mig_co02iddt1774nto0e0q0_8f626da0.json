@@ -1,0 +1,16 @@
+{
+  "id": "mig_co02iddt1774nto0e0q0",
+  "parentID": "mig_co02i5u1156m57qci4q0",
+  "checksum": "1:8f626da09c0afc66803d49b87183b4f96f39c1292dc910c1b144bc5012d5f705",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "heart_status_1B",
+          "type": "int"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

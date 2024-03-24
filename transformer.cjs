@@ -1,6 +1,13 @@
 const csv = require("csvtojson");
 const fs = require("fs");
 const path = require("path");
+const { DateTime } = require("luxon");
+
+const todaysDate = DateTime.now()
+  .setZone("America/New_York")
+  .toFormat("yyyy-MM-dd");
+const formattedDate = DateTime.fromFormat(todaysDate, "yyyy-MM-dd").toISO();
+console.log(formattedDate);
 
 async function transplantData() {
   const jsonArray = await csv().fromFile("TransformedWaitingListHeader.csv");
@@ -22,6 +29,7 @@ async function transplantData() {
       element.heart_status_7_inactive = parseInt(
         element.heart_status_7_inactive
       );
+      element.report_date = formattedDate;
       transformedData.push(element);
     } else {
       // if no region, then take the set region
@@ -33,6 +41,8 @@ async function transplantData() {
       element.heart_status_7_inactive = parseInt(
         element.heart_status_7_inactive
       );
+      element.report_date = formattedDate;
+
       transformedData.push(element);
     }
   }

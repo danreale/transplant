@@ -1,0 +1,16 @@
+{
+  "id": "mig_co02hh61156m57qci4o0",
+  "parentID": "mig_co02hbm1156m57qci4l0",
+  "checksum": "1:eabcd4160a1540efc7ed8cfdbb5aa30c12d6ab11f6477db67237952ca780e3d3",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "blood_type",
+          "type": "string"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

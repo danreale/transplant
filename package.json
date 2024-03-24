@@ -1,28 +1,57 @@
 {
   "name": "transplant",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
   "scripts": {
+    "build": "remix vite:build",
+    "dev": "remix vite:dev",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "start": "netlify serve",
+    "typecheck": "tsc",
     "pw:open": "npx playwright test --ui",
-    "createFormattedFile": "node filer.js",
-    "emailreport": "node mailer.js",
-    "transformHeader": "node headerTransformer.js",
-    "transformData": "node transformer.js",
-    "dailyDataETL":""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@playwright/test": "^1.42.1",
-    "@types/node": "^20.11.29"
+    "createFormattedFile": "node filer.cjs",
+    "emailreport": "node mailer.cjs",
+    "transformHeader": "node headerTransformer.cjs",
+    "transformData": "node transformer.cjs",
+    "dailyDataETL": "tsx ./database_stuff.ts"
   },
   "dependencies": {
+    "@netlify/functions": "^2.6.0",
+    "@netlify/remix-adapter": "^2.3.0",
+    "@remix-run/node": "^2.8.1",
+    "@remix-run/react": "^2.8.1",
+    "@remix-run/serve": "^2.8.1",
+    "@xata.io/client": "^0.29.3",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.4.5",
+    "isbot": "^4.1.0",
     "luxon": "^3.4.4",
     "n-readlines": "^1.0.1",
-    "nodemailer": "^6.9.12"
+    "nodemailer": "^6.9.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@remix-run/dev": "^2.8.1",
+    "@types/node": "^20.11.29",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.1.6",
+    "vite": "^5.0.0",
+    "vite-tsconfig-paths": "^4.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

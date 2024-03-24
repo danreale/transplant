@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Dan-Reale-s-workspace-3m1pjh.us-east-1.xata.sh/db/transplant",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}

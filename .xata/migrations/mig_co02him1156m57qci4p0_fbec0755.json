@@ -1,0 +1,16 @@
+{
+  "id": "mig_co02him1156m57qci4p0",
+  "parentID": "mig_co02hh61156m57qci4o0",
+  "checksum": "1:fbec07558c0499b5c21bbfd15665665bec00634a9d58b6084cfec1228400810b",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "empty",
+          "type": "string"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

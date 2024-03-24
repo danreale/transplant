@@ -1,0 +1,11 @@
+{
+  "id": "mig_co02cott1774nto0e0o0",
+  "checksum": "1:9946f3babcffcfaae7d371de45043b82b1519b67c0cc3d5854f8040378d5ffa9",
+  "operations": [
+    {
+      "addTable": {
+        "table": "transplant_data"
+      }
+    }
+  ]
+}
