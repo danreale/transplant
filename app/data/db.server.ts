@@ -5,7 +5,9 @@ export async function getTransplantData(region: string, date: string) {
   // const todaysDate = DateTime.now()
   //   .setZone("America/New_York")
   //   .toFormat("yyyy-MM-dd");
-  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toISO();
+  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd")
+    .setZone("America/New_York")
+    .toISO();
   const transplantData = await getXataClient()
     .db.transplant_data.select([
       "blood_type",
