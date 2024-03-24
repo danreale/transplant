@@ -1,0 +1,13 @@
+{
+  "id": "mig_co0a40dt1774nto0e4fg",
+  "parentID": "mig_co02ip5t1774nto0e0r0",
+  "checksum": "1:df02a8c0909ef716ab18d954bfcf8535f5d6e5acebcae95f190f95def94aca83",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "report_date",
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

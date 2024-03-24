@@ -6,8 +6,8 @@ const { DateTime } = require("luxon");
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
   .toFormat("yyyy-MM-dd");
-const formattedDate = DateTime.fromFormat(todaysDate, "yyyy-MM-dd").toISO();
-console.log(formattedDate);
+// const formattedDate = DateTime.fromFormat(todaysDate, "yyyy-MM-dd");
+console.log(todaysDate);
 
 async function transplantData() {
   const jsonArray = await csv().fromFile("TransformedWaitingListHeader.csv");
@@ -29,7 +29,7 @@ async function transplantData() {
       element.heart_status_7_inactive = parseInt(
         element.heart_status_7_inactive
       );
-      element.report_date = formattedDate;
+      element.report_date = todaysDate;
       transformedData.push(element);
     } else {
       // if no region, then take the set region
@@ -41,7 +41,7 @@ async function transplantData() {
       element.heart_status_7_inactive = parseInt(
         element.heart_status_7_inactive
       );
-      element.report_date = formattedDate;
+      element.report_date = todaysDate;
 
       transformedData.push(element);
     }

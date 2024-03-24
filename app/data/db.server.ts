@@ -5,11 +5,11 @@ export async function getTransplantData(region: string, date: string) {
   // const todaysDate = DateTime.now()
   //   .setZone("America/New_York")
   //   .toFormat("yyyy-MM-dd");
-  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd")
-    .setZone("America/New_York")
-    .toUTC()
-    .toISO();
-  console.log("Server Transplant Date", formattedDate);
+  // const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd")
+  //   .setZone("America/New_York")
+  //   .toUTC()
+  //   .toISO();
+  console.log("Server Transplant Date From Client", date);
   const transplantData = await getXataClient()
     .db.transplant_data.select([
       "blood_type",
@@ -19,7 +19,7 @@ export async function getTransplantData(region: string, date: string) {
     ])
     .filter({
       region,
-      report_date: formattedDate,
+      report_date: date,
       blood_type: { $any: ["B", "O"] },
     })
     .sort("blood_type", "asc")
@@ -43,8 +43,8 @@ export async function getTransplantData(region: string, date: string) {
 // }
 
 export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
-  const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toUTC().toISO();
-  console.log("Server Blood Type Date", formattedDate);
+  // const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toUTC().toISO();
+  console.log("Server Blood Type Date From Client", date);
   const records = await getXataClient().db.transplant_data.aggregate(
     {
       sumWaitlist: {
@@ -53,7 +53,7 @@ export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
         },
       },
     },
-    { report_date: formattedDate, blood_type: bloodType }
+    { report_date: date, blood_type: bloodType }
   );
   return records;
 }
