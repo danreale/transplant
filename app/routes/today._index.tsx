@@ -65,6 +65,7 @@ export async function loader({}: LoaderFunctionArgs) {
   const todaysDate = DateTime.now()
     .setZone("America/New_York")
     .toFormat("yyyy-MM-dd");
+  console.log("Loader Transplant Date", todaysDate);
   const region1data = await getTransplantData("Region  1", todaysDate);
   const region2data = await getTransplantData("Region  2", todaysDate);
   const region3data = await getTransplantData("Region  3", todaysDate);
