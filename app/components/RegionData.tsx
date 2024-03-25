@@ -22,6 +22,15 @@ export default function RegionData({
             <li key={index} className="flex justify-center space-x-2">
               <p>{record.blood_type}</p>
               <p>{record.heart_status_1A}</p>
+              {record.change === 0 && (
+                <p className="text-yellow-500">({record.change})</p>
+              )}
+              {record.change > 0 && (
+                <p className="text-red-500 font-bold">(+{record.change})</p>
+              )}
+              {record.change < 0 && (
+                <p className="text-green-500 font-bold">({record.change})</p>
+              )}
             </li>
           ))}
         </ul>

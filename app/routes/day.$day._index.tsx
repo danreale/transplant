@@ -1,14 +1,13 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { bloodTypeTotals, getTransplantData } from "~/data/db.server";
-import { useLoaderData, useNavigation } from "@remix-run/react";
+import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
 import RegionData from "~/components/RegionData";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
 
-const todaysDate = DateTime.now()
-  .setZone("America/New_York")
-  .minus({ days: 1 })
-  .toFormat("MM-dd-yyyy");
+// const todaysDate = DateTime.now()
+//   .setZone("America/New_York")
+//   .toFormat("MM-dd-yyyy");
 export default function Appointments() {
   const {
     region1dataChange,
@@ -30,12 +29,13 @@ export default function Appointments() {
 
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
+  const todaysDate = useParams();
   return (
     <>
       <Header />
-      <h1 className="text-center text-4xl">Yesterday's Data</h1>
+      <h1 className="text-center text-4xl">Transplant Data</h1>
       <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {todaysDate}
+        {todaysDate.day}
       </h2>
 
       {pageLoading && (
@@ -123,11 +123,12 @@ export default function Appointments() {
   );
 }
 
-export async function loader({}: LoaderFunctionArgs) {
-  const todaysDate = DateTime.now()
-    .setZone("America/New_York")
-    .minus({ days: 1 })
-    .toFormat("yyyy-MM-dd");
+export async function loader({ params }: LoaderFunctionArgs) {
+  const todaysDate = params.day!!;
+  console.log(todaysDate);
+  //   const todaysDate = DateTime.now()
+  //     .setZone("America/New_York")
+  //     .toFormat("yyyy-MM-dd");
   // console.log("Loader Transplant Date", todaysDate);
   const region1data = await getTransplantData("Region  1", todaysDate);
   const region2data = await getTransplantData("Region  2", todaysDate);
@@ -143,9 +144,9 @@ export async function loader({}: LoaderFunctionArgs) {
   const bloodBTotal = await bloodTypeTotals("B", todaysDate);
   const bloodOTotal = await bloodTypeTotals("O", todaysDate);
 
-  const yesterdaysDate = DateTime.now()
+  const yesterdaysDate = DateTime.fromFormat(todaysDate, "yyyy-MM-dd")
     .setZone("America/New_York")
-    .minus({ days: 2 })
+    .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
   const region1dataYesterday = await getTransplantData(
     "Region  1",

@@ -1,4 +1,4 @@
-import { getXataClient } from "src/xata";
+import { TransplantDataRecord, getXataClient } from "src/xata";
 import { DateTime } from "luxon";
 
 export async function getTransplantData(region: string, date: string) {
@@ -40,5 +40,12 @@ export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
     },
     { report_date: date, blood_type: bloodType }
   );
+  return records;
+}
+
+export async function getTransplantDates() {
+  const { records } = await await getXataClient()
+    .sql<TransplantDataRecord>`SELECT distinct(report_date) FROM "transplant_data" order by report_date desc`;
+
   return records;
 }

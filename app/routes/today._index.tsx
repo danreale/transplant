@@ -10,17 +10,17 @@ const todaysDate = DateTime.now()
   .toFormat("MM-dd-yyyy");
 export default function Appointments() {
   const {
-    region1data,
-    region2data,
-    region3data,
-    region4data,
-    region5data,
-    region6data,
-    region7data,
-    region8data,
-    region9data,
-    region10data,
-    region11data,
+    region1dataChange,
+    region2dataChange,
+    region3dataChange,
+    region4dataChange,
+    region5dataChange,
+    region6dataChange,
+    region7dataChange,
+    region8dataChange,
+    region9dataChange,
+    region10dataChange,
+    region11dataChange,
     bloodBTotal,
     bloodOTotal,
     changeB,
@@ -53,20 +53,20 @@ export default function Appointments() {
           ))}
         </ul>
       </div> */}
-      <RegionData transplantData={region1data} region="Region 1" />
+      <RegionData transplantData={region1dataChange} region="Region 1" />
       <div className="text-red-600 font-bold">
-        <RegionData transplantData={region2data} region="Region 2" />
+        <RegionData transplantData={region2dataChange} region="Region 2" />
       </div>
 
-      <RegionData transplantData={region3data} region="Region 3" />
-      <RegionData transplantData={region4data} region="Region 4" />
-      <RegionData transplantData={region5data} region="Region 5" />
-      <RegionData transplantData={region6data} region="Region 6" />
-      <RegionData transplantData={region7data} region="Region 7" />
-      <RegionData transplantData={region8data} region="Region 8" />
-      <RegionData transplantData={region9data} region="Region 9" />
-      <RegionData transplantData={region10data} region="Region 10" />
-      <RegionData transplantData={region11data} region="Region 11" />
+      <RegionData transplantData={region3dataChange} region="Region 3" />
+      <RegionData transplantData={region4dataChange} region="Region 4" />
+      <RegionData transplantData={region5dataChange} region="Region 5" />
+      <RegionData transplantData={region6dataChange} region="Region 6" />
+      <RegionData transplantData={region7dataChange} region="Region 7" />
+      <RegionData transplantData={region8dataChange} region="Region 8" />
+      <RegionData transplantData={region9dataChange} region="Region 9" />
+      <RegionData transplantData={region10dataChange} region="Region 10" />
+      <RegionData transplantData={region11dataChange} region="Region 11" />
       <div className="py-5 text-center">
         {changeB === 0 && (
           <div className="flex justify-center text-center space-x-2">
@@ -88,7 +88,7 @@ export default function Appointments() {
           <div className="flex justify-center text-center space-x-2">
             <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
             <label htmlFor="" className="text-green-500 font-bold">
-              (-{changeB})
+              ({changeB})
             </label>
           </div>
         )}
@@ -113,7 +113,7 @@ export default function Appointments() {
           <div className="flex justify-center text-center space-x-2">
             <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
             <label htmlFor="" className="text-green-500 font-bold">
-              (-{changeO})
+              ({changeO})
             </label>
           </div>
         )}
@@ -145,8 +145,107 @@ export async function loader({}: LoaderFunctionArgs) {
     .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
+  const region1dataYesterday = await getTransplantData(
+    "Region  1",
+    yesterdaysDate
+  );
+  const region2dataYesterday = await getTransplantData(
+    "Region  2",
+    yesterdaysDate
+  );
+  const region3dataYesterday = await getTransplantData(
+    "Region  3",
+    yesterdaysDate
+  );
+  const region4dataYesterday = await getTransplantData(
+    "Region  4",
+    yesterdaysDate
+  );
+  const region5dataYesterday = await getTransplantData(
+    "Region  5",
+    yesterdaysDate
+  );
+  const region6dataYesterday = await getTransplantData(
+    "Region  6",
+    yesterdaysDate
+  );
+  const region7dataYesterday = await getTransplantData(
+    "Region  7",
+    yesterdaysDate
+  );
+  const region8dataYesterday = await getTransplantData(
+    "Region  8",
+    yesterdaysDate
+  );
+  const region9dataYesterday = await getTransplantData(
+    "Region  9",
+    yesterdaysDate
+  );
+  const region10dataYesterday = await getTransplantData(
+    "Region  10",
+    yesterdaysDate
+  );
+  const region11dataYesterday = await getTransplantData(
+    "Region  11",
+    yesterdaysDate
+  );
+
   const bloodBTotalYesterday = await bloodTypeTotals("B", yesterdaysDate);
   const bloodOTotalYesteray = await bloodTypeTotals("O", yesterdaysDate);
+
+  const regionDataWithChange = (regionData: any, regionDataYesterday: any) => {
+    const data = regionData.map((item: any, index: number) => ({
+      ...item,
+      change:
+        item.heart_status_1A - regionDataYesterday[index].heart_status_1A!!,
+    }));
+    return data;
+  };
+
+  const region1dataChange = regionDataWithChange(
+    region1data,
+    region1dataYesterday
+  );
+  const region2dataChange = regionDataWithChange(
+    region2data,
+    region2dataYesterday
+  );
+  const region3dataChange = regionDataWithChange(
+    region3data,
+    region3dataYesterday
+  );
+  const region4dataChange = regionDataWithChange(
+    region4data,
+    region4dataYesterday
+  );
+  const region5dataChange = regionDataWithChange(
+    region5data,
+    region5dataYesterday
+  );
+  const region6dataChange = regionDataWithChange(
+    region6data,
+    region6dataYesterday
+  );
+  const region7dataChange = regionDataWithChange(
+    region7data,
+    region7dataYesterday
+  );
+  const region8dataChange = regionDataWithChange(
+    region8data,
+    region8dataYesterday
+  );
+  const region9dataChange = regionDataWithChange(
+    region9data,
+    region9dataYesterday
+  );
+  const region10dataChange = regionDataWithChange(
+    region10data,
+    region10dataYesterday
+  );
+  const region11dataChange = regionDataWithChange(
+    region11data,
+    region11dataYesterday
+  );
 
   const changeB =
     bloodBTotal.aggs.sumWaitlist!! - bloodBTotalYesterday.aggs.sumWaitlist!!;
@@ -154,17 +253,17 @@ export async function loader({}: LoaderFunctionArgs) {
     bloodOTotal.aggs.sumWaitlist!! - bloodOTotalYesteray.aggs.sumWaitlist!!;
 
   return {
-    region1data,
-    region2data,
-    region3data,
-    region4data,
-    region5data,
-    region6data,
-    region7data,
-    region8data,
-    region9data,
-    region10data,
-    region11data,
+    region1dataChange,
+    region2dataChange,
+    region3dataChange,
+    region4dataChange,
+    region5dataChange,
+    region6dataChange,
+    region7dataChange,
+    region8dataChange,
+    region9dataChange,
+    region10dataChange,
+    region11dataChange,
     bloodBTotal,
     bloodOTotal,
     changeB,

@@ -1,6 +1,8 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link, useNavigation } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Link, useLoaderData, useNavigation } from "@remix-run/react";
+import { DateTime } from "luxon";
 import Header from "~/components/Header";
+import { getTransplantDates } from "~/data/db.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,6 +14,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
+  const { dates } = useLoaderData<typeof loader>();
   return (
     <>
       <Header />
@@ -20,6 +23,28 @@ export default function Index() {
           Transplant Data Loading.....
         </div>
       )}
+      <h2 className="text-center text-2xl py-2">Past Transplant Data</h2>
+      <div className="py-5 flex justify-center">
+        <ul className="space-y-2">
+          {dates.map((date: any, index: number) => (
+            <li key={index}>
+              <Link to={`/day/${date.report_date}`}>
+                {date.report_date} (
+                {
+                  DateTime.fromFormat(date.report_date, "yyyy-MM-dd")
+                    .weekdayLong
+                }
+                )
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
+}
+
+export async function loader({}: LoaderFunctionArgs) {
+  const dates = await getTransplantDates();
+  return { dates };
 }
