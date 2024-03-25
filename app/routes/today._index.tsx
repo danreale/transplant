@@ -23,6 +23,8 @@ export default function Appointments() {
     region11data,
     bloodBTotal,
     bloodOTotal,
+    changeB,
+    changeO,
   } = useLoaderData<typeof loader>();
 
   const transition = useNavigation();
@@ -66,8 +68,55 @@ export default function Appointments() {
       <RegionData transplantData={region10data} region="Region 10" />
       <RegionData transplantData={region11data} region="Region 11" />
       <div className="py-5 text-center">
-        <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
-        <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
+        {changeB === 0 && (
+          <div className="flex justify-center text-center space-x-2">
+            <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
+            <label htmlFor="" className="text-yellow-600 font-bold">
+              ({changeB})
+            </label>
+          </div>
+        )}
+        {changeB > 0 && (
+          <div className="flex justify-center text-center space-x-2">
+            <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
+            <label htmlFor="" className="text-red-500 font-bold">
+              (+{changeB})
+            </label>
+          </div>
+        )}
+        {changeB < 0 && (
+          <div className="flex justify-center text-center space-x-2">
+            <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
+            <label htmlFor="" className="text-green-500 font-bold">
+              (-{changeB})
+            </label>
+          </div>
+        )}
+
+        {changeO === 0 && (
+          <div className="flex justify-center text-center space-x-2">
+            <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
+            <label htmlFor="" className="text-yellow-600 font-bold">
+              ({changeO})
+            </label>
+          </div>
+        )}
+        {changeO > 0 && (
+          <div className="flex justify-center text-center space-x-2">
+            <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
+            <label htmlFor="" className="text-red-500 font-bold">
+              (+{changeO})
+            </label>
+          </div>
+        )}
+        {changeO < 0 && (
+          <div className="flex justify-center text-center space-x-2">
+            <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
+            <label htmlFor="" className="text-green-500 font-bold">
+              (-{changeO})
+            </label>
+          </div>
+        )}
       </div>
     </>
   );
@@ -92,6 +141,18 @@ export async function loader({}: LoaderFunctionArgs) {
   const bloodBTotal = await bloodTypeTotals("B", todaysDate);
   const bloodOTotal = await bloodTypeTotals("O", todaysDate);
 
+  const yesterdaysDate = DateTime.now()
+    .setZone("America/New_York")
+    .minus({ days: 1 })
+    .toFormat("yyyy-MM-dd");
+  const bloodBTotalYesterday = await bloodTypeTotals("B", yesterdaysDate);
+  const bloodOTotalYesteray = await bloodTypeTotals("O", yesterdaysDate);
+
+  const changeB =
+    bloodBTotal.aggs.sumWaitlist!! - bloodBTotalYesterday.aggs.sumWaitlist!!;
+  const changeO =
+    bloodOTotal.aggs.sumWaitlist!! - bloodOTotalYesteray.aggs.sumWaitlist!!;
+
   return {
     region1data,
     region2data,
@@ -106,5 +167,7 @@ export async function loader({}: LoaderFunctionArgs) {
     region11data,
     bloodBTotal,
     bloodOTotal,
+    changeB,
+    changeO,
   };
 }
