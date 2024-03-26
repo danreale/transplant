@@ -45,7 +45,7 @@ export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
 
 export async function getTransplantDates() {
   const { records } = await await getXataClient()
-    .sql<TransplantDataRecord>`SELECT distinct(report_date) FROM "transplant_data" order by report_date desc`;
+    .sql<TransplantDataRecord>`SELECT distinct(report_date) FROM "transplant_data" order by report_date desc limit 365`;
 
   return records;
 }
