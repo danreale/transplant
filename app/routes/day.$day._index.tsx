@@ -145,7 +145,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const bloodOTotal = await bloodTypeTotals("O", todaysDate);
 
   const yesterdaysDate = DateTime.fromFormat(todaysDate, "yyyy-MM-dd")
-    .setZone("America/New_York")
+    // .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
   console.log("Yesterdays Date from loader", yesterdaysDate);
