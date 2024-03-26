@@ -125,7 +125,7 @@ export default function Appointments() {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const todaysDate = params.day!!;
-  console.log("Params Date", todaysDate);
+  //   console.log("Params Date", todaysDate);
   //   const todaysDate = DateTime.now()
   //     .setZone("America/New_York")
   //     .toFormat("yyyy-MM-dd");
@@ -148,7 +148,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     // .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
-  console.log("Yesterdays Date from loader", yesterdaysDate);
+  //   console.log("Yesterdays Date from loader", yesterdaysDate);
   const region1dataYesterday = await getTransplantData(
     "Region  1",
     yesterdaysDate
