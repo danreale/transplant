@@ -29,13 +29,13 @@ export default function Appointments() {
 
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const todaysDate = useParams();
+  const params = useParams();
   return (
     <>
       <Header />
       <h1 className="text-center text-4xl">Transplant Data</h1>
       <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {todaysDate.day}
+        {params.day}
       </h2>
 
       {pageLoading && (
@@ -125,7 +125,7 @@ export default function Appointments() {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const todaysDate = params.day!!;
-  console.log(todaysDate);
+  console.log("Params Date", todaysDate);
   //   const todaysDate = DateTime.now()
   //     .setZone("America/New_York")
   //     .toFormat("yyyy-MM-dd");
@@ -148,6 +148,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
+  console.log("Yesterdays Date from loader", yesterdaysDate);
   const region1dataYesterday = await getTransplantData(
     "Region  1",
     yesterdaysDate
