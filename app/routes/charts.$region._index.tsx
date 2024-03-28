@@ -3,6 +3,7 @@ import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
 import Header from "~/components/Header";
 import TransplantChart from "~/components/TransplantChart";
 import { bloodTypeTotalsChart, getTransplantDates } from "~/data/db.server";
+import { regionStates } from "~/data/states";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,6 +29,9 @@ export default function Index() {
 
       <div className="grid justify-center text-center pb-5">
         <h2 className="text-2xl text-center py-5">Region {params.region}</h2>
+        <p className="pb-5">
+          ({regionStates(parseInt(params.region!!)).join(", ")})
+        </p>
         <h3 className="text-2xl text-center">B</h3>
         <TransplantChart data={bloodBRegion2TotalB} />
         <h3 className="text-2xl text-center py-2">O</h3>
