@@ -2,11 +2,8 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
-import TransplantChart from "~/components/TransplantChart";
-import {
-  bloodTypeBRegion2TotalsChart,
-  getTransplantDates,
-} from "~/data/db.server";
+
+import { getTransplantDates } from "~/data/db.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,7 +15,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const { dates, bloodBRegion2Total } = useLoaderData<typeof loader>();
+  const { dates } = useLoaderData<typeof loader>();
   return (
     <>
       <Header />
@@ -44,11 +41,6 @@ export default function Index() {
           ))}
         </ul>
       </div>
-
-      <div className="grid justify-center text-center">
-        <h2 className="text-2xl text-center py-5">Region 2</h2>
-        <TransplantChart data={bloodBRegion2Total} />
-      </div>
     </>
   );
 }
@@ -56,7 +48,5 @@ export default function Index() {
 export async function loader({}: LoaderFunctionArgs) {
   const dates = await getTransplantDates();
 
-  const bloodBRegion2Total = await bloodTypeBRegion2TotalsChart();
-  console.log(bloodBRegion2Total);
-  return { dates, bloodBRegion2Total };
+  return { dates };
 }

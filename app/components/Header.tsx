@@ -17,6 +17,12 @@ export default function Header({}) {
           <li>
             <Link to="/yesterday">Yesterday</Link>
           </li>
+          <li>
+            <Link to="/charts/2">Region 2 Charts</Link>
+          </li>
+          <li>
+            <Link to="/charts">Region Charts</Link>
+          </li>
         </ul>
       </div>
     </>

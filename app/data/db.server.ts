@@ -50,10 +50,13 @@ export async function getTransplantDates() {
   return records;
 }
 
-export async function bloodTypeBRegion2TotalsChart() {
+export async function bloodTypeTotalsChart(
+  region: string,
+  bloodType: "B" | "O"
+) {
   const records = await getXataClient()
     .db.transplant_data.select(["heart_status_1A", "report_date"])
-    .filter({ blood_type: "B", region: "Region  2" })
+    .filter({ blood_type: bloodType, region: region })
     .sort("report_date", "asc")
     .getMany();
   return records;
