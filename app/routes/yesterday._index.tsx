@@ -54,20 +54,30 @@ export default function Appointments() {
           ))}
         </ul>
       </div> */}
-      <RegionData transplantData={region1dataChange} region="Region 1" />
+      <div className="text-blue-600">
+        <RegionData transplantData={region1dataChange} region="Region 1" />
+      </div>
       <div className="text-red-600 font-bold">
         <RegionData transplantData={region2dataChange} region="Region 2" />
       </div>
 
-      <RegionData transplantData={region3dataChange} region="Region 3" />
+      <div className="text-blue-600">
+        <RegionData transplantData={region3dataChange} region="Region 3" />
+      </div>
       <RegionData transplantData={region4dataChange} region="Region 4" />
       <RegionData transplantData={region5dataChange} region="Region 5" />
       <RegionData transplantData={region6dataChange} region="Region 6" />
       <RegionData transplantData={region7dataChange} region="Region 7" />
       <RegionData transplantData={region8dataChange} region="Region 8" />
-      <RegionData transplantData={region9dataChange} region="Region 9" />
-      <RegionData transplantData={region10dataChange} region="Region 10" />
-      <RegionData transplantData={region11dataChange} region="Region 11" />
+      <div className="text-blue-600">
+        <RegionData transplantData={region9dataChange} region="Region 9" />
+      </div>
+      <div className="text-blue-600">
+        <RegionData transplantData={region10dataChange} region="Region 10" />
+      </div>
+      <div className="text-blue-600">
+        <RegionData transplantData={region11dataChange} region="Region 11" />
+      </div>
       <div className="py-5 text-center">
         {changeB === 0 && (
           <div className="flex justify-center text-center space-x-2">
