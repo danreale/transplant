@@ -96,7 +96,7 @@ export default function Appointments() {
 
         {changeO === 0 && (
           <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
+            <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
             <label htmlFor="" className="text-yellow-600 font-bold">
               ({changeO})
             </label>
@@ -104,7 +104,7 @@ export default function Appointments() {
         )}
         {changeO > 0 && (
           <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
+            <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
             <label htmlFor="" className="text-red-500 font-bold">
               (+{changeO})
             </label>
@@ -112,7 +112,7 @@ export default function Appointments() {
         )}
         {changeO < 0 && (
           <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type B Total: {bloodOTotal.aggs.sumWaitlist}</p>
+            <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
             <label htmlFor="" className="text-green-500 font-bold">
               ({changeO})
             </label>
