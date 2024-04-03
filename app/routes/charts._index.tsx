@@ -1,12 +1,15 @@
-import { Link, useNavigation } from "@remix-run/react";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 
 import Header from "~/components/Header";
+import RegionChart from "~/components/RegionChart";
+import { getTransplantCountDates } from "~/data/db.server";
 import { regionStates } from "~/data/states";
 
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-
+  const { bloodBTotals, bloodOTotals } = useLoaderData<typeof loader>();
   return (
     <>
       <Header />
@@ -64,6 +67,20 @@ export default function Index() {
           </li>
         </ul>
       </div>
+      <div className="grid justify-center text-center pb-5">
+        <h2 className="text-2xl text-center py-5">Wait List Chart Totals</h2>
+        <h3 className="text-2xl text-center">B</h3>
+        <RegionChart data={bloodBTotals} />
+        <h3 className="text-2xl text-center py-2">O</h3>
+        <RegionChart data={bloodOTotals} />
+      </div>
     </>
   );
+}
+
+export async function loader({}: LoaderFunctionArgs) {
+  const bloodBTotals = await getTransplantCountDates("B");
+  const bloodOTotals = await getTransplantCountDates("O");
+
+  return { bloodBTotals, bloodOTotals };
 }

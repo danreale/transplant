@@ -44,7 +44,7 @@ export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
 }
 
 export async function getTransplantDates() {
-  const { records } = await await getXataClient()
+  const { records } = await getXataClient()
     .sql<TransplantDataRecord>`SELECT distinct(report_date) FROM "transplant_data" order by report_date desc limit 365`;
 
   return records;
@@ -59,5 +59,12 @@ export async function bloodTypeTotalsChart(
     .filter({ blood_type: bloodType, region: region })
     .sort("report_date", "asc")
     .getMany();
+  return records;
+}
+
+export async function getTransplantCountDates(bloodType: "B" | "O") {
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date,sum("heart_status_1A") FROM "transplant_data" where blood_type = ${bloodType} group by report_date order by report_date asc limit 365`;
+
   return records;
 }
