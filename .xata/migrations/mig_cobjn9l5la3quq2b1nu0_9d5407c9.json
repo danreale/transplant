@@ -1,0 +1,16 @@
+{
+  "id": "mig_cobjn9l5la3quq2b1nu0",
+  "parentID": "mig_cobjn1t5la3quq2b1nt0",
+  "checksum": "1:9d5407c9c1afc8ebad174c9c4d3bde697e8b419d2a3d466a77bd3344cd2e2a4b",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "heart",
+          "type": "int"
+        },
+        "table": "center_data"
+      }
+    }
+  ]
+}

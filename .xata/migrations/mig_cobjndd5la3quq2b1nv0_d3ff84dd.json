@@ -1,0 +1,16 @@
+{
+  "id": "mig_cobjndd5la3quq2b1nv0",
+  "parentID": "mig_cobjn9l5la3quq2b1nu0",
+  "checksum": "1:d3ff84ddd22ef239f55aeb74658a54cd2bcfed46c741f1cccb2877a684234454",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "report_date",
+          "type": "string"
+        },
+        "table": "center_data"
+      }
+    }
+  ]
+}

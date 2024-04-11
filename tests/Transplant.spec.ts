@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import fs from "fs";
+import { DateTime } from "luxon";
 
 test("Get Transplant Numbers", async ({ page }) => {
   await page.goto("/data/view-data-reports/build-advanced");
@@ -56,4 +57,48 @@ test("Get Transplant Numbers", async ({ page }) => {
       console.log("Created new report date file successfully");
     }
   });
+});
+
+test("Get Center Numbers", async ({ page }) => {
+  await page.goto("/data/view-data-reports/center-data");
+  await page.waitForTimeout(1000);
+  await page
+    .getByLabel("Choose a State")
+    .selectOption("PA;Pennsylvania;11;Area;Region");
+  await page.waitForTimeout(1000);
+  await page.getByRole("button", { name: "Go" }).click();
+  await page.waitForTimeout(3000);
+  await page
+    .getByLabel("Choose Center:")
+    .selectOption(
+      "PACP-TX1 Children's Hospital of Philadelphia;PACP-TX1 Children's Hospital of Philadelphia;305;TXC;TXC"
+    );
+  await page.waitForTimeout(1000);
+  await page.getByLabel("Choose Category:").selectOption("4;Waiting List");
+  await page.waitForTimeout(1000);
+  await page.getByRole("link", { name: "Overall by Organ" }).click();
+  await page.waitForTimeout(5000);
+  const heartCount = await page
+    .locator("#reportData > tbody > tr > td:nth-child(6)")
+    .innerText();
+  console.log(heartCount);
+
+  const todaysDate = DateTime.now()
+    .setZone("America/New_York")
+    .toFormat("yyyy-MM-dd");
+  console.log(todaysDate);
+
+  const heartData = { heart: parseInt(heartCount), report_date: todaysDate };
+
+  fs.writeFile(
+    "CenterHeartCount.json",
+    JSON.stringify(heartData, null, 2),
+    (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Created new center report date file successfully");
+      }
+    }
+  );
 });

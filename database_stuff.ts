@@ -10,6 +10,10 @@ const transplantData = JSON.parse(
   await readFile(new URL("./DatabaseWaitingList.json", import.meta.url))
 );
 
+const centerData = JSON.parse(
+  await readFile(new URL("./CenterHeartCount.json", import.meta.url))
+);
+
 // const page = await xata.db.transplant_data.getPaginated();
 // console.log(page.records);
 
@@ -37,3 +41,7 @@ const transplantData = JSON.parse(
 const dater = await xata.db.transplant_data.create(transplantData);
 
 console.log(dater);
+
+const center = await xata.db.center_data.create(centerData);
+
+console.log(center);
