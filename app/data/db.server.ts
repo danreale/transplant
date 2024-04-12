@@ -68,3 +68,22 @@ export async function getTransplantCountDates(bloodType: "B" | "O") {
 
   return records;
 }
+
+export async function getCenterData(date: string) {
+  const transplantData = await getXataClient()
+    .db.center_data.select(["heart", "report_date"])
+    .filter({
+      report_date: date,
+    })
+    .sort("report_date", "asc")
+    .getAll();
+  return transplantData;
+}
+
+export async function centerDataTotalsChart() {
+  const transplantData = await getXataClient()
+    .db.center_data.select(["heart", "report_date"])
+    .sort("report_date", "asc")
+    .getAll();
+  return transplantData;
+}

@@ -1,5 +1,9 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { bloodTypeTotals, getTransplantData } from "~/data/db.server";
+import {
+  bloodTypeTotals,
+  getCenterData,
+  getTransplantData,
+} from "~/data/db.server";
 import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
 import RegionData from "~/components/RegionData";
 import { DateTime } from "luxon";
@@ -25,6 +29,9 @@ export default function Appointments() {
     bloodOTotal,
     changeB,
     changeO,
+    todayCenterData,
+    yesterdayCenterData,
+    todaysCenterChange,
   } = useLoaderData<typeof loader>();
 
   const transition = useNavigation();
@@ -127,6 +134,35 @@ export default function Appointments() {
             </label>
           </div>
         )}
+      </div>
+      <div className="py-5 text-center">
+        <div className="grid justify-center text-center space-x-2">
+          <label htmlFor="" className="">
+            Today's Center Count:{" "}
+            {todayCenterData[0]?.heart?.toString() || "NA"}
+          </label>
+          <label htmlFor="" className="">
+            Yesterday's Center Count:{" "}
+            {yesterdayCenterData[0]?.heart?.toString() || "NA"}
+          </label>
+        </div>
+        <div className="flex justify-center text-center space-x-2">
+          {todaysCenterChange === 0 && (
+            <p className="text-yellow-600 font-bold">
+              Center Change: ({todaysCenterChange})
+            </p>
+          )}
+          {todaysCenterChange > 0 && (
+            <p className="text-red-500 font-bold">
+              Center Change: ({todaysCenterChange})
+            </p>
+          )}
+          {todaysCenterChange < 0 && (
+            <p className="text-green-500 font-bold">
+              Center Change: ({todaysCenterChange})
+            </p>
+          )}
+        </div>
       </div>
     </>
   );
@@ -265,6 +301,19 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const changeO =
     bloodOTotal.aggs.sumWaitlist!! - bloodOTotalYesteray.aggs.sumWaitlist!!;
 
+  const todayCenterData = await getCenterData(todaysDate);
+  const yesterdayCenterData = await getCenterData(yesterdaysDate);
+
+  const centerChange = () => {
+    if (yesterdayCenterData.length === 0 || todayCenterData.length === 0) {
+      return 0;
+    } else {
+      return todayCenterData[0].heart!! - yesterdayCenterData[0].heart!!;
+    }
+  };
+
+  const todaysCenterChange = centerChange();
+
   return {
     region1dataChange,
     region2dataChange,
@@ -281,5 +330,8 @@ export async function loader({ params }: LoaderFunctionArgs) {
     bloodOTotal,
     changeB,
     changeO,
+    todayCenterData,
+    yesterdayCenterData,
+    todaysCenterChange,
   };
 }

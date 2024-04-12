@@ -1,8 +1,14 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
+import CenterDataChart from "~/components/CenterDataChart";
 import Header from "~/components/Header";
 import TransplantChart from "~/components/TransplantChart";
-import { bloodTypeTotalsChart, getTransplantDates } from "~/data/db.server";
+import {
+  bloodTypeTotalsChart,
+  centerDataTotalsChart,
+  getCenterData,
+  getTransplantDates,
+} from "~/data/db.server";
 import { regionStates } from "~/data/states";
 
 export const meta: MetaFunction = () => {
@@ -15,7 +21,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const { bloodBRegion2TotalB, bloodBRegion2TotalO } =
+  const { bloodBRegion2TotalB, bloodBRegion2TotalO, centerData } =
     useLoaderData<typeof loader>();
   const params = useParams();
   return (
@@ -36,6 +42,13 @@ export default function Index() {
         <TransplantChart data={bloodBRegion2TotalB} />
         <h3 className="text-2xl text-center py-2">O</h3>
         <TransplantChart data={bloodBRegion2TotalO} />
+
+        {params.region === "2" && (
+          <>
+            <h3 className="text-2xl text-center py-2">CHOP</h3>
+            <CenterDataChart data={centerData} />
+          </>
+        )}
       </div>
     </>
   );
@@ -55,5 +68,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     "O"
   );
 
-  return { dates, bloodBRegion2TotalB, bloodBRegion2TotalO };
+  const centerData = await centerDataTotalsChart();
+
+  return { dates, bloodBRegion2TotalB, bloodBRegion2TotalO, centerData };
 }
