@@ -34,7 +34,7 @@
     "recharts": "^2.12.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "^1.43.1",
     "@remix-run/dev": "^2.8.1",
     "@types/luxon": "^3.4.2",
     "@types/node": "^20.11.29",
