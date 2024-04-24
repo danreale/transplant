@@ -8,3 +8,7 @@ node_modules
 # Local Netlify folder
 .netlify
 .DS_Store
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
