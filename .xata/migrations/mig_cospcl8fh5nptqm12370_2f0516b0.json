@@ -1,0 +1,16 @@
+{
+  "id": "mig_cospcl8fh5nptqm12370",
+  "parentID": "mig_cospcf8fh5nptqm12360",
+  "checksum": "1:2f0516b0c0cf91d12e73e0d1ab253c8d28ca4681fdb7d6c37da07f23a4a51ca5",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "report_date",
+          "type": "string"
+        },
+        "table": "donor_data"
+      }
+    }
+  ]
+}

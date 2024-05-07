@@ -14,7 +14,9 @@
     "emailreport": "node mailer.cjs",
     "transformHeader": "node headerTransformer.cjs",
     "transformData": "node transformer.cjs",
-    "dailyDataETL": "tsx ./database_stuff.ts"
+    "dailyDataETL": "tsx ./database_stuff.ts",
+    "transformHeaderDonors": "node donorHeaderTransformer.cjs",
+    "transformDataDonors": "node donorTransformer.cjs"
   },
   "dependencies": {
     "@netlify/functions": "^2.6.0",

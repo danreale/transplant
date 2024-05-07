@@ -30,6 +30,10 @@ jobs:
       run: npm run transformHeader
     - name: Transform Data
       run: npm run transformData
+    - name: Format Header Donors
+      run: npm run transformHeaderDonors
+    - name: Transform Data Donors
+      run: npm run transformDataDonors
     - name: Load Data
       run: XATA_BRANCH=${{secrets.XATA_BRANCH}} XATA_API_KEY=${{secrets.XATA_API_KEY}} npm run dailyDataETL
     - name: Email Results

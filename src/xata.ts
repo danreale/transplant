@@ -28,6 +28,16 @@ const tables = [
       { name: "report_date", type: "string" },
     ],
   },
+  {
+    name: "donor_data",
+    columns: [
+      { name: "gender", type: "string" },
+      { name: "ethnicity", type: "string" },
+      { name: "blood_type_o", type: "int" },
+      { name: "blood_type_b", type: "int" },
+      { name: "report_date", type: "string" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -39,9 +49,13 @@ export type TransplantDataRecord = TransplantData & XataRecord;
 export type CenterData = InferredTypes["center_data"];
 export type CenterDataRecord = CenterData & XataRecord;
 
+export type DonorData = InferredTypes["donor_data"];
+export type DonorDataRecord = DonorData & XataRecord;
+
 export type DatabaseSchema = {
   transplant_data: TransplantDataRecord;
   center_data: CenterDataRecord;
+  donor_data: DonorDataRecord;
 };
 
 const DatabaseClient = buildClient();

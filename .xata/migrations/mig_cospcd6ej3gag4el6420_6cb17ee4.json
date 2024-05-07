@@ -1,0 +1,16 @@
+{
+  "id": "mig_cospcd6ej3gag4el6420",
+  "parentID": "mig_cospc9gfh5nptqm12350",
+  "checksum": "1:6cb17ee4ba8fdc5f7324f45946371978fe87987800906f550e46326ad95ee628",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "blood_type_o",
+          "type": "int"
+        },
+        "table": "donor_data"
+      }
+    }
+  ]
+}

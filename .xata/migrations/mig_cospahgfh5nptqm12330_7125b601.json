@@ -1,0 +1,12 @@
+{
+  "id": "mig_cospahgfh5nptqm12330",
+  "parentID": "mig_cobjndd5la3quq2b1nv0",
+  "checksum": "1:7125b6019d81f4dd1d7b48709cc8c3fb28e6e89a8dd3be88acf55594b44b6cf8",
+  "operations": [
+    {
+      "addTable": {
+        "table": "donor_data"
+      }
+    }
+  ]
+}

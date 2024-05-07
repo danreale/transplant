@@ -1,0 +1,16 @@
+{
+  "id": "mig_cospcf8fh5nptqm12360",
+  "parentID": "mig_cospcd6ej3gag4el6420",
+  "checksum": "1:a1ee9c8631135c44302614587c54aaf8f0eb9241439fd553c372e7c25057179e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "blood_type_b",
+          "type": "int"
+        },
+        "table": "donor_data"
+      }
+    }
+  ]
+}

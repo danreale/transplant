@@ -1,0 +1,16 @@
+{
+  "id": "mig_cospamcc4esmhu0tucs0",
+  "parentID": "mig_cospahgfh5nptqm12330",
+  "checksum": "1:cbb034596652ea6824b344f82ad08829aafd1339fb2550a6d265d226539237de",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "gender",
+          "type": "string"
+        },
+        "table": "donor_data"
+      }
+    }
+  ]
+}
