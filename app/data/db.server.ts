@@ -87,3 +87,33 @@ export async function centerDataTotalsChart() {
     .getAll();
   return transplantData;
 }
+
+export async function getDonorData(date: string) {
+  const donor_dataData = await getXataClient()
+    .db.donor_data.select([
+      "gender",
+      "ethnicity",
+      "blood_type_o",
+      "blood_type_b",
+      "report_date",
+    ])
+    .filter({
+      report_date: date,
+      ethnicity: "All Ethnicities",
+    })
+    .getAll();
+  return donor_dataData;
+}
+
+export async function getDonorCountDatesB() {
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date,sum("blood_type_b") as blood_type_b,sum("blood_type_o") as blood_type_o FROM "donor_data" where ethnicity = 'All Ethnicities' group by report_date order by report_date asc limit 365`;
+
+  return records;
+}
+export async function getDonorCountDatesO() {
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date,sum("blood_type_o") FROM "donor_data" where ethnicity = 'All Ethnicities' group by report_date order by report_date asc limit 365`;
+
+  return records;
+}

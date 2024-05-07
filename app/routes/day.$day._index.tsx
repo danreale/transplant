@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import {
   bloodTypeTotals,
   getCenterData,
+  getDonorData,
   getTransplantData,
 } from "~/data/db.server";
 import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
@@ -32,6 +33,8 @@ export default function Appointments() {
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    donorDataB,
+    donorDataO,
   } = useLoaderData<typeof loader>();
 
   const transition = useNavigation();
@@ -161,6 +164,62 @@ export default function Appointments() {
             <p className="text-green-500 font-bold">
               Center Change: ({todaysCenterChange})
             </p>
+          )}
+        </div>
+      </div>
+
+      <div className="py-5 text-center">
+        <div className="flex justify-center text-center space-x-2">
+          {donorDataB.change === 0 && (
+            <div className="flex justify-center text-center space-x-2">
+              <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
+              <label htmlFor="" className="text-yellow-600 font-bold">
+                ({donorDataB.change})
+              </label>
+            </div>
+          )}
+          {donorDataB.change > 0 && (
+            <div className="flex justify-center text-center space-x-2">
+              <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
+              <label htmlFor="" className="text-green-500 font-bold">
+                ({donorDataB.change})
+              </label>
+            </div>
+          )}
+          {donorDataB.change < 0 && (
+            <div className="flex justify-center text-center space-x-2">
+              <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
+              <label htmlFor="" className="text-red-500 font-bold">
+                ({donorDataB.change})
+              </label>
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-center text-center space-x-2">
+          {donorDataO.change === 0 && (
+            <div className="flex justify-center text-center space-x-2">
+              <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
+              <label htmlFor="" className="text-yellow-600 font-bold">
+                ({donorDataO.change})
+              </label>
+            </div>
+          )}
+          {donorDataO.change > 0 && (
+            <div className="flex justify-center text-center space-x-2">
+              <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
+              <label htmlFor="" className="text-green-500 font-bold">
+                ({donorDataO.change})
+              </label>
+            </div>
+          )}
+          {donorDataO.change < 0 && (
+            <div className="flex justify-center text-center space-x-2">
+              <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
+              <label htmlFor="" className="text-red-500 font-bold">
+                ({donorDataO.change})
+              </label>
+            </div>
           )}
         </div>
       </div>
@@ -314,6 +373,66 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   const todaysCenterChange = centerChange();
 
+  const donorDataToday = await getDonorData(todaysDate);
+  // console.log(donorDataToday);
+
+  const donorDataBloodTypeBSumToday = donorDataToday.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue.blood_type_b!!;
+    },
+    0
+  );
+  const donorDataBloodTypeOSumToday = donorDataToday.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue.blood_type_o!!;
+    },
+    0
+  );
+
+  const donorDataYesterday = await getDonorData(yesterdaysDate);
+  console.log(donorDataYesterday);
+
+  const donorDataBloodTypeBSumYesterday = donorDataYesterday.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue.blood_type_b!!;
+    },
+    0
+  );
+  const donorDataBloodTypeOSumYesterday = donorDataYesterday.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue.blood_type_o!!;
+    },
+    0
+  );
+
+  const donorChangeB = () => {
+    if (donorDataYesterday.length === 0 || donorDataToday.length === 0) {
+      return 0;
+    } else {
+      return donorDataBloodTypeBSumToday - donorDataBloodTypeBSumYesterday;
+    }
+  };
+
+  const donorChangeO = () => {
+    if (donorDataYesterday.length === 0 || donorDataToday.length === 0) {
+      return 0;
+    } else {
+      return donorDataBloodTypeOSumToday - donorDataBloodTypeOSumYesterday;
+    }
+  };
+
+  const donorDataB = {
+    today: donorDataBloodTypeBSumToday,
+    yesterday: donorDataBloodTypeBSumYesterday,
+    change: donorChangeB(),
+  };
+
+  const donorDataO = {
+    today: donorDataBloodTypeOSumToday,
+    yesterday: donorDataBloodTypeOSumYesterday,
+    change: donorChangeO(),
+  };
+
   return {
     region1dataChange,
     region2dataChange,
@@ -333,5 +452,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    donorDataB,
+    donorDataO,
   };
 }

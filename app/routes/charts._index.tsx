@@ -1,15 +1,17 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
+import DonorDataChart from "~/components/DonorChart";
 
 import Header from "~/components/Header";
 import RegionChart from "~/components/RegionChart";
-import { getTransplantCountDates } from "~/data/db.server";
+import { getDonorCountDatesB, getTransplantCountDates } from "~/data/db.server";
 import { regionStates } from "~/data/states";
 
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const { bloodBTotals, bloodOTotals } = useLoaderData<typeof loader>();
+  const { bloodBTotals, bloodOTotals, donorData } =
+    useLoaderData<typeof loader>();
   return (
     <>
       <Header />
@@ -73,6 +75,8 @@ export default function Index() {
         <RegionChart data={bloodBTotals} />
         <h3 className="text-2xl text-center py-2">O</h3>
         <RegionChart data={bloodOTotals} />
+        <h3 className="text-2xl text-center py-2">Donors</h3>
+        <DonorDataChart data={donorData} />
       </div>
     </>
   );
@@ -81,6 +85,7 @@ export default function Index() {
 export async function loader({}: LoaderFunctionArgs) {
   const bloodBTotals = await getTransplantCountDates("B");
   const bloodOTotals = await getTransplantCountDates("O");
+  const donorData = await getDonorCountDatesB();
 
-  return { bloodBTotals, bloodOTotals };
+  return { bloodBTotals, bloodOTotals, donorData };
 }

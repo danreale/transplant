@@ -1,12 +1,13 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
 import CenterDataChart from "~/components/CenterDataChart";
+import DonorDataChart from "~/components/DonorChart";
 import Header from "~/components/Header";
 import TransplantChart from "~/components/TransplantChart";
 import {
   bloodTypeTotalsChart,
   centerDataTotalsChart,
-  getCenterData,
+  getDonorCountDatesB,
   getTransplantDates,
 } from "~/data/db.server";
 import { regionStates } from "~/data/states";
@@ -21,7 +22,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const { bloodBRegion2TotalB, bloodBRegion2TotalO, centerData } =
+  const { bloodBRegion2TotalB, bloodBRegion2TotalO, centerData, donorData } =
     useLoaderData<typeof loader>();
   const params = useParams();
   return (
@@ -47,6 +48,9 @@ export default function Index() {
           <>
             <h3 className="text-2xl text-center py-2">CHOP</h3>
             <CenterDataChart data={centerData} />
+
+            <h3 className="text-2xl text-center py-2">Donors</h3>
+            <DonorDataChart data={donorData} />
           </>
         )}
       </div>
@@ -70,5 +74,13 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   const centerData = await centerDataTotalsChart();
 
-  return { dates, bloodBRegion2TotalB, bloodBRegion2TotalO, centerData };
+  const donorData = await getDonorCountDatesB();
+
+  return {
+    dates,
+    bloodBRegion2TotalB,
+    bloodBRegion2TotalO,
+    centerData,
+    donorData,
+  };
 }
