@@ -389,7 +389,7 @@ export async function loader({}: LoaderFunctionArgs) {
   );
 
   const donorDataYesterday = await getDonorData(yesterdaysDate);
-  console.log(donorDataYesterday);
+  // console.log(donorDataYesterday);
 
   const donorDataBloodTypeBSumYesterday = donorDataYesterday.reduce(
     (accumulator, currentValue) => {
