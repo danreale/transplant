@@ -182,7 +182,7 @@ export default function Appointments() {
             <div className="flex justify-center text-center space-x-2">
               <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
               <label htmlFor="" className="text-green-500 font-bold">
-                ({donorDataB.change})
+                (+{donorDataB.change})
               </label>
             </div>
           )}
@@ -209,7 +209,7 @@ export default function Appointments() {
             <div className="flex justify-center text-center space-x-2">
               <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
               <label htmlFor="" className="text-green-500 font-bold">
-                ({donorDataO.change})
+                (+{donorDataO.change})
               </label>
             </div>
           )}
