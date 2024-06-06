@@ -58,7 +58,7 @@ export async function bloodTypeTotalsChart(
     .db.transplant_data.select(["heart_status_1A", "report_date"])
     .filter({ blood_type: bloodType, region: region })
     .sort("report_date", "asc")
-    .getMany();
+    .getAll();
   return records;
 }
 
