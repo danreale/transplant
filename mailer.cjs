@@ -20,7 +20,7 @@ while ((line = liner.next())) {
   lineNumber++;
 }
 
-const file = path.join(cwd(), "ModifiedWaitingList.csv");
+const file = path.join(cwd(), "WaitingList.csv");
 console.log(file);
 const todaysDate = DateTime.now().toFormat("MM-dd-yyyy");
 
