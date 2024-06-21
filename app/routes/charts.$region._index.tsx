@@ -3,6 +3,8 @@ import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
 import CenterDataChart from "~/components/CenterDataChart";
 import DonorDataChart from "~/components/DonorChart";
 import Header from "~/components/Header";
+import RegionChartV2 from "~/components/RegionChartV2";
+import RegionChart from "~/components/RegionChartV2";
 import TransplantChart from "~/components/TransplantChart";
 import {
   bloodTypeTotalsChart,
@@ -22,7 +24,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const { bloodBRegion2TotalB, bloodBRegion2TotalO, centerData, donorData } =
+  const { bloodTypeTotals, centerData, donorData } =
     useLoaderData<typeof loader>();
   const params = useParams();
   return (
@@ -39,18 +41,16 @@ export default function Index() {
         <p className="pb-5">
           ({regionStates(parseInt(params.region!!)).join(", ")})
         </p>
-        <h3 className="text-2xl text-center">B</h3>
-        <TransplantChart data={bloodBRegion2TotalB} />
-        <h3 className="text-2xl text-center py-2">O</h3>
-        <TransplantChart data={bloodBRegion2TotalO} />
+        <h3 className="text-2xl text-center">Blood Types</h3>
+        <RegionChartV2 data={bloodTypeTotals} />
 
         {params.region === "2" && (
           <>
             <h3 className="text-2xl text-center py-2">CHOP</h3>
             <CenterDataChart data={centerData} />
 
-            <h3 className="text-2xl text-center py-2">Donors</h3>
-            <DonorDataChart data={donorData} />
+            {/* <h3 className="text-2xl text-center py-2">Donors</h3>
+            <DonorDataChart data={donorData} /> */}
           </>
         )}
       </div>
@@ -62,15 +62,8 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const region = params.region;
   const dates = await getTransplantDates();
 
-  const bloodBRegion2TotalB = await bloodTypeTotalsChart(
-    `Region  ${region}`,
-    "B"
-  );
-
-  const bloodBRegion2TotalO = await bloodTypeTotalsChart(
-    `Region  ${region}`,
-    "O"
-  );
+  const bloodTypeTotals = await bloodTypeTotalsChart(`Region  ${region}`);
+  console.log(bloodTypeTotals);
 
   const centerData = await centerDataTotalsChart();
 
@@ -78,8 +71,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   return {
     dates,
-    bloodBRegion2TotalB,
-    bloodBRegion2TotalO,
+    bloodTypeTotals,
     centerData,
     donorData,
   };

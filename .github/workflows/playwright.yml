@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
@@ -24,12 +28,10 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-    - name: Format File
-      run: npm run createFormattedFile
-    - name: Format Header
-      run: npm run transformHeader
+    - name: Run Python unit tests
+      run: python3 etl.py
     - name: Transform Data
-      run: npm run transformData
+      run: npm run etlTransformer
     - name: Format Header Donors
       run: npm run transformHeaderDonors
     - name: Transform Data Donors

@@ -1,0 +1,13 @@
+{
+  "id": "mig_cpplg2j9qr4670eau3lg",
+  "parentID": "mig_cpplg1r9qr4670eau3kg",
+  "checksum": "1:5ed1961a13ff0287d5731560470ede6158921fcaa7b196297e1f2cde948a4757",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "five_or_more_years",
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mig_cpmnevu63uojtj1je8g0",
+  "parentID": "mig_cpldmioumkeu28dovrgg",
+  "checksum": "1:6d55a540fbc4d28464b046ad86727c5e023cc99c16ffc1853cacddc6effd6b19",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "waiting_time",
+          "type": "string"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

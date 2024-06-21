@@ -1,0 +1,16 @@
+{
+  "id": "mig_cpldm3ljmsne708hhogg",
+  "parentID": "mig_cpldlvoumkeu28dovrdg",
+  "checksum": "1:d3555eacd8cc48be5fa469b99833430a76d0f99b7f5b4a96a81ab5cb08d2f240",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "six_months_to_a_year",
+          "type": "int"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

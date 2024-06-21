@@ -1,0 +1,16 @@
+{
+  "id": "mig_cpldlvoumkeu28dovrdg",
+  "parentID": "mig_cpldlqm7c35ollc6j77g",
+  "checksum": "1:02f9d71a264021b8352ad8e6c39e2d4515ba1682746968865f31dc9adc18d663",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "ninety_days_to_six_months",
+          "type": "int"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

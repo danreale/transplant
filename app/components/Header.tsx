@@ -12,10 +12,10 @@ export default function Header({}) {
 
         <ul className="py-2 space-y-2">
           <li>
-            <Link to="/today">Today</Link>
+            <Link to="/today?waitListType=All+Types">Today</Link>
           </li>
           <li>
-            <Link to="/yesterday">Yesterday</Link>
+            <Link to="/yesterday?waitListType=All+Types">Yesterday</Link>
           </li>
           <li>
             <Link to="/charts/2">Region 2 Charts</Link>

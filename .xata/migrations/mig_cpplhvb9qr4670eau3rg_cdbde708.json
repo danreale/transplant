@@ -1,0 +1,16 @@
+{
+  "id": "mig_cpplhvb9qr4670eau3rg",
+  "parentID": "mig_cpplhs14esj6l3ponang",
+  "checksum": "1:cdbde708a5f09ef4b643c20e48c66d3f93327637f2e9fd221a9bbe43d3d45d16",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "blood_type_ab",
+          "type": "int"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

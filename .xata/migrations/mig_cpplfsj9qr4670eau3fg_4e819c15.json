@@ -1,0 +1,13 @@
+{
+  "id": "mig_cpplfsj9qr4670eau3fg",
+  "parentID": "mig_cpmnevu63uojtj1je8g0",
+  "checksum": "1:4e819c156bd3a55f2a7e42d6da2dd81e04a6c6638c1c8818bb43cc597f37df63",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "less_than_thirty_days",
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

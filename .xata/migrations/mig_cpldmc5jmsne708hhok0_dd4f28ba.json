@@ -1,0 +1,16 @@
+{
+  "id": "mig_cpldmc5jmsne708hhok0",
+  "parentID": "mig_cpldm8ljmsne708hhoig",
+  "checksum": "1:dd4f28ba2ee64cd271d412504613b81fa69156640163c07293fc464aa90e58b0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "two_years_to_three_years",
+          "type": "int"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

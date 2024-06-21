@@ -1,0 +1,13 @@
+{
+  "id": "mig_cpplgv77t488bqo1l8h0",
+  "parentID": "mig_cpplgtj9qr4670eau3ng",
+  "checksum": "1:08ee0b87571e07e437a670994d51e9357ecb9f0bc103c8a997bd9c64cdae6a01",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "all_types",
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

@@ -1,7 +1,11 @@
 import { TransplantDataRecord, getXataClient } from "src/xata";
 import { DateTime } from "luxon";
 
-export async function getTransplantData(region: string, date: string) {
+export async function getTransplantData(
+  region: string,
+  date: string,
+  waitListType: string
+) {
   // const todaysDate = DateTime.now()
   //   .setZone("America/New_York")
   //   .toFormat("yyyy-MM-dd");
@@ -12,17 +16,23 @@ export async function getTransplantData(region: string, date: string) {
   // console.log("Server Transplant Date From Client", date);
   const transplantData = await getXataClient()
     .db.transplant_data.select([
-      "blood_type",
-      "heart_status_1A",
       "region",
       "report_date",
+      "wait_list_type",
+      "wait_list_time",
+      "blood_type_a",
+      "blood_type_b",
+      "blood_type_ab",
+      "blood_type_o",
+      "blood_type_all",
     ])
     .filter({
       region,
       report_date: date,
-      blood_type: { $any: ["B", "O"] },
+      wait_list_type: waitListType,
+      wait_list_time: "All Time",
     })
-    .sort("blood_type", "asc")
+    .sort("region", "asc")
     .getAll();
   return transplantData;
 }
@@ -50,21 +60,28 @@ export async function getTransplantDates() {
   return records;
 }
 
-export async function bloodTypeTotalsChart(
-  region: string,
-  bloodType: "B" | "O"
-) {
+export async function bloodTypeTotalsChart(region: string) {
   const records = await getXataClient()
-    .db.transplant_data.select(["heart_status_1A", "report_date"])
-    .filter({ blood_type: bloodType, region: region })
+    .db.transplant_data.select([
+      "blood_type_a",
+      "blood_type_ab",
+      "blood_type_b",
+      "blood_type_o",
+      "report_date",
+    ])
+    .filter({
+      wait_list_time: "All Time",
+      wait_list_type: "All Types",
+      region: region,
+    })
     .sort("report_date", "asc")
     .getAll();
   return records;
 }
 
-export async function getTransplantCountDates(bloodType: "B" | "O") {
+export async function getTransplantCountDates() {
   const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date,sum("heart_status_1A") FROM "transplant_data" where blood_type = ${bloodType} group by report_date order by report_date asc limit 365`;
+    .sql<TransplantDataRecord>`SELECT report_date, "blood_type_a", "blood_type_b", "blood_type_o", "blood_type_ab" FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = 'All Types' and region = 'All Regions' order by report_date asc limit 365`;
 
   return records;
 }

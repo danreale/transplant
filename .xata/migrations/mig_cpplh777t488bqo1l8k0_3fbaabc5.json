@@ -1,0 +1,16 @@
+{
+  "id": "mig_cpplh777t488bqo1l8k0",
+  "parentID": "mig_cpplh214esj6l3ponamg",
+  "checksum": "1:3fbaabc57dc0b790aec20bfeb5133749757ad17af96acf9a61062481334358e1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "wait_list_type",
+          "type": "text"
+        },
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

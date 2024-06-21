@@ -5,41 +5,28 @@ import {
   getDonorData,
   getTransplantData,
 } from "~/data/db.server";
-import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
-import RegionData from "~/components/RegionData";
+import {
+  Form,
+  useLoaderData,
+  useNavigation,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
+import RegionDataV2 from "~/components/RegionDataV2";
 
-// const todaysDate = DateTime.now()
-//   .setZone("America/New_York")
-//   .toFormat("MM-dd-yyyy");
+const todaysDate = DateTime.now()
+  .setZone("America/New_York")
+  .toFormat("MM-dd-yyyy");
 export default function Appointments() {
-  const {
-    region1dataChange,
-    region2dataChange,
-    region3dataChange,
-    region4dataChange,
-    region5dataChange,
-    region6dataChange,
-    region7dataChange,
-    region8dataChange,
-    region9dataChange,
-    region10dataChange,
-    region11dataChange,
-    bloodBTotal,
-    bloodOTotal,
-    changeB,
-    changeO,
-    todayCenterData,
-    yesterdayCenterData,
-    todaysCenterChange,
-    donorDataB,
-    donorDataO,
-  } = useLoaderData<typeof loader>();
+  const { regionChangeData } = useLoaderData<typeof loader>();
+
+  const params = useParams();
+  const [parms] = useSearchParams();
 
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const params = useParams();
   return (
     <>
       <Header />
@@ -53,406 +40,153 @@ export default function Appointments() {
           Transplant Data Loading.....
         </div>
       )}
-      {/* <h2 className="text-2xl text-center py-2">Region 2</h2>
-      <div>
-        <ul className="">
-          {transplantData.map((record: any, index: number) => (
-            <li key={index} className="flex justify-center space-x-2">
-              <p>{record.blood_type}</p>
-              <p>{record.heart_status_1A}</p>
-            </li>
-          ))}
-        </ul>
-      </div> */}
-      <div className="text-blue-600">
-        <RegionData transplantData={region1dataChange} region="Region 1" />
-      </div>
-      <div className="text-red-600 font-bold">
-        <RegionData transplantData={region2dataChange} region="Region 2" />
-      </div>
-      <div className="text-blue-600">
-        <RegionData transplantData={region3dataChange} region="Region 3" />
-      </div>
-      <RegionData transplantData={region4dataChange} region="Region 4" />
-      <RegionData transplantData={region5dataChange} region="Region 5" />
-      <RegionData transplantData={region6dataChange} region="Region 6" />
-      <RegionData transplantData={region7dataChange} region="Region 7" />
-      <RegionData transplantData={region8dataChange} region="Region 8" />
-      <div className="text-blue-600">
-        <RegionData transplantData={region9dataChange} region="Region 9" />
-      </div>
-      <div className="text-blue-600">
-        <RegionData transplantData={region10dataChange} region="Region 10" />
-      </div>
-      <div className="text-blue-600">
-        <RegionData transplantData={region11dataChange} region="Region 11" />
-      </div>
-      <div className="py-5 text-center">
-        {changeB === 0 && (
-          <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
-            <label htmlFor="" className="text-yellow-600 font-bold">
-              ({changeB})
-            </label>
-          </div>
-        )}
-        {changeB > 0 && (
-          <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
-            <label htmlFor="" className="text-red-500 font-bold">
-              (+{changeB})
-            </label>
-          </div>
-        )}
-        {changeB < 0 && (
-          <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type B Total: {bloodBTotal.aggs.sumWaitlist}</p>
-            <label htmlFor="" className="text-green-500 font-bold">
-              ({changeB})
-            </label>
-          </div>
-        )}
 
-        {changeO === 0 && (
-          <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
-            <label htmlFor="" className="text-yellow-600 font-bold">
-              ({changeO})
-            </label>
+      <div className="grid justify-center text-center py-5">
+        <Form>
+          <div className="grid justify-center text-center py-5">
+            <div className="grid justify-center text-center py-2">
+              <label htmlFor="">Choose Region</label>
+              <select
+                name="region"
+                id="region"
+                className="text-center"
+                defaultValue={parms.get("region") || "Region  2"}
+              >
+                <option value="All Regions">All Regions</option>
+                <option value="Region  1">Region 1</option>
+                <option value="Region  2">Region 2</option>
+                <option value="Region  3">Region 3</option>
+                <option value="Region  4">Region 4</option>
+                <option value="Region  5">Region 5</option>
+                <option value="Region  6">Region 6</option>
+                <option value="Region  7">Region 7</option>
+                <option value="Region  8">Region 8</option>
+                <option value="Region  9">Region 9</option>
+                <option value="Region  10">Region 10</option>
+                <option value="Region  11">Region 11</option>
+              </select>
+            </div>
+
+            <div className="grid justify-center text-center py-2">
+              <label htmlFor="">Choose Wait List Type</label>
+              <select
+                name="waitListType"
+                id="waitListType"
+                className="text-center"
+                defaultValue={parms.get("waitListType") || "Heart Status 1A"}
+              >
+                <option value="Heart Status 1A">Heart Status 1A</option>
+                <option value="Heart Status 1B">Heart Status 1B</option>
+                <option value="Heart Status 2">Heart Status 2</option>
+                <option value="Heart Status 7 (Inactive)">
+                  Heart Status 7 (Inactive)
+                </option>
+                <option value="All Types">All Types</option>
+              </select>
+            </div>
+
+            <div className="grid justify-center text-center py-2">
+              <label htmlFor="">Choose Wait List Time</label>
+              <select
+                name="waitListTime"
+                id="waitListTime"
+                className="text-center"
+                defaultValue={
+                  parms.get("waitListTime") || "90 Days to < 6 Months"
+                }
+              >
+                <option value="All Time">All Time</option>
+                <option value="< 30 Days">Less 30 Days</option>
+                <option value="30 to < 90 Days">30 to 90 Days</option>
+                <option value="90 Days to < 6 Months">
+                  90 Days to 6 Months
+                </option>
+                <option value="6 Months to < 1 Year">6 Months to 1 Year</option>
+                <option value="1 Year to < 2 Years">1 Year to 2 Years</option>
+                <option value="2 Year to < 3 Years">2 Years to 3 Years</option>
+                <option value="3 Year to < 5 Years">3 Years to 5 Years</option>
+                <option value="5 or More Years">5 or More Years</option>
+              </select>
+            </div>
+
+            {/* <div className="grid justify-center text-center py-2">
+              <input
+                type="date"
+                id="reportDate"
+                name="reportDate"
+                defaultValue={params.get("reportDate") || todaysDate}
+              />
+            </div> */}
+
+            <button type="submit" className="text-blue-500 font-bold">
+              Filter
+            </button>
           </div>
-        )}
-        {changeO > 0 && (
-          <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
-            <label htmlFor="" className="text-red-500 font-bold">
-              (+{changeO})
-            </label>
-          </div>
-        )}
-        {changeO < 0 && (
-          <div className="flex justify-center text-center space-x-2">
-            <p>Blood Type O Total: {bloodOTotal.aggs.sumWaitlist}</p>
-            <label htmlFor="" className="text-green-500 font-bold">
-              ({changeO})
-            </label>
-          </div>
-        )}
-      </div>
-      <div className="py-5 text-center">
-        <div className="grid justify-center text-center space-x-2">
-          <label htmlFor="" className="">
-            Today's Center Count:{" "}
-            {todayCenterData[0]?.heart?.toString() || "NA"}
-          </label>
-          <label htmlFor="" className="">
-            Yesterday's Center Count:{" "}
-            {yesterdayCenterData[0]?.heart?.toString() || "NA"}
-          </label>
-        </div>
-        <div className="flex justify-center text-center space-x-2">
-          {todaysCenterChange === 0 && (
-            <p className="text-yellow-600 font-bold">
-              Center Change: ({todaysCenterChange})
-            </p>
-          )}
-          {todaysCenterChange > 0 && (
-            <p className="text-red-500 font-bold">
-              Center Change: ({todaysCenterChange})
-            </p>
-          )}
-          {todaysCenterChange < 0 && (
-            <p className="text-green-500 font-bold">
-              Center Change: ({todaysCenterChange})
-            </p>
-          )}
-        </div>
+        </Form>
       </div>
 
-      <div className="py-5 text-center">
-        <div className="flex justify-center text-center space-x-2">
-          {donorDataB.change === 0 && (
-            <div className="flex justify-center text-center space-x-2">
-              <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
-              <label htmlFor="" className="text-yellow-600 font-bold">
-                ({donorDataB.change})
-              </label>
-            </div>
-          )}
-          {donorDataB.change > 0 && (
-            <div className="flex justify-center text-center space-x-2">
-              <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
-              <label htmlFor="" className="text-green-500 font-bold">
-                (+{donorDataB.change})
-              </label>
-            </div>
-          )}
-          {donorDataB.change < 0 && (
-            <div className="flex justify-center text-center space-x-2">
-              <p>Blood Type B Total Donor Count: {donorDataB.today}</p>
-              <label htmlFor="" className="text-red-500 font-bold">
-                ({donorDataB.change})
-              </label>
-            </div>
-          )}
-        </div>
-
-        <div className="flex justify-center text-center space-x-2">
-          {donorDataO.change === 0 && (
-            <div className="flex justify-center text-center space-x-2">
-              <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
-              <label htmlFor="" className="text-yellow-600 font-bold">
-                ({donorDataO.change})
-              </label>
-            </div>
-          )}
-          {donorDataO.change > 0 && (
-            <div className="flex justify-center text-center space-x-2">
-              <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
-              <label htmlFor="" className="text-green-500 font-bold">
-                (+{donorDataO.change})
-              </label>
-            </div>
-          )}
-          {donorDataO.change < 0 && (
-            <div className="flex justify-center text-center space-x-2">
-              <p>Blood Type O Total Donor Count: {donorDataO.today}</p>
-              <label htmlFor="" className="text-red-500 font-bold">
-                ({donorDataO.change})
-              </label>
-            </div>
-          )}
-        </div>
+      <div className="text-blue-600">
+        <RegionDataV2
+          transplantData={regionChangeData}
+          region={parms.get("region") || "Region  2"}
+        />
       </div>
     </>
   );
 }
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const search = new URLSearchParams(url.search);
+
   const todaysDate = params.day!!;
-  //   console.log("Params Date", todaysDate);
-  //   const todaysDate = DateTime.now()
-  //     .setZone("America/New_York")
-  //     .toFormat("yyyy-MM-dd");
-  // console.log("Loader Transplant Date", todaysDate);
-  const region1data = await getTransplantData("Region  1", todaysDate);
-  const region2data = await getTransplantData("Region  2", todaysDate);
-  const region3data = await getTransplantData("Region  3", todaysDate);
-  const region4data = await getTransplantData("Region  4", todaysDate);
-  const region5data = await getTransplantData("Region  5", todaysDate);
-  const region6data = await getTransplantData("Region  6", todaysDate);
-  const region7data = await getTransplantData("Region  7", todaysDate);
-  const region8data = await getTransplantData("Region  8", todaysDate);
-  const region9data = await getTransplantData("Region  9", todaysDate);
-  const region10data = await getTransplantData("Region  10", todaysDate);
-  const region11data = await getTransplantData("Region  11", todaysDate);
-  const bloodBTotal = await bloodTypeTotals("B", todaysDate);
-  const bloodOTotal = await bloodTypeTotals("O", todaysDate);
 
   const yesterdaysDate = DateTime.fromFormat(todaysDate, "yyyy-MM-dd")
     // .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
-  //   console.log("Yesterdays Date from loader", yesterdaysDate);
-  const region1dataYesterday = await getTransplantData(
-    "Region  1",
-    yesterdaysDate
-  );
-  const region2dataYesterday = await getTransplantData(
-    "Region  2",
-    yesterdaysDate
-  );
-  const region3dataYesterday = await getTransplantData(
-    "Region  3",
-    yesterdaysDate
-  );
-  const region4dataYesterday = await getTransplantData(
-    "Region  4",
-    yesterdaysDate
-  );
-  const region5dataYesterday = await getTransplantData(
-    "Region  5",
-    yesterdaysDate
-  );
-  const region6dataYesterday = await getTransplantData(
-    "Region  6",
-    yesterdaysDate
-  );
-  const region7dataYesterday = await getTransplantData(
-    "Region  7",
-    yesterdaysDate
-  );
-  const region8dataYesterday = await getTransplantData(
-    "Region  8",
-    yesterdaysDate
-  );
-  const region9dataYesterday = await getTransplantData(
-    "Region  9",
-    yesterdaysDate
-  );
-  const region10dataYesterday = await getTransplantData(
-    "Region  10",
-    yesterdaysDate
-  );
-  const region11dataYesterday = await getTransplantData(
-    "Region  11",
-    yesterdaysDate
-  );
 
-  const bloodBTotalYesterday = await bloodTypeTotals("B", yesterdaysDate);
-  const bloodOTotalYesteray = await bloodTypeTotals("O", yesterdaysDate);
+  // console.log("Loader Transplant Date", todaysDate);
+  const regionDataToday = await getTransplantData(
+    search.get("region") || "Region  2",
+    todaysDate,
+    search.get("waitListType") || "Heart Status 1A",
+    search.get("waitListTime") || "90 Days to < 6 Months"
+  );
+  // console.log(regionDataToday);
 
-  const regionDataWithChange = (regionData: any, regionDataYesterday: any) => {
-    const data = regionData.map((item: any, index: number) => ({
-      ...item,
-      change:
-        item.heart_status_1A - regionDataYesterday[index].heart_status_1A!!,
-    }));
-    return data;
+  const regionDataYesterday = await getTransplantData(
+    search.get("region") || "Region  2",
+    yesterdaysDate,
+    search.get("waitListType") || "Heart Status 1A",
+    search.get("waitListTime") || "90 Days to < 6 Months"
+  );
+  // console.log(regionDataYesterday);
+
+  const changeData = (regionDataToday: any, regionDataYesterday: any) => {
+    return [
+      {
+        ...regionDataToday[0],
+        blood_type_a_change:
+          regionDataToday[0].blood_type_a - regionDataYesterday[0].blood_type_a,
+        blood_type_b_change:
+          regionDataToday[0].blood_type_b - regionDataYesterday[0].blood_type_b,
+        blood_type_o_change:
+          regionDataToday[0].blood_type_o - regionDataYesterday[0].blood_type_o,
+        blood_type_ab_change:
+          regionDataToday[0].blood_type_ab -
+          regionDataYesterday[0].blood_type_ab,
+        blood_type_all_change:
+          regionDataToday[0].blood_type_all -
+          regionDataYesterday[0].blood_type_all,
+      },
+    ];
   };
 
-  const region1dataChange = regionDataWithChange(
-    region1data,
-    region1dataYesterday
-  );
-  const region2dataChange = regionDataWithChange(
-    region2data,
-    region2dataYesterday
-  );
-  const region3dataChange = regionDataWithChange(
-    region3data,
-    region3dataYesterday
-  );
-  const region4dataChange = regionDataWithChange(
-    region4data,
-    region4dataYesterday
-  );
-  const region5dataChange = regionDataWithChange(
-    region5data,
-    region5dataYesterday
-  );
-  const region6dataChange = regionDataWithChange(
-    region6data,
-    region6dataYesterday
-  );
-  const region7dataChange = regionDataWithChange(
-    region7data,
-    region7dataYesterday
-  );
-  const region8dataChange = regionDataWithChange(
-    region8data,
-    region8dataYesterday
-  );
-  const region9dataChange = regionDataWithChange(
-    region9data,
-    region9dataYesterday
-  );
-  const region10dataChange = regionDataWithChange(
-    region10data,
-    region10dataYesterday
-  );
-  const region11dataChange = regionDataWithChange(
-    region11data,
-    region11dataYesterday
-  );
-
-  const changeB =
-    bloodBTotal.aggs.sumWaitlist!! - bloodBTotalYesterday.aggs.sumWaitlist!!;
-  const changeO =
-    bloodOTotal.aggs.sumWaitlist!! - bloodOTotalYesteray.aggs.sumWaitlist!!;
-
-  const todayCenterData = await getCenterData(todaysDate);
-  const yesterdayCenterData = await getCenterData(yesterdaysDate);
-
-  const centerChange = () => {
-    if (yesterdayCenterData.length === 0 || todayCenterData.length === 0) {
-      return 0;
-    } else {
-      return todayCenterData[0].heart!! - yesterdayCenterData[0].heart!!;
-    }
-  };
-
-  const todaysCenterChange = centerChange();
-
-  const donorDataToday = await getDonorData(todaysDate);
-  // console.log(donorDataToday);
-
-  const donorDataBloodTypeBSumToday = donorDataToday.reduce(
-    (accumulator, currentValue) => {
-      return accumulator + currentValue.blood_type_b!!;
-    },
-    0
-  );
-  const donorDataBloodTypeOSumToday = donorDataToday.reduce(
-    (accumulator, currentValue) => {
-      return accumulator + currentValue.blood_type_o!!;
-    },
-    0
-  );
-
-  const donorDataYesterday = await getDonorData(yesterdaysDate);
-  // console.log(donorDataYesterday);
-
-  const donorDataBloodTypeBSumYesterday = donorDataYesterday.reduce(
-    (accumulator, currentValue) => {
-      return accumulator + currentValue.blood_type_b!!;
-    },
-    0
-  );
-  const donorDataBloodTypeOSumYesterday = donorDataYesterday.reduce(
-    (accumulator, currentValue) => {
-      return accumulator + currentValue.blood_type_o!!;
-    },
-    0
-  );
-
-  const donorChangeB = () => {
-    if (donorDataYesterday.length === 0 || donorDataToday.length === 0) {
-      return 0;
-    } else {
-      return donorDataBloodTypeBSumToday - donorDataBloodTypeBSumYesterday;
-    }
-  };
-
-  const donorChangeO = () => {
-    if (donorDataYesterday.length === 0 || donorDataToday.length === 0) {
-      return 0;
-    } else {
-      return donorDataBloodTypeOSumToday - donorDataBloodTypeOSumYesterday;
-    }
-  };
-
-  const donorDataB = {
-    today: donorDataBloodTypeBSumToday,
-    yesterday: donorDataBloodTypeBSumYesterday,
-    change: donorChangeB(),
-  };
-
-  const donorDataO = {
-    today: donorDataBloodTypeOSumToday,
-    yesterday: donorDataBloodTypeOSumYesterday,
-    change: donorChangeO(),
-  };
+  const regionChangeData = changeData(regionDataToday, regionDataYesterday);
+  console.log(regionChangeData);
 
   return {
-    region1dataChange,
-    region2dataChange,
-    region3dataChange,
-    region4dataChange,
-    region5dataChange,
-    region6dataChange,
-    region7dataChange,
-    region8dataChange,
-    region9dataChange,
-    region10dataChange,
-    region11dataChange,
-    bloodBTotal,
-    bloodOTotal,
-    changeB,
-    changeO,
-    todayCenterData,
-    yesterdayCenterData,
-    todaysCenterChange,
-    donorDataB,
-    donorDataO,
+    regionChangeData,
   };
 }

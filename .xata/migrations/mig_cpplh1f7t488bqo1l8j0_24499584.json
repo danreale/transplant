@@ -1,0 +1,13 @@
+{
+  "id": "mig_cpplh1f7t488bqo1l8j0",
+  "parentID": "mig_cpplh0n7t488bqo1l8i0",
+  "checksum": "1:244995848f2baa268a41244b3b78d49a0ea1084fc0a1de4c7fa35e37a97b1f74",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "heart_status_2",
+        "table": "transplant_data"
+      }
+    }
+  ]
+}

@@ -10,13 +10,11 @@
     "start": "netlify serve",
     "typecheck": "tsc",
     "pw:open": "npx playwright test --ui",
-    "createFormattedFile": "node filer.cjs",
     "emailreport": "node mailer.cjs",
-    "transformHeader": "node headerTransformer.cjs",
-    "transformData": "node transformer.cjs",
     "dailyDataETL": "tsx ./database_stuff.ts",
     "transformHeaderDonors": "node donorHeaderTransformer.cjs",
-    "transformDataDonors": "node donorTransformer.cjs"
+    "transformDataDonors": "node donorTransformer.cjs",
+    "etlTransformer": "tsx etlTransformer.ts"
   },
   "dependencies": {
     "@netlify/functions": "^2.6.0",
