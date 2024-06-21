@@ -47,24 +47,24 @@ export default function RegionData({
               </li> */}
 
               <li key={index} className="flex justify-center space-x-2">
-                <p className="flex justify-center text-center font-semibold">
-                  A: {record.blood_type_a}{" "}
+                <p className="flex justify-center text-center font-semibold space-x-1">
+                  <label htmlFor=""> A: {record.blood_type_a}</label>
                   <DataChange bloodType={record.blood_type_a_change} />
                 </p>
-                <p className="flex justify-center text-center font-semibold">
-                  B: {record.blood_type_b}{" "}
+                <p className="flex justify-center text-center font-semibold space-x-1">
+                  <label htmlFor=""> B: {record.blood_type_b}</label>
                   <DataChange bloodType={record.blood_type_b_change} />
                 </p>
-                <p className="flex justify-center text-center font-semibold">
-                  AB: {record.blood_type_ab}{" "}
+                <p className="flex justify-center text-center font-semibold space-x-1">
+                  <label htmlFor=""> AB: {record.blood_type_ab}</label>
                   <DataChange bloodType={record.blood_type_ab_change} />
                 </p>
-                <p className="flex justify-center text-center font-semibold">
-                  O: {record.blood_type_o}{" "}
+                <p className="flex justify-center text-center font-semibold space-x-1">
+                  <label htmlFor=""> O: {record.blood_type_o}</label>
                   <DataChange bloodType={record.blood_type_o_change} />
                 </p>
-                <p className="flex justify-center text-center font-semibold">
-                  All: {record.blood_type_all}{" "}
+                <p className="flex justify-center text-center font-semibold space-x-1">
+                  <label htmlFor=""> All: {record.blood_type_all}</label>
                   <DataChange bloodType={record.blood_type_all_change} />
                 </p>
               </li>
