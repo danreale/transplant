@@ -6,7 +6,7 @@ export default function Header({}) {
       <div className="text-center py-5">
         <Link to="/">
           <h1 className="text-4xl py-2">
-            Heart Transplant Wait List For Status 1A
+            Pediatric Heart Transplant Wait List Statistics
           </h1>
         </Link>
 
