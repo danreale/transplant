@@ -11,9 +11,6 @@ import { DateTime } from "luxon";
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
 
-const todaysDate = DateTime.now()
-  .setZone("America/New_York")
-  .toFormat("MM-dd-yyyy");
 export default function Appointments() {
   const {
     region1ChangeData,
@@ -157,13 +154,12 @@ export default function Appointments() {
   );
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
 
-  const todaysDate = DateTime.now()
-    .setZone("America/New_York")
-    .toFormat("yyyy-MM-dd");
+  const todaysDate = params.day!!;
+  // console.log(todaysDate);
   // console.log("Loader Transplant Date", todaysDate);
   const region1DataToday = await getTransplantData(
     "Region  1",
@@ -220,10 +216,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     todaysDate,
     search.get("waitListType")
   );
-  // console.log(regionDataToday);
 
-  const yesterdaysDate = DateTime.now()
-    .setZone("America/New_York")
+  const yesterdaysDate = DateTime.fromFormat(params.day!!, "yyyy-MM-dd")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
