@@ -118,11 +118,11 @@ test("Get Donor Numbers", async ({ page }) => {
 
   await page
     .getByLabel("Choose report rows 1 of 3")
-    .selectOption("[Gender].members;Donor Gender;3;Gender");
+    .selectOption("[Gender].members;Donor Birth Sex;3;Gender");
   await page.waitForTimeout(1000);
   await page
     .getByLabel("Choose report rows 2 of 3")
-    .selectOption("[Ethnicity].members;Donor Ethnicity;9;Ethnicity");
+    .selectOption("[Ethnicity].members;Donor Race/Ethnicity;9;Ethnicity");
   await page.waitForTimeout(1000);
 
   await page
