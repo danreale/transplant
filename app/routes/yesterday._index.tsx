@@ -94,35 +94,18 @@ export default function Appointments() {
         {params.get("waitListType")}
       </p>
 
-      <div className="text-blue-600">
-        <RegionDataV2 transplantData={region1ChangeData} region={"Region  1"} />
-      </div>
-      <div className="text-red-600 font-bold">
-        <RegionDataV2 transplantData={region2ChangeData} region={"Region  2"} />
-      </div>
-      <div className="text-blue-600">
-        <RegionDataV2 transplantData={region3ChangeData} region={"Region  3"} />
-      </div>
-      <RegionDataV2 transplantData={region4ChangeData} region={"Region  4"} />
-      <RegionDataV2 transplantData={region5ChangeData} region={"Region  5"} />
-      <RegionDataV2 transplantData={region6ChangeData} region={"Region  6"} />
-      <RegionDataV2 transplantData={region7ChangeData} region={"Region  7"} />
-      <RegionDataV2 transplantData={region8ChangeData} region={"Region  8"} />
-      <div className="text-blue-600">
-        <RegionDataV2 transplantData={region9ChangeData} region={"Region  9"} />
-      </div>
-      <div className="text-blue-600">
-        <RegionDataV2
-          transplantData={region10ChangeData}
-          region={"Region  10"}
-        />
-      </div>
-      <div className="text-blue-600">
-        <RegionDataV2
-          transplantData={region11ChangeData}
-          region={"Region  11"}
-        />
-      </div>
+      {/* TODO: refactor into array map */}
+      <RegionDataV2 transplantData={region1ChangeData} regionNumber={1} />
+      <RegionDataV2 transplantData={region2ChangeData} regionNumber={2} />
+      <RegionDataV2 transplantData={region3ChangeData} regionNumber={3} />
+      <RegionDataV2 transplantData={region4ChangeData} regionNumber={4} />
+      <RegionDataV2 transplantData={region5ChangeData} regionNumber={5} />
+      <RegionDataV2 transplantData={region6ChangeData} regionNumber={6} />
+      <RegionDataV2 transplantData={region7ChangeData} regionNumber={7} />
+      <RegionDataV2 transplantData={region8ChangeData} regionNumber={8} />
+      <RegionDataV2 transplantData={region9ChangeData} regionNumber={9} />
+      <RegionDataV2 transplantData={region10ChangeData} regionNumber={10} />
+      <RegionDataV2 transplantData={region11ChangeData} regionNumber={11} />
 
       <div className="py-5 text-center">
         <div className="grid justify-center text-center space-x-2">
@@ -291,19 +274,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
         ...regionDataToday[0],
         blood_type_a_change:
           regionDataToday[0].blood_type_a -
-            regionDataYesterday[0]?.blood_type_a || 0,
+          regionDataYesterday[0]?.blood_type_a || 0,
         blood_type_b_change:
           regionDataToday[0].blood_type_b -
-            regionDataYesterday[0]?.blood_type_b || 0,
+          regionDataYesterday[0]?.blood_type_b || 0,
         blood_type_o_change:
           regionDataToday[0].blood_type_o -
-            regionDataYesterday[0]?.blood_type_o || 0,
+          regionDataYesterday[0]?.blood_type_o || 0,
         blood_type_ab_change:
           regionDataToday[0].blood_type_ab -
-            regionDataYesterday[0]?.blood_type_ab || 0,
+          regionDataYesterday[0]?.blood_type_ab || 0,
         blood_type_all_change:
           regionDataToday[0].blood_type_all -
-            regionDataYesterday[0]?.blood_type_all || 0,
+          regionDataYesterday[0]?.blood_type_all || 0,
       },
     ];
   };

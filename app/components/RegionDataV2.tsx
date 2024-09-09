@@ -1,11 +1,14 @@
 import { RecordArray, SelectedPick } from "@xata.io/client";
 import { TransplantDataRecord } from "src/xata";
 import { regionStates } from "~/data/states";
-import DataChange from "./DataChange";
+import BloodTypeDataTile from "./BloodTypeDataTile";
+import { Link } from "@remix-run/react";
+import InformationCircle from "~/icons/information-circle";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
 export default function RegionData({
   transplantData,
-  region,
+  regionNumber,
 }: {
   transplantData: RecordArray<
     SelectedPick<
@@ -27,10 +30,21 @@ export default function RegionData({
 }) {
   return (
     <>
-      <h2 className="text-2xl text-center">{region}</h2>
-      <p className="text-center">
-        ({regionStates(parseInt(region.split("Region ")[1])).join(", ")})
-      </p>
+      <div className="flex justify-center items-center gap-x-2">
+        <h2 className="text-2xl text-center">Region {regionNumber}</h2>
+        <Popover className="relative">
+          {/* may need to be bigger for a11y */}
+          <PopoverButton className="flex items-center" aria-label={`Show list of states for region ${regionNumber}`}>
+            <InformationCircle className="size-8 fill-blue-600 stroke-white" />
+          </PopoverButton>
+          <PopoverPanel anchor="bottom" className="flex flex-col bg-white border rounded p-2">
+            <ul>
+              {regionStates(regionNumber).map(state => <li key={state}>{state}</li>)}
+            </ul>
+          </PopoverPanel>
+        </Popover>
+      </div>
+
       <div className="py-2">
         <ul className="">
           {transplantData.map((record, index: number) => (
@@ -46,31 +60,19 @@ export default function RegionData({
                 </p>
               </li> */}
 
-              <li key={index} className="flex justify-center space-x-2">
-                <p className="flex justify-center text-center font-semibold space-x-1">
-                  <label htmlFor=""> A: {record.blood_type_a}</label>
-                  <DataChange bloodType={record.blood_type_a_change} />
-                </p>
-                <p className="flex justify-center text-center font-semibold space-x-1">
-                  <label htmlFor=""> B: {record.blood_type_b}</label>
-                  <DataChange bloodType={record.blood_type_b_change} />
-                </p>
-                <p className="flex justify-center text-center font-semibold space-x-1">
-                  <label htmlFor=""> AB: {record.blood_type_ab}</label>
-                  <DataChange bloodType={record.blood_type_ab_change} />
-                </p>
-                <p className="flex justify-center text-center font-semibold space-x-1">
-                  <label htmlFor=""> O: {record.blood_type_o}</label>
-                  <DataChange bloodType={record.blood_type_o_change} />
-                </p>
-                <p className="flex justify-center text-center font-semibold space-x-1">
-                  <label htmlFor=""> All: {record.blood_type_all}</label>
-                  <DataChange bloodType={record.blood_type_all_change} />
-                </p>
+              <li key={index} className="flex justify-center flex-wrap gap-2">
+                <BloodTypeDataTile label="A" count={record.blood_type_a} change={record.blood_type_a_change} />
+                <BloodTypeDataTile label="B" count={record.blood_type_b} change={record.blood_type_b_change} />
+                <BloodTypeDataTile label="AB" count={record.blood_type_ab} change={record.blood_type_ab_change} />
+                <BloodTypeDataTile label="O" count={record.blood_type_o} change={record.blood_type_o_change} />
+                <BloodTypeDataTile label="All" count={record.blood_type_all} change={record.blood_type_all_change} />
+                <BloodTypeDataTile label="Test" count={35} change={5} />
+                <BloodTypeDataTile label="Test2" count={2} change={-1} />
               </li>
             </>
           ))}
         </ul>
+        <Link className="text-center font-semibold block my-4 text-blue-600" to={`/charts/${regionNumber}`}>View Trends</Link>
       </div>
     </>
   );

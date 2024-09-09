@@ -17,6 +17,7 @@
     "etlTransformer": "tsx etlTransformer.ts"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.5",
     "@netlify/functions": "^2.6.0",
     "@netlify/remix-adapter": "^2.3.0",
     "@remix-run/node": "^2.8.1",
