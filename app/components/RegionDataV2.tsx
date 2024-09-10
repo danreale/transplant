@@ -60,14 +60,12 @@ export default function RegionData({
                 </p>
               </li> */}
 
-              <li key={index} className="flex justify-center flex-wrap gap-2">
+              <li key={`record-${index}`} className="flex justify-center flex-wrap gap-2">
                 <BloodTypeDataTile label="A" count={record.blood_type_a} change={record.blood_type_a_change} />
                 <BloodTypeDataTile label="B" count={record.blood_type_b} change={record.blood_type_b_change} />
                 <BloodTypeDataTile label="AB" count={record.blood_type_ab} change={record.blood_type_ab_change} />
                 <BloodTypeDataTile label="O" count={record.blood_type_o} change={record.blood_type_o_change} />
                 <BloodTypeDataTile label="All" count={record.blood_type_all} change={record.blood_type_all_change} />
-                <BloodTypeDataTile label="Test" count={35} change={5} />
-                <BloodTypeDataTile label="Test2" count={2} change={-1} />
               </li>
             </>
           ))}
