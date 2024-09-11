@@ -26,7 +26,7 @@ export default function RegionData({
       )[]
     >
   >;
-  region: string;
+  regionNumber: number;
 }) {
   return (
     <>
