@@ -147,3 +147,31 @@ export async function getDonorCountDatesO() {
 
   return records;
 }
+
+export async function getAllTransplantData(
+  date: string,
+  waitListType: string,
+) {
+  const records = await getXataClient()
+    .db.transplant_data.select([
+      "region",
+      "report_date",
+      "wait_list_type",
+      "wait_list_time",
+      "blood_type_a",
+      "blood_type_b",
+      "blood_type_ab",
+      "blood_type_o",
+      "blood_type_all",
+    ])
+    .filter({
+      report_date: date,
+      $not: {
+        region: "All Regions",
+      },
+      wait_list_time: "All Time",
+      wait_list_type: waitListType,
+    })
+    .getAll()
+  return records
+}

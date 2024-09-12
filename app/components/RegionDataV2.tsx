@@ -37,7 +37,7 @@ export default function RegionData({
           <PopoverButton className="flex items-center" aria-label={`Show list of states for region ${regionNumber}`}>
             <InformationCircle className="size-8 fill-blue-600 stroke-white" />
           </PopoverButton>
-          <PopoverPanel anchor="bottom" className="flex flex-col bg-white border rounded p-2">
+          <PopoverPanel anchor={{ to: 'bottom start', gap: '4px' }} modal focus className="flex flex-col bg-white border rounded p-2">
             <ul>
               {regionStates(regionNumber).map(state => <li key={state}>{state}</li>)}
             </ul>

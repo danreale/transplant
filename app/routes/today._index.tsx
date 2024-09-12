@@ -1,5 +1,4 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { getCenterData, getTransplantData } from "~/data/db.server";
 import {
   Form,
   useLoaderData,
@@ -7,8 +6,11 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { DateTime } from "luxon";
+
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
+import { getChangeData } from "~/data/change-data.server";
+import { getCenterData } from "~/data/db.server";
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
@@ -130,70 +132,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const todaysDate = DateTime.now()
     .setZone("America/New_York")
     .toFormat("yyyy-MM-dd");
-  // console.log("Loader Transplant Date", todaysDate);
-
-  const N_REGIONS = 11
-  let regionPromises = []
-
-  for (let i = 0; i < N_REGIONS; i++) {
-    regionPromises.push(
-      getTransplantData(
-        `Region  ${i + 1}`,
-        todaysDate,
-        waitListType
-      ))
-  }
 
   const yesterdaysDate = DateTime.now()
     .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
-  for (let i = 0; i < N_REGIONS; i++) {
-    regionPromises.push(
-      getTransplantData(
-        `Region  ${i + 1}`,
-        yesterdaysDate,
-        waitListType
-      ))
-  }
-
-  // resolve all of today and yesterday together
-  const data = await Promise.all(regionPromises)
-
-  // split the first 11 to today, and last 11 to yesterday
-  const regionDataToday = data.slice(0, 11)
-  const regionDataYesterday = data.slice(11)
-
-  const changeData = (regionDataToday: any, regionDataYesterday: any) => {
-    return [
-      {
-        ...regionDataToday[0],
-        blood_type_a_change:
-          regionDataToday[0].blood_type_a -
-          regionDataYesterday[0]?.blood_type_a || 0,
-        blood_type_b_change:
-          regionDataToday[0].blood_type_b -
-          regionDataYesterday[0]?.blood_type_b || 0,
-        blood_type_o_change:
-          regionDataToday[0].blood_type_o -
-          regionDataYesterday[0]?.blood_type_o || 0,
-        blood_type_ab_change:
-          regionDataToday[0].blood_type_ab -
-          regionDataYesterday[0]?.blood_type_ab || 0,
-        blood_type_all_change:
-          regionDataToday[0].blood_type_all -
-          regionDataYesterday[0]?.blood_type_all || 0,
-      },
-    ];
-  };
-
-  let changeDataList = []
-
-  for (let i = 0; i < N_REGIONS; i++) {
-    let change = changeData(regionDataToday[i], regionDataYesterday[i])
-    changeDataList.push(change)
-  }
+  const changeDataList = await getChangeData(todaysDate, yesterdaysDate, waitListType)
 
   const todayCenterData = await getCenterData(todaysDate);
   const yesterdayCenterData = await getCenterData(yesterdaysDate);
