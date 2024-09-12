@@ -134,8 +134,6 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
-  console.log({ providedDate, dayBeforeProvidedDate })
-
   const changeDataList = await getChangeData(providedDate, dayBeforeProvidedDate, waitListType)
 
   const todayCenterData = await getCenterData(providedDate);
