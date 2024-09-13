@@ -45,7 +45,7 @@ export default function RegionData({
         </Popover>
       </div>
 
-      <div className="py-2">
+      <div className="my-4">
         <ul className="">
           {transplantData.map((record, index: number) => (
             <>
@@ -70,7 +70,9 @@ export default function RegionData({
             </>
           ))}
         </ul>
-        <Link className="text-center font-semibold block my-4 text-blue-600" to={`/charts/${regionNumber}`}>View Trends</Link>
+        <div className="flex justify-center">
+          <Link className="font-semibold my-4 text-blue-600" to={`/charts/${regionNumber}`}>View Trends</Link>
+        </div>
       </div>
     </>
   );
