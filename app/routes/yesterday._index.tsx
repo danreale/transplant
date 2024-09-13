@@ -30,7 +30,7 @@ export default function Appointments() {
   const [, setSearchParams] = useSearchParams();
 
   return (
-    <>
+    <div>
       <Header />
       <h1 className="text-center text-4xl">Yesterday's Data</h1>
       <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
@@ -120,7 +120,7 @@ export default function Appointments() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
