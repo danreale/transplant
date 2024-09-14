@@ -1,15 +1,18 @@
-export default function DataChange({ bloodType }: { bloodType: number }) {
+import ArrowTrendingDown from "~/icons/arrow-trending-down"
+import { ArrowTrendingUp } from "~/icons/arrow-trending-up"
+
+export default function DataChange({ count }: { count: number }) {
+  // if no change, omit number and trend icon
+  if (count === 0) return
   return (
-    <>
-      <div className="text-center">
-        {bloodType === 0 && <p className="text-yellow-500">({bloodType})</p>}
-        {bloodType > 0 && (
-          <p className="text-red-500 font-bold">(+{bloodType})</p>
-        )}
-        {bloodType < 0 && (
-          <p className="text-green-500 font-bold">({bloodType})</p>
-        )}
-      </div>
-    </>
+    <div className="flex gap-1" >
+      {count > 0 && (
+        <ArrowTrendingUp className="text-red-600 size-4" />
+      )}
+      {count < 0 && (
+        <ArrowTrendingDown className="text-green-600 size-4" />
+      )}
+      <p className="font-bold text-xs">{count}</p>
+    </div>
   );
 }

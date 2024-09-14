@@ -63,7 +63,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const dates = await getTransplantDates();
 
   const bloodTypeTotals = await bloodTypeTotalsChart(`Region  ${region}`);
-  console.log(bloodTypeTotals);
+  // console.log(bloodTypeTotals);
 
   const centerData = await centerDataTotalsChart();
 

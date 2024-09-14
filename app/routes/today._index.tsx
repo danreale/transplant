@@ -1,5 +1,4 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { getCenterData, getTransplantData } from "~/data/db.server";
 import {
   Form,
   useLoaderData,
@@ -7,25 +6,18 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { DateTime } from "luxon";
+
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
+import { getChangeData } from "~/data/change-data.server";
+import { getCenterData } from "~/data/db.server";
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
   .toFormat("MM-dd-yyyy");
 export default function Appointments() {
   const {
-    region1ChangeData,
-    region2ChangeData,
-    region3ChangeData,
-    region4ChangeData,
-    region5ChangeData,
-    region6ChangeData,
-    region7ChangeData,
-    region8ChangeData,
-    region9ChangeData,
-    region10ChangeData,
-    region11ChangeData,
+    changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
@@ -35,10 +27,10 @@ export default function Appointments() {
 
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   return (
-    <>
+    <div>
       <Header />
       <h1 className="text-center text-4xl">Today's Data</h1>
       <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
@@ -93,35 +85,11 @@ export default function Appointments() {
       <p className="text-center text-rose-500 font-bold py-5">
         {params.get("waitListType")}
       </p>
-      <div className="text-blue-600">
-        <RegionDataV2 transplantData={region1ChangeData} region={"Region  1"} />
-      </div>
-      <div className="text-red-600 font-bold">
-        <RegionDataV2 transplantData={region2ChangeData} region={"Region  2"} />
-      </div>
-      <div className="text-blue-600">
-        <RegionDataV2 transplantData={region3ChangeData} region={"Region  3"} />
-      </div>
-      <RegionDataV2 transplantData={region4ChangeData} region={"Region  4"} />
-      <RegionDataV2 transplantData={region5ChangeData} region={"Region  5"} />
-      <RegionDataV2 transplantData={region6ChangeData} region={"Region  6"} />
-      <RegionDataV2 transplantData={region7ChangeData} region={"Region  7"} />
-      <RegionDataV2 transplantData={region8ChangeData} region={"Region  8"} />
-      <div className="text-blue-600">
-        <RegionDataV2 transplantData={region9ChangeData} region={"Region  9"} />
-      </div>
-      <div className="text-blue-600">
-        <RegionDataV2
-          transplantData={region10ChangeData}
-          region={"Region  10"}
-        />
-      </div>
-      <div className="text-blue-600">
-        <RegionDataV2
-          transplantData={region11ChangeData}
-          region={"Region  11"}
-        />
-      </div>
+
+      {/* Render Region Change Data */}
+      {changeDataList.map((data, index) => (
+        <RegionDataV2 transplantData={data} regionNumber={index + 1} key={`region-${index + 1}`} />
+      ))}
 
       <div className="py-5 text-center">
         <div className="grid justify-center text-center space-x-2">
@@ -152,188 +120,25 @@ export default function Appointments() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
+  const waitListType = search.get("waitListType") as string
 
   const todaysDate = DateTime.now()
     .setZone("America/New_York")
     .toFormat("yyyy-MM-dd");
-  // console.log("Loader Transplant Date", todaysDate);
-  const region1DataToday = await getTransplantData(
-    "Region  1",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region2DataToday = await getTransplantData(
-    "Region  2",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region3DataToday = await getTransplantData(
-    "Region  3",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region4DataToday = await getTransplantData(
-    "Region  4",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region5DataToday = await getTransplantData(
-    "Region  5",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region6DataToday = await getTransplantData(
-    "Region  6",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region7DataToday = await getTransplantData(
-    "Region  7",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region8DataToday = await getTransplantData(
-    "Region  8",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region9DataToday = await getTransplantData(
-    "Region  9",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region10DataToday = await getTransplantData(
-    "Region  10",
-    todaysDate,
-    search.get("waitListType")
-  );
-  const region11DataToday = await getTransplantData(
-    "Region  11",
-    todaysDate,
-    search.get("waitListType")
-  );
-  // console.log(regionDataToday);
 
   const yesterdaysDate = DateTime.now()
     .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
-  const region1DataYesterday = await getTransplantData(
-    "Region  1",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region2DataYesterday = await getTransplantData(
-    "Region  2",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region3DataYesterday = await getTransplantData(
-    "Region  3",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region4DataYesterday = await getTransplantData(
-    "Region  4",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region5DataYesterday = await getTransplantData(
-    "Region  5",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region6DataYesterday = await getTransplantData(
-    "Region  6",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region7DataYesterday = await getTransplantData(
-    "Region  7",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region8DataYesterday = await getTransplantData(
-    "Region  8",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region9DataYesterday = await getTransplantData(
-    "Region  9",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region10DataYesterday = await getTransplantData(
-    "Region  10",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  const region11DataYesterday = await getTransplantData(
-    "Region  11",
-    yesterdaysDate,
-    search.get("waitListType")
-  );
-  // console.log(regionDataYesterday);
-
-  const changeData = (regionDataToday: any, regionDataYesterday: any) => {
-    return [
-      {
-        ...regionDataToday[0],
-        blood_type_a_change:
-          regionDataToday[0].blood_type_a -
-            regionDataYesterday[0]?.blood_type_a || 0,
-        blood_type_b_change:
-          regionDataToday[0].blood_type_b -
-            regionDataYesterday[0]?.blood_type_b || 0,
-        blood_type_o_change:
-          regionDataToday[0].blood_type_o -
-            regionDataYesterday[0]?.blood_type_o || 0,
-        blood_type_ab_change:
-          regionDataToday[0].blood_type_ab -
-            regionDataYesterday[0]?.blood_type_ab || 0,
-        blood_type_all_change:
-          regionDataToday[0].blood_type_all -
-            regionDataYesterday[0]?.blood_type_all || 0,
-      },
-    ];
-  };
-
-  const region1ChangeData = changeData(region1DataToday, region1DataYesterday);
-  // console.log(region1ChangeData);
-  const region2ChangeData = changeData(region2DataToday, region2DataYesterday);
-  // console.log(region2ChangeData);
-  const region3ChangeData = changeData(region3DataToday, region3DataYesterday);
-  // console.log(region3ChangeData);
-  const region4ChangeData = changeData(region4DataToday, region4DataYesterday);
-  // console.log(region4ChangeData);
-  const region5ChangeData = changeData(region5DataToday, region5DataYesterday);
-  // console.log(region5ChangeData);
-  const region6ChangeData = changeData(region6DataToday, region6DataYesterday);
-  // console.log(region6ChangeData);
-  const region7ChangeData = changeData(region7DataToday, region7DataYesterday);
-  // console.log(region7ChangeData);
-  const region8ChangeData = changeData(region8DataToday, region8DataYesterday);
-  // console.log(region8ChangeData);
-  const region9ChangeData = changeData(region9DataToday, region9DataYesterday);
-  // console.log(region9ChangeData);
-  const region10ChangeData = changeData(
-    region10DataToday,
-    region10DataYesterday
-  );
-  // console.log(region10ChangeData);
-  const region11ChangeData = changeData(
-    region11DataToday,
-    region11DataYesterday
-  );
-  // console.log(region11ChangeData);
+  const changeDataList = await getChangeData(todaysDate, yesterdaysDate, waitListType)
 
   const todayCenterData = await getCenterData(todaysDate);
   const yesterdayCenterData = await getCenterData(yesterdaysDate);
@@ -349,17 +154,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const todaysCenterChange = centerChange();
 
   return {
-    region1ChangeData,
-    region2ChangeData,
-    region3ChangeData,
-    region4ChangeData,
-    region5ChangeData,
-    region6ChangeData,
-    region7ChangeData,
-    region8ChangeData,
-    region9ChangeData,
-    region10ChangeData,
-    region11ChangeData,
+    changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
