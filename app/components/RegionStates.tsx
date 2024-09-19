@@ -3,7 +3,7 @@ import { regionStates } from "~/data/states";
 
 type Props = {
   region: number;
-  title: boolean;
+  title?: boolean;
 };
 
 export default function RegionStates({ region, title = true }: Props) {
