@@ -18,10 +18,7 @@ export default function Header({}) {
             <Link to="/yesterday?waitListType=All+Types">Yesterday</Link>
           </li>
           <li>
-            <Link to="/charts/2">Region 2 Charts</Link>
-          </li>
-          <li>
-            <Link to="/charts">Region Charts</Link>
+            <Link to="/charts">USA Charts</Link>
           </li>
         </ul>
       </div>

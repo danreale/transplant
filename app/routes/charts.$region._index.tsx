@@ -6,6 +6,7 @@ import Header from "~/components/Header";
 import RegionChartV2 from "~/components/RegionChartV2";
 import RegionChart from "~/components/RegionChartV2";
 import RegionChartV3 from "~/components/RegionChartV3";
+import RegionStates from "~/components/RegionStates";
 import TransplantChart from "~/components/TransplantChart";
 import {
   bloodTypeTotalsChart,
@@ -39,10 +40,14 @@ export default function Index() {
       )}
 
       <div className="grid justify-center text-center pb-5">
-        <h2 className="text-2xl text-center py-5">Region {params.region}</h2>
-        <p className="pb-5">
+        <h2 className="text-2xl text-center">Region {params.region}</h2>
+        {/* <p className="pb-5">
           ({regionStates(parseInt(params.region!!)).join(", ")})
-        </p>
+        </p> */}
+        <div className="pb-5">
+          <RegionStates region={parseInt(params.region!!)} title={false} />
+        </div>
+
         <h3 className="text-2xl text-center">Blood Types</h3>
         <RegionChartV2 data={bloodTypeTotals} />
 
