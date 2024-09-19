@@ -34,9 +34,23 @@ export default function Appointments() {
     <div>
       <Header />
       <h1 className="text-center text-4xl">Today's Data</h1>
-      <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {params.get("reportDate") || todaysDate}
+      <h2 className="text-center text-4xl text-yellow-500 italic font-semibold pb-2">
+        {DateTime.fromFormat(
+          params.get("reportDate") || todaysDate,
+          "MM-dd-yyyy"
+        ).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
       </h2>
+
+      <p className="text-center font-semibold grid justify-center">
+        <span className="italic">*Based on data through</span>
+        <span className="italic">
+          {DateTime.fromFormat(
+            settingsDates?.last_data_refresh_date,
+            "yyyy-MM-dd"
+          ).toFormat("DDDD")}
+          *
+        </span>
+      </p>
 
       {pageLoading && (
         <div className="flex justify-center items-center text-center text-yellow-400 text-3xl pb-5">
@@ -83,18 +97,8 @@ export default function Appointments() {
         {/* </Form> */}
       </div>
 
-      <p className="text-center text-rose-500 font-bold py-5">
+      <p className="text-center text-rose-500 font-bold pb-5">
         {params.get("waitListType")}
-      </p>
-      <p className="text-center pb-5 font-semibold grid justify-center">
-        <span className="italic">*Based on data through</span>
-        <span className="italic">
-          {DateTime.fromFormat(
-            settingsDates?.last_data_refresh_date,
-            "yyyy-MM-dd"
-          ).toFormat("DDDD")}
-          *
-        </span>
       </p>
 
       {/* Render Region Change Data */}
