@@ -98,6 +98,20 @@ export async function getTransplantStatusCountDates(
 
   return records;
 }
+export async function getTransplantStatusCountDatesForRegion(
+  status:
+    | "Heart Status 1A"
+    | "Heart Status 1B"
+    | "Heart Status 2"
+    | "Heart Status 7 (Inactive)",
+  region: string
+) {
+  const usRegion = `Region  ${region}`;
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date, SUM("blood_type_a" + "blood_type_b" + "blood_type_o" + "blood_type_ab") as wlt FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${status} and region = ${usRegion} group by report_date order by report_date asc limit 365`;
+
+  return records;
+}
 
 export async function getCenterData(date: string) {
   const transplantData = await getXataClient()
