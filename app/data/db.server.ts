@@ -148,10 +148,7 @@ export async function getDonorCountDatesO() {
   return records;
 }
 
-export async function getAllTransplantData(
-  date: string,
-  waitListType: string,
-) {
+export async function getAllTransplantData(date: string, waitListType: string) {
   const records = await getXataClient()
     .db.transplant_data.select([
       "region",
@@ -172,6 +169,13 @@ export async function getAllTransplantData(
       wait_list_time: "All Time",
       wait_list_type: waitListType,
     })
-    .getAll()
-  return records
+    .getAll();
+  return records;
+}
+
+export async function getSettingsDates() {
+  const dataRefreshDate = await getXataClient()
+    .db.settings.select(["from_data_refresh_date", "last_data_refresh_date"])
+    .getFirst();
+  return dataRefreshDate;
 }

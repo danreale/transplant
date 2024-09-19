@@ -1,0 +1,16 @@
+{
+  "id": "mig_crm3kmdlkr89gjehgvv0",
+  "parentID": "mig_crm0q1llkr89gjehgm2g",
+  "checksum": "1:fc9c16d2ba511e3022d031f8a3582d78a7ed830089888cc7e37c6d5fc3638df0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "from_data_refresh_date",
+          "type": "text"
+        },
+        "table": "settings"
+      }
+    }
+  ]
+}

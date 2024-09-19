@@ -24,6 +24,9 @@ const donorData = JSON.parse(
   await readFile(new URL("./DatabaseDonorList.json", import.meta.url))
 );
 
+const datesData = JSON.parse(
+  await readFile(new URL("./DataDates.json", import.meta.url))
+);
 // Delete Todays Data first in case needing to rerun
 
 const records =
@@ -64,3 +67,17 @@ console.log(center);
 const donors = await xata.db.donor_data.create(donorData);
 
 console.log(donors);
+
+// update data dates
+
+const settingsRecord = await xata.db.settings.getFirst();
+
+if (settingsRecord) {
+  const dates = await xata.db.settings.update(settingsRecord?.id, {
+    from_data_refresh_date: datesData.startDate,
+    last_data_refresh_date: datesData.endDate,
+  });
+  console.log(dates);
+} else {
+  console.log("Settings Date Not Updated");
+}
