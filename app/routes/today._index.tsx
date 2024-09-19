@@ -10,7 +10,7 @@ import { DateTime } from "luxon";
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
 import { getChangeData } from "~/data/change-data.server";
-import { getCenterData } from "~/data/db.server";
+import { getCenterData, getSettingsDates } from "~/data/db.server";
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
@@ -21,6 +21,7 @@ export default function Appointments() {
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    settingsDates,
   } = useLoaderData<typeof loader>();
 
   const [params] = useSearchParams();
@@ -85,10 +86,24 @@ export default function Appointments() {
       <p className="text-center text-rose-500 font-bold py-5">
         {params.get("waitListType")}
       </p>
+      <p className="text-center pb-5 font-semibold grid justify-center">
+        <span className="italic">*Based on data through</span>
+        <span className="italic">
+          {DateTime.fromFormat(
+            settingsDates?.last_data_refresh_date,
+            "yyyy-MM-dd"
+          ).toFormat("DDDD")}
+          *
+        </span>
+      </p>
 
       {/* Render Region Change Data */}
       {changeDataList.map((data, index) => (
-        <RegionDataV2 transplantData={data} regionNumber={index + 1} key={`region-${index + 1}`} />
+        <RegionDataV2
+          transplantData={data}
+          regionNumber={index + 1}
+          key={`region-${index + 1}`}
+        />
       ))}
 
       <div className="py-5 text-center">
@@ -127,7 +142,7 @@ export default function Appointments() {
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const waitListType = search.get("waitListType") as string
+  const waitListType = search.get("waitListType") as string;
 
   const todaysDate = DateTime.now()
     .setZone("America/New_York")
@@ -138,7 +153,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
-  const changeDataList = await getChangeData(todaysDate, yesterdaysDate, waitListType)
+  const changeDataList = await getChangeData(
+    todaysDate,
+    yesterdaysDate,
+    waitListType
+  );
 
   const todayCenterData = await getCenterData(todaysDate);
   const yesterdayCenterData = await getCenterData(yesterdaysDate);
@@ -153,10 +172,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const todaysCenterChange = centerChange();
 
+  const settingsDates = await getSettingsDates();
+
   return {
     changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    settingsDates,
   };
 }
