@@ -25,6 +25,18 @@ export default function Index() {
         </div>
       )}
       <h2 className="text-center text-2xl py-2">Past Transplant Data</h2>
+      <div className="text-center py-2 space-y-2">
+        <p>
+          <span className="italic">
+            Data is not updated on Saturday/Sunday*
+          </span>
+        </p>
+        <p>
+          <span className="italic">
+            Access up to the past 1 years worth of data*
+          </span>
+        </p>
+      </div>
       <div className="py-5 flex justify-center">
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
