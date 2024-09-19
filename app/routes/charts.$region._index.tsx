@@ -12,7 +12,6 @@ import {
   centerDataTotalsChart,
   getDonorCountDatesB,
   getTransplantDates,
-  getTransplantStatusCountDates,
   getTransplantStatusCountDatesForRegion,
 } from "~/data/db.server";
 import { regionStates } from "~/data/states";
