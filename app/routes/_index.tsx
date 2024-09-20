@@ -6,6 +6,7 @@ import RegionStates from "~/components/RegionStates";
 
 import { getTransplantDates } from "~/data/db.server";
 import { regionStates } from "~/data/states";
+import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return [
@@ -52,17 +53,10 @@ export default function Index() {
           how many others in your general area are waiting for the same organ.
         </p>
 
-        <RegionStates region={1} />
-        <RegionStates region={2} />
-        <RegionStates region={3} />
-        <RegionStates region={4} />
-        <RegionStates region={5} />
-        <RegionStates region={6} />
-        <RegionStates region={7} />
-        <RegionStates region={8} />
-        <RegionStates region={9} />
-        <RegionStates region={10} />
-        <RegionStates region={11} />
+        {/* all regions */}
+        {range(1, 12).map((num) => (
+          <RegionStates region={num} />
+        ))}
       </div>
     </>
   );
