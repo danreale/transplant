@@ -10,7 +10,11 @@ import { DateTime } from "luxon";
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
 import { getChangeData } from "~/data/change-data.server";
-import { getCenterData, getSettingsDates } from "~/data/db.server";
+import {
+  getAllTransplantDataWithWaitListTime,
+  getCenterData,
+  getSettingsDates,
+} from "~/data/db.server";
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
@@ -22,6 +26,7 @@ export default function Appointments() {
     yesterdayCenterData,
     todaysCenterChange,
     settingsDates,
+    waitListTimeData,
   } = useLoaderData<typeof loader>();
 
   const [params] = useSearchParams();
@@ -107,6 +112,9 @@ export default function Appointments() {
           transplantData={data}
           regionNumber={index + 1}
           key={`region-${index + 1}`}
+          timeData={waitListTimeData.filter(
+            (d) => d.region === `Region  ${index + 1}`
+          )}
         />
       ))}
 
@@ -178,11 +186,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const settingsDates = await getSettingsDates();
 
+  const waitListTimeData = await getAllTransplantDataWithWaitListTime(
+    todaysDate,
+    waitListType
+  );
+
   return {
     changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
     settingsDates,
+    waitListTimeData,
   };
 }

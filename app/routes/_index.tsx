@@ -44,7 +44,7 @@ export default function Index() {
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
             <li key={index}>
-              <Link to={`/day/${date.report_date}`}>
+              <Link to={`/day/${date.report_date}?waitListType=All+Types`}>
                 {date.report_date} (
                 {
                   DateTime.fromFormat(date.report_date, "yyyy-MM-dd")
