@@ -2,8 +2,11 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
+import RegionStates from "~/components/RegionStates";
 
 import { getTransplantDates } from "~/data/db.server";
+import { regionStates } from "~/data/states";
+import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return [
@@ -40,6 +43,20 @@ export default function Index() {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="py-5 grid justify-center text-center">
+        <h2 className="py-2 font-semibold text-3xl">What Region Am I In?</h2>
+        <p>
+          Aside from accrued time on the waitlist, distance is an important
+          factor. It's important to know what region you are in so you can see
+          how many others in your general area are waiting for the same organ.
+        </p>
+
+        {/* all regions */}
+        {range(1, 12).map((num) => (
+          <RegionStates region={num} />
+        ))}
       </div>
     </>
   );
