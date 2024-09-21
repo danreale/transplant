@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   Form,
   useLoaderData,
@@ -19,7 +19,15 @@ import {
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
   .toFormat("MM-dd-yyyy");
-export default function Appointments() {
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - Today" },
+    { name: "description", content: "Todays Waiting List Data" },
+  ];
+};
+
+export default function Today() {
   const {
     changeDataList,
     todayCenterData,

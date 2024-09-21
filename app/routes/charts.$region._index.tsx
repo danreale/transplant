@@ -19,8 +19,8 @@ import { regionStates } from "~/data/states";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Heart Transplant Waiting List" },
-    { name: "description", content: "Status 1A Blood Type B and O" },
+    { title: "Heart Transplant Waiting List - Region Charts" },
+    { name: "description", content: "Region Charts" },
   ];
 };
 

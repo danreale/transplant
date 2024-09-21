@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   getAllTransplantDataWithWaitListTime,
   getCenterData,
@@ -19,7 +19,15 @@ const todaysDate = DateTime.now()
   .setZone("America/New_York")
   .minus({ days: 1 })
   .toFormat("MM-dd-yyyy");
-export default function Appointments() {
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - Yesterday" },
+    { name: "description", content: "Yesterdays Waiting List Data" },
+  ];
+};
+
+export default function Yesterday() {
   const {
     changeDataList,
     todayCenterData,

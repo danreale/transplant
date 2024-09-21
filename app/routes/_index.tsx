@@ -10,8 +10,11 @@ import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Heart Transplant Waiting List" },
-    { name: "description", content: "Status 1A Blood Type B and O" },
+    { title: "Heart Transplant Waiting List - Home" },
+    {
+      name: "description",
+      content: "Wait list status data for each blood type and region",
+    },
   ];
 };
 

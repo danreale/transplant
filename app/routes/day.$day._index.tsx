@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   Form,
   useLoaderData,
@@ -16,7 +16,14 @@ import {
   getCenterData,
 } from "~/data/db.server";
 
-export default function Appointments() {
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - Daily" },
+    { name: "description", content: "Daily Waiting List Data" },
+  ];
+};
+
+export default function Daily() {
   const {
     changeDataList,
     todayCenterData,

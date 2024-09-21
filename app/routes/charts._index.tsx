@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import DonorDataChart from "~/components/DonorChart";
 
@@ -11,6 +11,13 @@ import {
   getTransplantStatusCountDates,
 } from "~/data/db.server";
 import { regionStates } from "~/data/states";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - USA Charts" },
+    { name: "description", content: "USA Charts" },
+  ];
+};
 
 export default function Index() {
   const transition = useNavigation();
