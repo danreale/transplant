@@ -10,8 +10,11 @@ import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Heart Transplant Waiting List" },
-    { name: "description", content: "Status 1A Blood Type B and O" },
+    { title: "Heart Transplant Waiting List - Home" },
+    {
+      name: "description",
+      content: "Wait list status data for each blood type and region",
+    },
   ];
 };
 
@@ -44,7 +47,7 @@ export default function Index() {
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
             <li key={index}>
-              <Link to={`/day/${date.report_date}`}>
+              <Link to={`/day/${date.report_date}?waitListType=All+Types`}>
                 {date.report_date} (
                 {
                   DateTime.fromFormat(date.report_date, "yyyy-MM-dd")

@@ -1,5 +1,9 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { getCenterData, getTransplantData } from "~/data/db.server";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import {
+  getAllTransplantDataWithWaitListTime,
+  getCenterData,
+  getTransplantData,
+} from "~/data/db.server";
 import {
   Form,
   useLoaderData,
@@ -15,12 +19,21 @@ const todaysDate = DateTime.now()
   .setZone("America/New_York")
   .minus({ days: 1 })
   .toFormat("MM-dd-yyyy");
-export default function Appointments() {
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - Yesterday" },
+    { name: "description", content: "Yesterdays Waiting List Data" },
+  ];
+};
+
+export default function Yesterday() {
   const {
     changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    waitListTimeData,
   } = useLoaderData<typeof loader>();
 
   const [params] = useSearchParams();
@@ -88,7 +101,14 @@ export default function Appointments() {
 
       {/* Render Region Change Data */}
       {changeDataList.map((data, index) => (
-        <RegionDataV2 transplantData={data} regionNumber={index + 1} key={`region-${index + 1}`} />
+        <RegionDataV2
+          transplantData={data}
+          regionNumber={index + 1}
+          key={`region-${index + 1}`}
+          timeData={waitListTimeData.filter(
+            (d) => d.region === `Region  ${index + 1}`
+          )}
+        />
       ))}
 
       <div className="py-5 text-center">
@@ -126,8 +146,8 @@ export default function Appointments() {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
-  const search = new URLSearchParams(url.search)
-  const waitListType = search.get("waitListType") as string
+  const search = new URLSearchParams(url.search);
+  const waitListType = search.get("waitListType") as string;
 
   const yesterdaysDate = DateTime.now()
     .setZone("America/New_York")
@@ -139,7 +159,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .minus({ days: 2 })
     .toFormat("yyyy-MM-dd");
 
-  const changeDataList = await getChangeData(yesterdaysDate, dayBeforeYesterdayDate, waitListType)
+  const changeDataList = await getChangeData(
+    yesterdaysDate,
+    dayBeforeYesterdayDate,
+    waitListType
+  );
 
   const todayCenterData = await getCenterData(yesterdaysDate);
   const yesterdayCenterData = await getCenterData(dayBeforeYesterdayDate);
@@ -153,10 +177,16 @@ export async function loader({ request }: LoaderFunctionArgs) {
   };
   const todaysCenterChange = centerChange();
 
+  const waitListTimeData = await getAllTransplantDataWithWaitListTime(
+    yesterdaysDate,
+    waitListType
+  );
+
   return {
     changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    waitListTimeData,
   };
 }

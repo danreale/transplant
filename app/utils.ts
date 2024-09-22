@@ -17,3 +17,15 @@ export const range = (start: number, end: number, step = 1) => {
   }
   return output;
 };
+
+export type TimeBreakdown = {
+  region: string | null | undefined;
+  report_date: string | null | undefined;
+  wait_list_type: string | null | undefined;
+  wait_list_time: string | null | undefined;
+  blood_type_a: number | null | undefined;
+  blood_type_ab: number | null | undefined;
+  blood_type_all: number | null | undefined;
+  blood_type_b: number | null | undefined;
+  blood_type_o: number | null | undefined;
+};

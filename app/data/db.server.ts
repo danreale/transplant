@@ -1,5 +1,6 @@
 import { TransplantDataRecord, getXataClient } from "src/xata";
 import { DateTime } from "luxon";
+import { TimeBreakdown } from "~/utils";
 
 export async function getTransplantData(
   region: string,
@@ -192,4 +193,47 @@ export async function getSettingsDates() {
     .db.settings.select(["from_data_refresh_date", "last_data_refresh_date"])
     .getFirst();
   return dataRefreshDate;
+}
+
+export async function getAllTransplantDataWithWaitListTime(
+  date: string,
+  waitListType: string
+) {
+  const records = await getXataClient()
+    .db.transplant_data.select([
+      "region",
+      "report_date",
+      "wait_list_type",
+      "wait_list_time",
+      "blood_type_a",
+      "blood_type_b",
+      "blood_type_ab",
+      "blood_type_o",
+      "blood_type_all",
+    ])
+    .filter({
+      report_date: date,
+      $not: {
+        region: "All Regions",
+      },
+      wait_list_type: waitListType,
+    })
+    .getAll();
+  // return records;
+
+  const filteredRecords = records.map((rec) => {
+    const data: TimeBreakdown = {
+      region: rec.region,
+      report_date: rec.report_date,
+      wait_list_type: rec.wait_list_type,
+      wait_list_time: rec.wait_list_time,
+      blood_type_a: rec.blood_type_a,
+      blood_type_ab: rec.blood_type_ab,
+      blood_type_all: rec.blood_type_all,
+      blood_type_b: rec.blood_type_b,
+      blood_type_o: rec.blood_type_o,
+    };
+    return data;
+  });
+  return filteredRecords;
 }

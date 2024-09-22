@@ -7,10 +7,12 @@ import InformationCircle from "~/icons/information-circle";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useLayoutEffect, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
+import { TimeBreakdown } from "~/utils";
 
 export default function RegionData({
   transplantData,
   regionNumber,
+  timeData,
 }: {
   transplantData: RecordArray<
     SelectedPick<
@@ -29,6 +31,7 @@ export default function RegionData({
     >
   >;
   regionNumber: number;
+  timeData: Array<TimeBreakdown>;
 }) {
   const [regionFavorite, setRegionFavorite] = useState(false);
 
@@ -49,6 +52,41 @@ export default function RegionData({
       setRegionFavorite(true);
     }
   }, []);
+
+  // Get wait list times for each blood type
+  const bloodTypeWaitTimeData = (bloodType: string) =>
+    timeData.map((d) => {
+      if (bloodType === "A") {
+        return {
+          wait_list_time: d.wait_list_time,
+          count: d.blood_type_a,
+        };
+      }
+      if (bloodType === "B") {
+        return {
+          wait_list_time: d.wait_list_time,
+          count: d.blood_type_b,
+        };
+      }
+      if (bloodType === "AB") {
+        return {
+          wait_list_time: d.wait_list_time,
+          count: d.blood_type_ab,
+        };
+      }
+      if (bloodType === "O") {
+        return {
+          wait_list_time: d.wait_list_time,
+          count: d.blood_type_o,
+        };
+      }
+      if (bloodType === "ALL") {
+        return {
+          wait_list_time: d.wait_list_time,
+          count: d.blood_type_all,
+        };
+      }
+    });
   return (
     <>
       <div className="flex justify-center items-center gap-x-2">
@@ -116,26 +154,31 @@ export default function RegionData({
                   label="A"
                   count={record.blood_type_a}
                   change={record.blood_type_a_change}
+                  waitTimes={bloodTypeWaitTimeData("A")}
                 />
                 <BloodTypeDataTile
                   label="B"
                   count={record.blood_type_b}
                   change={record.blood_type_b_change}
+                  waitTimes={bloodTypeWaitTimeData("B")}
                 />
                 <BloodTypeDataTile
                   label="AB"
                   count={record.blood_type_ab}
                   change={record.blood_type_ab_change}
+                  waitTimes={bloodTypeWaitTimeData("AB")}
                 />
                 <BloodTypeDataTile
                   label="O"
                   count={record.blood_type_o}
                   change={record.blood_type_o_change}
+                  waitTimes={bloodTypeWaitTimeData("O")}
                 />
                 <BloodTypeDataTile
                   label="All"
                   count={record.blood_type_all}
                   change={record.blood_type_all_change}
+                  waitTimes={bloodTypeWaitTimeData("ALL")}
                 />
               </li>
             </>
