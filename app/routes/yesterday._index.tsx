@@ -46,8 +46,11 @@ export default function Yesterday() {
     <div>
       <Header />
       <h1 className="text-center text-4xl">Yesterday's Data</h1>
-      <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {params.get("reportDate") || todaysDate}
+      <h2 className="text-center text-4xl text-yellow-500 italic font-semibold pb-2">
+        {DateTime.fromFormat(
+          params.get("reportDate") || todaysDate,
+          "MM-dd-yyyy"
+        ).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
       </h2>
 
       {pageLoading && (

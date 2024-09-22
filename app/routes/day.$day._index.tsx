@@ -42,8 +42,10 @@ export default function Daily() {
     <div>
       <Header />
       <h1 className="text-center text-4xl">Day's Data</h1>
-      <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {params.day}
+      <h2 className="text-center text-4xl text-yellow-500 italic font-semibold pb-2">
+        {DateTime.fromFormat(params.day!!, "yyyy-MM-dd").toLocaleString(
+          DateTime.DATE_MED_WITH_WEEKDAY
+        )}
       </h2>
 
       {pageLoading && (
