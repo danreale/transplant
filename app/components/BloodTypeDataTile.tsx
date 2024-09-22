@@ -47,10 +47,14 @@ export default function BloodTypeDataTile({
           focus
           className="flex flex-col bg-white border rounded p-2"
         >
-          <ul>
+          <ul className="text-center">
             {waitTimes.map((d, index) => (
-              <li key={index}>
-                {d.wait_list_time} - {d.count}
+              <li
+                key={index}
+                className="grid text-center justify-center border-2 bg-amber-50 px-1"
+              >
+                <span className="italic">{d.wait_list_time}</span>
+                <span className="font-bold pb-0">{d.count}</span>
               </li>
             ))}
           </ul>
