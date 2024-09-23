@@ -37,6 +37,11 @@ export default function Index() {
             Data is not updated on Saturday/Sunday*
           </span>
         </p>
+        <p className="italic">
+          <span className="italic">
+            Data is updated at 7:00 am EST Monday-Friday*
+          </span>
+        </p>
         <p>
           <span className="italic">
             Access up to the past 1 years worth of data*
@@ -78,7 +83,7 @@ export default function Index() {
 }
 
 export async function loader({}: LoaderFunctionArgs) {
-  const dates = await getTransplantDates();
+  const dates = (await getTransplantDates()).splice(2);
 
   return { dates };
 }

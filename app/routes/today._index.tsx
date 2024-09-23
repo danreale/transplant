@@ -15,6 +15,7 @@ import {
   getCenterData,
   getSettingsDates,
 } from "~/data/db.server";
+import { isBetweenMidnightAndSeven } from "~/utils";
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
@@ -43,6 +44,8 @@ export default function Today() {
   const pageLoading = transition.state !== "idle";
   const [, setSearchParams] = useSearchParams();
 
+  const currentTime = DateTime.now().setZone("America/New_York");
+
   return (
     <div>
       <Header />
@@ -54,6 +57,14 @@ export default function Today() {
         ).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
       </h2>
 
+      {isBetweenMidnightAndSeven() && (
+        <p className="text-center font-semibold grid justify-center">
+          <span className="italic">
+            The current time is {currentTime.toFormat("h:mm a")}. Please check
+            back after 7:00 am EST for updated data.*
+          </span>
+        </p>
+      )}
       <p className="text-center font-semibold grid justify-center">
         <span className="italic">*Based on data through</span>
         <span className="italic">
@@ -71,90 +82,94 @@ export default function Today() {
         </div>
       )}
 
-      <div className="grid justify-center text-center py-5">
-        {/* <Form> */}
-        <div className="grid justify-center text-center">
-          <div className="grid justify-center text-center">
-            <label htmlFor="" className="font-bold py-1">
-              Choose Wait List Type
-            </label>
-            <select
-              name="waitListType"
-              id="waitListType"
-              className="text-center"
-              defaultValue={params.get("waitListType") || "All Types"}
-              onChange={(e) => {
-                setSearchParams((prev) => {
-                  prev.set("waitListType", e.target.value);
-                  return prev;
-                });
-              }}
-            >
-              <option value="Heart Status 1A">Heart Status 1A</option>
-              <option value="Heart Status 1B">Heart Status 1B</option>
-              <option value="Heart Status 2">Heart Status 2</option>
-              <option value="Heart Status 7 (Inactive)">
-                Heart Status 7 (Inactive)
-              </option>
-              <option value="All Types">All Types</option>
-            </select>
-          </div>
+      {!isBetweenMidnightAndSeven() && (
+        <>
+          <div className="grid justify-center text-center py-5">
+            {/* <Form> */}
+            <div className="grid justify-center text-center">
+              <div className="grid justify-center text-center">
+                <label htmlFor="" className="font-bold py-1">
+                  Choose Wait List Type
+                </label>
+                <select
+                  name="waitListType"
+                  id="waitListType"
+                  className="text-center"
+                  defaultValue={params.get("waitListType") || "All Types"}
+                  onChange={(e) => {
+                    setSearchParams((prev) => {
+                      prev.set("waitListType", e.target.value);
+                      return prev;
+                    });
+                  }}
+                >
+                  <option value="Heart Status 1A">Heart Status 1A</option>
+                  <option value="Heart Status 1B">Heart Status 1B</option>
+                  <option value="Heart Status 2">Heart Status 2</option>
+                  <option value="Heart Status 7 (Inactive)">
+                    Heart Status 7 (Inactive)
+                  </option>
+                  <option value="All Types">All Types</option>
+                </select>
+              </div>
 
-          {/* <button
+              {/* <button
               type="submit"
               className="text-blue-500 font-bold border-2 border-blue-500 rounded-xl"
             >
               Filter
             </button> */}
-        </div>
-        {/* </Form> */}
-      </div>
+            </div>
+            {/* </Form> */}
+          </div>
 
-      <p className="text-center text-rose-500 font-bold pb-5">
-        {params.get("waitListType")}
-      </p>
+          <p className="text-center text-rose-500 font-bold pb-5">
+            {params.get("waitListType")}
+          </p>
 
-      {/* Render Region Change Data */}
-      {changeDataList.map((data, index) => (
-        <RegionDataV2
-          transplantData={data}
-          regionNumber={index + 1}
-          key={`region-${index + 1}`}
-          timeData={waitListTimeData.filter(
-            (d) => d.region === `Region  ${index + 1}`
-          )}
-        />
-      ))}
+          {/* Render Region Change Data */}
+          {changeDataList.map((data, index) => (
+            <RegionDataV2
+              transplantData={data}
+              regionNumber={index + 1}
+              key={`region-${index + 1}`}
+              timeData={waitListTimeData.filter(
+                (d) => d.region === `Region  ${index + 1}`
+              )}
+            />
+          ))}
 
-      <div className="py-5 text-center">
-        <div className="grid justify-center text-center space-x-2">
-          <label htmlFor="" className="">
-            Today's Center Count:{" "}
-            {todayCenterData[0]?.heart?.toString() || "NA"}
-          </label>
-          <label htmlFor="" className="">
-            Yesterday's Center Count:{" "}
-            {yesterdayCenterData[0]?.heart?.toString() || "NA"}
-          </label>
-        </div>
-        <div className="flex justify-center text-center space-x-2">
-          {todaysCenterChange === 0 && (
-            <p className="text-yellow-600 font-bold">
-              Center Change: ({todaysCenterChange})
-            </p>
-          )}
-          {todaysCenterChange > 0 && (
-            <p className="text-red-500 font-bold">
-              Center Change: ({todaysCenterChange})
-            </p>
-          )}
-          {todaysCenterChange < 0 && (
-            <p className="text-green-500 font-bold">
-              Center Change: ({todaysCenterChange})
-            </p>
-          )}
-        </div>
-      </div>
+          <div className="py-5 text-center">
+            <div className="grid justify-center text-center space-x-2">
+              <label htmlFor="" className="">
+                Today's Center Count:{" "}
+                {todayCenterData[0]?.heart?.toString() || "NA"}
+              </label>
+              <label htmlFor="" className="">
+                Yesterday's Center Count:{" "}
+                {yesterdayCenterData[0]?.heart?.toString() || "NA"}
+              </label>
+            </div>
+            <div className="flex justify-center text-center space-x-2">
+              {todaysCenterChange === 0 && (
+                <p className="text-yellow-600 font-bold">
+                  Center Change: ({todaysCenterChange})
+                </p>
+              )}
+              {todaysCenterChange > 0 && (
+                <p className="text-red-500 font-bold">
+                  Center Change: ({todaysCenterChange})
+                </p>
+              )}
+              {todaysCenterChange < 0 && (
+                <p className="text-green-500 font-bold">
+                  Center Change: ({todaysCenterChange})
+                </p>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
