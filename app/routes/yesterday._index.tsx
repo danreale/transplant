@@ -2,10 +2,8 @@ import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   getAllTransplantDataWithWaitListTime,
   getCenterData,
-  getTransplantData,
 } from "~/data/db.server";
 import {
-  Form,
   useLoaderData,
   useNavigation,
   useSearchParams,

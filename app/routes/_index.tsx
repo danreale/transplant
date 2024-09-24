@@ -5,7 +5,6 @@ import Header from "~/components/Header";
 import RegionStates from "~/components/RegionStates";
 
 import { getTransplantDates } from "~/data/db.server";
-import { regionStates } from "~/data/states";
 import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
@@ -35,6 +34,11 @@ export default function Index() {
         <p>
           <span className="italic">
             Data is not updated on Saturday/Sunday*
+          </span>
+        </p>
+        <p className="italic">
+          <span className="italic">
+            Data is updated at 7:00 am EST Monday-Friday*
           </span>
         </p>
         <p>

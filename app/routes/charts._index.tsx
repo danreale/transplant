@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useNavigation } from "@remix-run/react";
-import DonorDataChart from "~/components/DonorChart";
+import { useLoaderData, useNavigation } from "@remix-run/react";
 
 import Header from "~/components/Header";
 import RegionChartV2 from "~/components/RegionChartV2";
@@ -10,7 +9,6 @@ import {
   getTransplantCountDates,
   getTransplantStatusCountDates,
 } from "~/data/db.server";
-import { regionStates } from "~/data/states";
 
 export const meta: MetaFunction = () => {
   return [
@@ -51,7 +49,7 @@ export default function Index() {
 
 export async function loader({}: LoaderFunctionArgs) {
   const bloodTypeTotals = await getTransplantCountDates();
-  // console.log(bloodTypeTotals);
+
   const donorData = await getDonorCountDatesB();
   const heartStatus1A = await getTransplantStatusCountDates("Heart Status 1A");
   const heartStatus1B = await getTransplantStatusCountDates("Heart Status 1B");
@@ -77,8 +75,6 @@ export async function loader({}: LoaderFunctionArgs) {
     };
     statusData.push(obj);
   }
-
-  // console.log(statusData);
 
   return { bloodTypeTotals, donorData, statusData };
 }
