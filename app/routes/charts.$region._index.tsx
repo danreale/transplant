@@ -1,13 +1,10 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useNavigation, useParams } from "@remix-run/react";
 import CenterDataChart from "~/components/CenterDataChart";
-import DonorDataChart from "~/components/DonorChart";
 import Header from "~/components/Header";
 import RegionChartV2 from "~/components/RegionChartV2";
-import RegionChart from "~/components/RegionChartV2";
 import RegionChartV3 from "~/components/RegionChartV3";
 import RegionStates from "~/components/RegionStates";
-import TransplantChart from "~/components/TransplantChart";
 import {
   bloodTypeTotalsChart,
   centerDataTotalsChart,
@@ -15,7 +12,6 @@ import {
   getTransplantDates,
   getTransplantStatusCountDatesForRegion,
 } from "~/data/db.server";
-import { regionStates } from "~/data/states";
 
 export const meta: MetaFunction = () => {
   return [

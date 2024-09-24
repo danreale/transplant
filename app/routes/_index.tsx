@@ -5,7 +5,6 @@ import Header from "~/components/Header";
 import RegionStates from "~/components/RegionStates";
 
 import { getTransplantDates } from "~/data/db.server";
-import { regionStates } from "~/data/states";
 import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
@@ -83,7 +82,7 @@ export default function Index() {
 }
 
 export async function loader({}: LoaderFunctionArgs) {
-  const dates = (await getTransplantDates()).splice(2);
+  const dates = await getTransplantDates();
 
   return { dates };
 }
