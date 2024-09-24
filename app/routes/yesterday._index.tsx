@@ -40,8 +40,6 @@ export default function Yesterday() {
   const pageLoading = transition.state !== "idle";
   const [, setSearchParams] = useSearchParams();
 
-  const currentTime = DateTime.now().setZone("America/New_York");
-
   return (
     <div>
       <Header />
