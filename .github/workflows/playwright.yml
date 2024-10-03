@@ -29,10 +29,14 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-    - name: Run Python unit tests
+    - name: Run Python Pediatric tests
       run: python3 etl.py
-    - name: Transform Data
+    - name: Run Python Adult tests
+      run: python3 etlAdult.py
+    - name: Transform Pediatric Data
       run: npm run etlTransformer
+    - name: Transform Adult Data
+      run: npm run etlTransformerAdult
     - name: Format Header Donors
       run: npm run transformHeaderDonors
     - name: Transform Data Donors

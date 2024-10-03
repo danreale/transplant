@@ -1,0 +1,12 @@
+{
+  "id": "mig_crvhifvm9hr77jce1m60",
+  "parentID": "mig_crm3kmdlkr89gjehgvv0",
+  "checksum": "1:7ef548bb0405c34431dd56e0f8b429de7fc0ff8a4683387597acbd5b0bb0edfb",
+  "operations": [
+    {
+      "addTable": {
+        "table": "transplant_data_adult"
+      }
+    }
+  ]
+}
