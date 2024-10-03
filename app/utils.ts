@@ -38,7 +38,7 @@ export const isBetweenMidnightAndSeven = () => {
 
   // Define the start and end times
   const start = currentTime.startOf("day"); // 12:00 AM
-  const end = start.plus({ hours: 7 }); // 7:00 AM
+  const end = start.plus({ hours: 7, minutes: 30 }); // 7:30 AM
 
   // Check if the current time is between 12:00 AM and 7:00 AM
   const isBetween = currentTime >= start && currentTime < end;
