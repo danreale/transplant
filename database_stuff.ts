@@ -16,6 +16,10 @@ const transplantData = JSON.parse(
   await readFile(new URL("./DatabaseWaitingList.json", import.meta.url))
 );
 
+const transplantDataAdult = JSON.parse(
+  await readFile(new URL("./DatabaseWaitingListAdult.json", import.meta.url))
+);
+
 const centerData = JSON.parse(
   await readFile(new URL("./CenterHeartCount.json", import.meta.url))
 );
@@ -38,6 +42,15 @@ WHERE id IN (
 );`;
 console.log(records);
 
+const recordsAdult =
+  await xata.sql<TransplantDataRecord>`DELETE FROM "transplant_data_adult"
+WHERE id IN (
+    SELECT id
+    FROM transplant_data_adult
+    WHERE "report_date" = ${todaysDate}
+);`;
+console.log(recordsAdult);
+
 const records1 = await xata.sql<DonorDataRecord>`DELETE FROM "donor_data"
 WHERE id IN (
     SELECT id
@@ -59,6 +72,12 @@ console.log(records2);
 const dater = await xata.db.transplant_data.create(transplantData);
 
 console.log(dater);
+
+const adultData = await xata.db.transplant_data_adult.create(
+  transplantDataAdult
+);
+
+console.log(adultData);
 
 const center = await xata.db.center_data.create(centerData);
 
