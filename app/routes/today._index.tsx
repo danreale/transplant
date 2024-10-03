@@ -60,7 +60,7 @@ export default function Today() {
         <p className="text-center font-semibold grid justify-center">
           <span className="italic">
             The current time is {currentTime.toFormat("h:mm a")}. Please check
-            back after 7:30 am EST for updated data.*
+            back after 8:00 am EST for updated data.*
           </span>
         </p>
       )}

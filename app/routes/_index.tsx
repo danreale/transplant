@@ -38,7 +38,7 @@ export default function Index() {
         </p>
         <p className="italic">
           <span className="italic">
-            Data is updated at 7:30 am EST Monday-Friday*
+            Data is updated at 8:00 am EST Monday-Friday*
           </span>
         </p>
         <p>
