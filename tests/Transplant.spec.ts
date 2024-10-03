@@ -73,13 +73,13 @@ test("Get Transplant Numbers", async ({ page }) => {
   // Wait for the download process to complete and save the downloaded file somewhere.
   await download.saveAs("WaitingList.csv");
 
-  const endDate = DateTime.fromFormat(strDate, "LLLL dd, yyyy", {
+  const endDate = DateTime.fromFormat(strDate, "LLLL d, yyyy", {
     setZone: true,
     zone: "America/New_York",
   }).toFormat("yyyy-MM-dd");
   console.log(endDate);
 
-  const startDate = DateTime.fromFormat(vacStrDate, "LLLL dd, yyyy", {
+  const startDate = DateTime.fromFormat(vacStrDate, "LLLL d, yyyy", {
     setZone: true,
     zone: "America/New_York",
   }).toFormat("yyyy-MM-dd");
