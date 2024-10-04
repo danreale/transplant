@@ -1,7 +1,8 @@
 name: Daily Transplant Run
 on:
+  # 8 am
   schedule:
-    - cron: "30 11 * * *"
+    - cron: "00 12 * * *"
   workflow_dispatch:
 jobs:
   test:
