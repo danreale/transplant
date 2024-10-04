@@ -68,7 +68,7 @@ export default function Today() {
         <span className="italic">*Based on data through</span>
         <span className="italic">
           {DateTime.fromFormat(
-            settingsDates?.last_data_refresh_date,
+            settingsDates?.last_data_refresh_date!!,
             "yyyy-MM-dd"
           ).toFormat("DDDD")}
           *

@@ -95,6 +95,8 @@ if (settingsRecord) {
   const dates = await xata.db.settings.update(settingsRecord?.id, {
     from_data_refresh_date: datesData.startDate,
     last_data_refresh_date: datesData.endDate,
+    yesterday_from_data_refresh_date: settingsRecord.from_data_refresh_date,
+    yesterday_last_data_refresh_date: settingsRecord.last_data_refresh_date,
   });
   console.log(dates);
 } else {

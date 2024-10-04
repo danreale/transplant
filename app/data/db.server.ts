@@ -190,7 +190,12 @@ export async function getAllTransplantData(date: string, waitListType: string) {
 
 export async function getSettingsDates() {
   const dataRefreshDate = await getXataClient()
-    .db.settings.select(["from_data_refresh_date", "last_data_refresh_date"])
+    .db.settings.select([
+      "from_data_refresh_date",
+      "last_data_refresh_date",
+      "yesterday_from_data_refresh_date",
+      "yesterday_last_data_refresh_date",
+    ])
     .getFirst();
   return dataRefreshDate;
 }

@@ -43,6 +43,8 @@ const tables = [
     columns: [
       { name: "last_data_refresh_date", type: "text" },
       { name: "from_data_refresh_date", type: "text" },
+      { name: "yesterday_from_data_refresh_date", type: "text" },
+      { name: "yesterday_last_data_refresh_date", type: "text" },
     ],
   },
   {
