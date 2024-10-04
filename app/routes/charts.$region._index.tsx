@@ -51,7 +51,11 @@ export default function Index() {
           ({regionStates(parseInt(params.region!!)).join(", ")})
         </p> */}
         <div className="pb-5">
-          <RegionStates region={parseInt(params.region!!)} title={false} />
+          <RegionStates
+            region={parseInt(params.region!!)}
+            age={age}
+            title={false}
+          />
         </div>
 
         <h3 className="text-2xl text-center">Blood Types</h3>

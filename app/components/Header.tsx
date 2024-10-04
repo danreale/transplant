@@ -48,7 +48,7 @@ export default function Header({}) {
             });
           }}
         >
-          {ageGroup === "Adult" ? "View Pediatric" : "View Adult"}
+          {ageGroup === "Adult" ? "View Pediatric Data" : "View Adult Data"}
         </button>
 
         <ul className="py-2 space-y-2">

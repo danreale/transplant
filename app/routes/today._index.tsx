@@ -160,6 +160,7 @@ export default function Today() {
               timeData={waitListTimeData.filter(
                 (d) => d.region === `Region  ${index + 1}`
               )}
+              age={age}
             />
           ))}
 
