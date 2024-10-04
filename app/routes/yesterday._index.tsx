@@ -2,6 +2,7 @@ import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   getAllTransplantDataWithWaitListTime,
   getCenterData,
+  getSettingsDates,
 } from "~/data/db.server";
 import {
   useLoaderData,
@@ -32,6 +33,7 @@ export default function Yesterday() {
     yesterdayCenterData,
     todaysCenterChange,
     waitListTimeData,
+    settingsDates,
   } = useLoaderData<typeof loader>();
 
   const [params] = useSearchParams();
@@ -51,6 +53,17 @@ export default function Yesterday() {
           "MM-dd-yyyy"
         ).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
       </h2>
+
+      <p className="text-center font-semibold grid justify-center">
+        <span className="italic">*Based on data through</span>
+        <span className="italic">
+          {DateTime.fromFormat(
+            settingsDates?.yesterday_last_data_refresh_date!!,
+            "yyyy-MM-dd"
+          ).toFormat("DDDD")}
+          *
+        </span>
+      </p>
 
       {pageLoading && (
         <div className="flex justify-center items-center text-center text-yellow-400 text-3xl pb-5">
@@ -212,6 +225,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     waitListType,
     age
   );
+  const settingsDates = await getSettingsDates();
 
   return {
     changeDataList,
@@ -219,5 +233,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     yesterdayCenterData,
     todaysCenterChange,
     waitListTimeData,
+    settingsDates,
   };
 }

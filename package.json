@@ -14,7 +14,8 @@
     "dailyDataETL": "tsx ./database_stuff.ts",
     "transformHeaderDonors": "node donorHeaderTransformer.cjs",
     "transformDataDonors": "node donorTransformer.cjs",
-    "etlTransformer": "tsx etlTransformer.ts"
+    "etlTransformer": "tsx etlTransformer.ts",
+    "etlTransformerAdult": "tsx etlTransformerAdult.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.5",

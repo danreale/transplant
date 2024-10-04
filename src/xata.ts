@@ -43,6 +43,22 @@ const tables = [
     columns: [
       { name: "last_data_refresh_date", type: "text" },
       { name: "from_data_refresh_date", type: "text" },
+      { name: "yesterday_from_data_refresh_date", type: "text" },
+      { name: "yesterday_last_data_refresh_date", type: "text" },
+    ],
+  },
+  {
+    name: "transplant_data_adult",
+    columns: [
+      { name: "region", type: "text" },
+      { name: "report_date", type: "text" },
+      { name: "wait_list_type", type: "text" },
+      { name: "wait_list_time", type: "text" },
+      { name: "blood_type_a", type: "int" },
+      { name: "blood_type_b", type: "int" },
+      { name: "blood_type_o", type: "int" },
+      { name: "blood_type_ab", type: "int" },
+      { name: "blood_type_all", type: "int" },
     ],
   },
 ] as const;
@@ -62,11 +78,15 @@ export type DonorDataRecord = DonorData & XataRecord;
 export type Settings = InferredTypes["settings"];
 export type SettingsRecord = Settings & XataRecord;
 
+export type TransplantDataAdult = InferredTypes["transplant_data_adult"];
+export type TransplantDataAdultRecord = TransplantDataAdult & XataRecord;
+
 export type DatabaseSchema = {
   transplant_data: TransplantDataRecord;
   center_data: CenterDataRecord;
   donor_data: DonorDataRecord;
   settings: SettingsRecord;
+  transplant_data_adult: TransplantDataAdultRecord;
 };
 
 const DatabaseClient = buildClient();
