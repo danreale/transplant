@@ -54,12 +54,6 @@ export default function Index() {
           <RegionStates region={parseInt(params.region!!)} title={false} />
         </div>
 
-        {/* // TODO: */}
-
-        {/* if pediatric, show pediatric charts */}
-
-        {/* if adult, show adult charts */}
-
         <h3 className="text-2xl text-center">Blood Types</h3>
         <RegionChartV2 data={bloodTypeTotals} />
 

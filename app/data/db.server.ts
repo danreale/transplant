@@ -104,6 +104,12 @@ export async function getTransplantCountDates() {
 
   return records;
 }
+export async function getTransplantCountDatesAdult() {
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date, "blood_type_a", "blood_type_b", "blood_type_o", "blood_type_ab" FROM "transplant_data_adult" where wait_list_time = 'All Time' and wait_list_type = 'All Types' and region = 'All Regions' order by report_date asc limit 365`;
+
+  return records;
+}
 
 export async function getTransplantStatusCountDates(
   status:

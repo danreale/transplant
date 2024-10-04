@@ -65,7 +65,7 @@ export default function Header({}) {
             </Link>
           </li>
           <li>
-            <Link to="/charts">USA Charts</Link>
+            <Link to={`/charts?ageGroupType=${ageGroup}`}>USA Charts</Link>
           </li>
         </ul>
       </div>
