@@ -79,6 +79,24 @@ export async function bloodTypeTotalsChart(region: string) {
     .getAll();
   return records;
 }
+export async function bloodTypeTotalsChartAdult(region: string) {
+  const records = await getXataClient()
+    .db.transplant_data_adult.select([
+      "blood_type_a",
+      "blood_type_ab",
+      "blood_type_b",
+      "blood_type_o",
+      "report_date",
+    ])
+    .filter({
+      wait_list_time: "All Time",
+      wait_list_type: "All Types",
+      region: region,
+    })
+    .sort("report_date", "asc")
+    .getAll();
+  return records;
+}
 
 export async function getTransplantCountDates() {
   const { records } = await getXataClient()
@@ -110,6 +128,37 @@ export async function getTransplantStatusCountDatesForRegion(
   const usRegion = `Region  ${region}`;
   const { records } = await getXataClient()
     .sql<TransplantDataRecord>`SELECT report_date, SUM("blood_type_a" + "blood_type_b" + "blood_type_o" + "blood_type_ab") as wlt FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${status} and region = ${usRegion} group by report_date order by report_date asc limit 365`;
+
+  return records;
+}
+
+export async function getTransplantStatusCountDatesAdult(
+  status:
+    | "Adult Status 1"
+    | "Adult Status 2"
+    | "Adult Status 3"
+    | "Adult Status 4"
+    | "Adult Status 5"
+    | "Adult Status 6"
+) {
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date, SUM("blood_type_a" + "blood_type_b" + "blood_type_o" + "blood_type_ab") as wlt FROM "transplant_data_adult" where wait_list_time = 'All Time' and wait_list_type = ${status} and region = 'All Regions' group by report_date order by report_date asc limit 365`;
+
+  return records;
+}
+export async function getTransplantStatusCountDatesForRegionAdult(
+  status:
+    | "Adult Status 1"
+    | "Adult Status 2"
+    | "Adult Status 3"
+    | "Adult Status 4"
+    | "Adult Status 5"
+    | "Adult Status 6",
+  region: string
+) {
+  const usRegion = `Region  ${region}`;
+  const { records } = await getXataClient()
+    .sql<TransplantDataRecord>`SELECT report_date, SUM("blood_type_a" + "blood_type_b" + "blood_type_o" + "blood_type_ab") as wlt FROM "transplant_data_adult" where wait_list_time = 'All Time' and wait_list_type = ${status} and region = ${usRegion} group by report_date order by report_date asc limit 365`;
 
   return records;
 }
@@ -163,29 +212,58 @@ export async function getDonorCountDatesO() {
   return records;
 }
 
-export async function getAllTransplantData(date: string, waitListType: string) {
-  const records = await getXataClient()
-    .db.transplant_data.select([
-      "region",
-      "report_date",
-      "wait_list_type",
-      "wait_list_time",
-      "blood_type_a",
-      "blood_type_b",
-      "blood_type_ab",
-      "blood_type_o",
-      "blood_type_all",
-    ])
-    .filter({
-      report_date: date,
-      $not: {
-        region: "All Regions",
-      },
-      wait_list_time: "All Time",
-      wait_list_type: waitListType,
-    })
-    .getAll();
-  return records;
+export async function getAllTransplantData(
+  date: string,
+  waitListType: string,
+  age: string
+) {
+  if (age === "Pediatric") {
+    const records = await getXataClient()
+      .db.transplant_data.select([
+        "region",
+        "report_date",
+        "wait_list_type",
+        "wait_list_time",
+        "blood_type_a",
+        "blood_type_b",
+        "blood_type_ab",
+        "blood_type_o",
+        "blood_type_all",
+      ])
+      .filter({
+        report_date: date,
+        $not: {
+          region: "All Regions",
+        },
+        wait_list_time: "All Time",
+        wait_list_type: waitListType,
+      })
+      .getAll();
+    return records;
+  } else {
+    const records = await getXataClient()
+      .db.transplant_data_adult.select([
+        "region",
+        "report_date",
+        "wait_list_type",
+        "wait_list_time",
+        "blood_type_a",
+        "blood_type_b",
+        "blood_type_ab",
+        "blood_type_o",
+        "blood_type_all",
+      ])
+      .filter({
+        report_date: date,
+        $not: {
+          region: "All Regions",
+        },
+        wait_list_time: "All Time",
+        wait_list_type: waitListType,
+      })
+      .getAll();
+    return records;
+  }
 }
 
 export async function getSettingsDates() {
@@ -197,30 +275,58 @@ export async function getSettingsDates() {
 
 export async function getAllTransplantDataWithWaitListTime(
   date: string,
-  waitListType: string
+  waitListType: string,
+  age: string
 ) {
-  const records = await getXataClient()
-    .db.transplant_data.select([
-      "region",
-      "report_date",
-      "wait_list_type",
-      "wait_list_time",
-      "blood_type_a",
-      "blood_type_b",
-      "blood_type_ab",
-      "blood_type_o",
-      "blood_type_all",
-    ])
-    .filter({
-      report_date: date,
-      $not: {
-        region: "All Regions",
-      },
-      wait_list_type: waitListType,
-    })
-    .getAll();
-  // return records;
+  const recs = async () => {
+    if (age === "Pediatric") {
+      const records = await getXataClient()
+        .db.transplant_data.select([
+          "region",
+          "report_date",
+          "wait_list_type",
+          "wait_list_time",
+          "blood_type_a",
+          "blood_type_b",
+          "blood_type_ab",
+          "blood_type_o",
+          "blood_type_all",
+        ])
+        .filter({
+          report_date: date,
+          $not: {
+            region: "All Regions",
+          },
+          wait_list_type: waitListType,
+        })
+        .getAll();
+      return records;
+    } else {
+      const records = await getXataClient()
+        .db.transplant_data_adult.select([
+          "region",
+          "report_date",
+          "wait_list_type",
+          "wait_list_time",
+          "blood_type_a",
+          "blood_type_b",
+          "blood_type_ab",
+          "blood_type_o",
+          "blood_type_all",
+        ])
+        .filter({
+          report_date: date,
+          $not: {
+            region: "All Regions",
+          },
+          wait_list_type: waitListType,
+        })
+        .getAll();
+      return records;
+    }
+  };
 
+  const records = await recs();
   const filteredRecords = records.map((rec) => {
     const data: TimeBreakdown = {
       region: rec.region,

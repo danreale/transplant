@@ -5,11 +5,12 @@ import { getAllTransplantData } from "./db.server";
 export async function getChangeData(
   currentDate: string,
   previousDate: string,
-  waitListType: string
+  waitListType: string,
+  age: string
 ) {
   const [currentData, previousData] = await Promise.all([
-    getAllTransplantData(currentDate, waitListType),
-    getAllTransplantData(previousDate, waitListType),
+    getAllTransplantData(currentDate, waitListType, age),
+    getAllTransplantData(previousDate, waitListType, age),
   ]);
 
   const sortedCurrentData = SortByRegionNumber(currentData);
