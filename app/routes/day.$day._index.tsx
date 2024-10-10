@@ -36,6 +36,7 @@ export default function Daily() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
   const [searchParams, setSearchParams] = useSearchParams();
+  const age = (searchParams.get("ageGroupType") as string) || "Pediatric";
 
   return (
     <div>
@@ -60,26 +61,51 @@ export default function Daily() {
             <label htmlFor="" className="font-bold py-1">
               Choose Wait List Type
             </label>
-            <select
-              name="waitListType"
-              id="waitListType"
-              className="text-center"
-              defaultValue={searchParams.get("waitListType") || "All Types"}
-              onChange={(e) => {
-                setSearchParams((prev) => {
-                  prev.set("waitListType", e.target.value);
-                  return prev;
-                });
-              }}
-            >
-              <option value="Heart Status 1A">Heart Status 1A</option>
-              <option value="Heart Status 1B">Heart Status 1B</option>
-              <option value="Heart Status 2">Heart Status 2</option>
-              <option value="Heart Status 7 (Inactive)">
-                Heart Status 7 (Inactive)
-              </option>
-              <option value="All Types">All Types</option>
-            </select>
+            {age === "Pediatric" && (
+              <select
+                name="waitListType"
+                id="waitListType"
+                className="text-center"
+                defaultValue={searchParams.get("waitListType") || "All Types"}
+                onChange={(e) => {
+                  setSearchParams((prev) => {
+                    prev.set("waitListType", e.target.value);
+                    return prev;
+                  });
+                }}
+              >
+                <option value="Heart Status 1A">Heart Status 1A</option>
+                <option value="Heart Status 1B">Heart Status 1B</option>
+                <option value="Heart Status 2">Heart Status 2</option>
+                <option value="Heart Status 7 (Inactive)">
+                  Heart Status 7 (Inactive)
+                </option>
+                <option value="All Types">All Types</option>
+              </select>
+            )}
+
+            {age === "Adult" && (
+              <select
+                name="waitListType"
+                id="waitListType"
+                className="text-center"
+                defaultValue={searchParams.get("waitListType") || "All Types"}
+                onChange={(e) => {
+                  setSearchParams((prev) => {
+                    prev.set("waitListType", e.target.value);
+                    return prev;
+                  });
+                }}
+              >
+                <option value="Adult Status 1">Status 1</option>
+                <option value="Adult Status 2">Status 2</option>
+                <option value="Adult Status 3">Status 3</option>
+                <option value="Adult Status 4">Status 4</option>
+                <option value="Adult Status 5">Status 5</option>
+                <option value="Adult Status 6">Status 6</option>
+                <option value="All Types">All Types</option>
+              </select>
+            )}
           </div>
 
           {/* <button
@@ -105,6 +131,7 @@ export default function Daily() {
           timeData={waitListTimeData.filter(
             (d) => d.region === `Region  ${index + 1}`
           )}
+          age={age}
         />
       ))}
 
@@ -145,6 +172,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
   const waitListType = search.get("waitListType") as string;
+  const age = (search.get("ageGroupType") as string) || "Pediatric";
 
   // TODO: maybe should have a bail early error if bad date
   const providedDate = params.day!!;
@@ -156,7 +184,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const changeDataList = await getChangeData(
     providedDate,
     dayBeforeProvidedDate,
-    waitListType
+    waitListType,
+    age
   );
 
   const todayCenterData = await getCenterData(providedDate);
@@ -174,7 +203,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
   const waitListTimeData = await getAllTransplantDataWithWaitListTime(
     providedDate,
-    waitListType
+    waitListType,
+    age
   );
 
   return {

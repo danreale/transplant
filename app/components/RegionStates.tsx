@@ -3,16 +3,20 @@ import { regionStates } from "~/data/states";
 
 type Props = {
   region: number;
+  age: string;
   title?: boolean;
 };
 
-export default function RegionStates({ region, title = true }: Props) {
+export default function RegionStates({ region, age, title = true }: Props) {
   return (
     <div className="flex justify-center items-center text-center py-2">
       <ul className="">
         <li key={region} className="text-center">
           {title && (
-            <Link to={`/charts/${region}`} className="underline text-xl">
+            <Link
+              to={`/charts/${region}?ageGroupType=${age}`}
+              className="underline text-xl"
+            >
               Region {region}
             </Link>
           )}

@@ -1,5 +1,10 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useNavigation } from "@remix-run/react";
+import {
+  Link,
+  useLoaderData,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
 import RegionStates from "~/components/RegionStates";
@@ -21,6 +26,8 @@ export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
   const { dates } = useLoaderData<typeof loader>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const age = (searchParams.get("ageGroupType") as string) || "Pediatric";
   return (
     <>
       <Header />
@@ -51,7 +58,9 @@ export default function Index() {
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
             <li key={index}>
-              <Link to={`/day/${date.report_date}?waitListType=All+Types`}>
+              <Link
+                to={`/day/${date.report_date}?waitListType=All+Types&ageGroupType=${age}`}
+              >
                 {date.report_date} (
                 {
                   DateTime.fromFormat(date.report_date, "yyyy-MM-dd")
@@ -74,7 +83,7 @@ export default function Index() {
 
         {/* all regions */}
         {range(1, 12).map((num) => (
-          <RegionStates region={num} />
+          <RegionStates region={num} age={age} />
         ))}
       </div>
     </>
