@@ -13,6 +13,7 @@ export default function RegionData({
   transplantData,
   regionNumber,
   timeData,
+  age,
 }: {
   transplantData: RecordArray<
     SelectedPick<
@@ -32,6 +33,7 @@ export default function RegionData({
   >;
   regionNumber: number;
   timeData: Array<TimeBreakdown>;
+  age: string;
 }) {
   const [regionFavorite, setRegionFavorite] = useState(false);
 
@@ -187,7 +189,7 @@ export default function RegionData({
         <div className="flex justify-center">
           <Link
             className="font-semibold my-4 text-blue-600"
-            to={`/charts/${regionNumber}`}
+            to={`/charts/${regionNumber}?ageGroupType=${age}`}
           >
             View Trends
           </Link>
