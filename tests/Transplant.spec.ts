@@ -220,7 +220,7 @@ test("Get Donor Numbers", async ({ page }) => {
   await page.waitForTimeout(1000);
   await page
     .getByLabel("Year")
-    .selectOption("[Donation Year].[2025];2025;45;Donation Year");
+    .selectOption("[Donation Year].[2024];2024;45;Donation Year");
   await page.waitForTimeout(1000);
   await page.getByRole("button", { name: "Go" }).click();
   await page.waitForTimeout(5000);
