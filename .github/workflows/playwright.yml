@@ -70,6 +70,8 @@ jobs:
     - name: Run k6 tests
       uses: grafana/setup-k6-action@v1
       uses: grafana/run-k6-action@v1
+      env:
+        TEST_ENV: prod
       with:
         path: |
           ./load_tests/hearttransplant.js
@@ -79,5 +81,4 @@ jobs:
       with:
         name: k6-summary-report.html
         path: HeartTransplant.html
-      env:
-        TEST_ENV: prod
+      

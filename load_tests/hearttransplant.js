@@ -7,6 +7,9 @@ const test_env = __ENV.TEST_ENV;
 
 export const options = {
   // insecureSkipTLSVerify: true,
+  cloud: {
+    projectID: 3739847,
+  },
   ext: {},
   thresholds: {
     http_req_failed: ["rate<0.01"],
