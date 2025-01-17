@@ -4,7 +4,11 @@ function Footer() {
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid items-center justify-center">
           <div className="flex justify-center text-teal-600 px-4">
-            <a href="https://www.buymeacoffee.com/cap10chunks" target="_blank">
+            <a
+              href="https://www.buymeacoffee.com/cap10chunks"
+              target="_blank"
+              data-testid="buyMeCoffeeLink"
+            >
               <img
                 src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png"
                 alt="Buy Me A Coffee"
@@ -16,6 +20,7 @@ function Footer() {
           <a
             className="mt-4 text-center text-sm underline text-blue-600"
             href="mailto:djreale@gmail.com?subject=Pediatric Heart Transplant Site"
+            data-testid="emailMe"
           >
             Email Me
           </a>

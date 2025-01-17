@@ -37,6 +37,7 @@ test.describe("End To End Tests", () => {
       `We make our best attempt to analyze the waiting list data to determine if there has been a transplant or if patients are moving around the waiting list to different statuses. Without the actual data, these are only best guesses, guesses that we can confidently say are more right than wrong just by looking at data patterns. In cases where we claim a patient receieved a transplant, there are really a few options. 1. The patient actually receives the transplant. 2. The patient goes home without needing a transplant and has made a full recovery. 3. The patient did not make it and is no longer on the waiting list. Since 2 of the 3 are good outcomes, we "assume" that the patient got a transplant. Again, without the realtime data, we don't know for sure. I hope you all find this helpful as you navigate through your transplant journey.`
     );
 
+    // verift all regions
     await expect(page.getByTestId("chart-region-1")).toHaveAttribute(
       "href",
       "/charts/1"
@@ -46,6 +47,103 @@ test.describe("End To End Tests", () => {
     await expect(page.getByTestId("Massachusetts")).toBeVisible();
     await expect(page.getByTestId("New Hampshire")).toBeVisible();
     await expect(page.getByTestId("Rhode Island")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-2")).toHaveAttribute(
+      "href",
+      "/charts/2"
+    );
+    await expect(page.getByTestId("DC")).toBeVisible();
+    await expect(page.getByTestId("Delaware")).toBeVisible();
+    await expect(page.getByTestId("Maryland")).toBeVisible();
+    await expect(page.getByTestId("New Jersey")).toBeVisible();
+    await expect(page.getByTestId("Pennsylvania")).toBeVisible();
+    await expect(page.getByTestId("West Virginia")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-3")).toHaveAttribute(
+      "href",
+      "/charts/3"
+    );
+    await expect(page.getByTestId("Alabama")).toBeVisible();
+    await expect(page.getByTestId("Arkansas")).toBeVisible();
+    await expect(page.getByTestId("Florida")).toBeVisible();
+    await expect(page.getByTestId("Georgia")).toBeVisible();
+    await expect(page.getByTestId("Louisiana")).toBeVisible();
+    await expect(page.getByTestId("Mississippi")).toBeVisible();
+    await expect(page.getByTestId("Puerto Rico")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-4")).toHaveAttribute(
+      "href",
+      "/charts/4"
+    );
+    await expect(page.getByTestId("Oklahoma")).toBeVisible();
+    await expect(page.getByTestId("Texas")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-5")).toHaveAttribute(
+      "href",
+      "/charts/5"
+    );
+    await expect(page.getByTestId("Arizona")).toBeVisible();
+    await expect(page.getByTestId("California")).toBeVisible();
+    await expect(page.getByTestId("Nevada")).toBeVisible();
+    await expect(page.getByTestId("New Mexico")).toBeVisible();
+    await expect(page.getByTestId("Utah")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-6")).toHaveAttribute(
+      "href",
+      "/charts/6"
+    );
+    await expect(page.getByTestId("Alaska")).toBeVisible();
+    await expect(page.getByTestId("Hawaii")).toBeVisible();
+    await expect(page.getByTestId("Idaho")).toBeVisible();
+    await expect(page.getByTestId("Montana")).toBeVisible();
+    await expect(page.getByTestId("Oregon")).toBeVisible();
+    await expect(page.getByTestId("Washington")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-7")).toHaveAttribute(
+      "href",
+      "/charts/7"
+    );
+    await expect(page.getByTestId("Illinois")).toBeVisible();
+    await expect(page.getByTestId("Minnesota")).toBeVisible();
+    await expect(page.getByTestId("North Dakota")).toBeVisible();
+    await expect(page.getByTestId("South Dakota")).toBeVisible();
+    await expect(page.getByTestId("Wisconsin")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-8")).toHaveAttribute(
+      "href",
+      "/charts/8"
+    );
+    await expect(page.getByTestId("Colorado")).toBeVisible();
+    await expect(page.getByTestId("Iowa")).toBeVisible();
+    await expect(page.getByTestId("Kansas")).toBeVisible();
+    await expect(page.getByTestId("Missouri")).toBeVisible();
+    await expect(page.getByTestId("Nebraska")).toBeVisible();
+    await expect(page.getByTestId("Wyoming")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-9")).toHaveAttribute(
+      "href",
+      "/charts/9"
+    );
+    await expect(page.getByTestId("New York")).toBeVisible();
+    await expect(page.getByTestId("Vermont")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-10")).toHaveAttribute(
+      "href",
+      "/charts/10"
+    );
+    await expect(page.getByTestId("Indiana")).toBeVisible();
+    await expect(page.getByTestId("Michigan")).toBeVisible();
+    await expect(page.getByTestId("Ohio")).toBeVisible();
+
+    await expect(page.getByTestId("chart-region-11")).toHaveAttribute(
+      "href",
+      "/charts/11"
+    );
+    await expect(page.getByTestId("Kentucky")).toBeVisible();
+    await expect(page.getByTestId("North Carolina")).toBeVisible();
+    await expect(page.getByTestId("South Carolina")).toBeVisible();
+    await expect(page.getByTestId("Tennessee")).toBeVisible();
+    await expect(page.getByTestId("Virginia")).toBeVisible();
   });
   test("Open Specific Days Data", async ({ page }) => {
     await page.getByTestId(`report-date-2025-01-15`).click();
@@ -109,8 +207,23 @@ test.describe("End To End Tests", () => {
     // for a specific day, check all region counts and trends
     // do this for each wait list type, 1a, 1b, 2, 7 and check all numbers
   });
-  test("Verify Footer Elements", async () => {
+  test("Verify Footer Elements", async ({ page }) => {
     // buy me a coffe
+    await expect(page.getByTestId("buyMeCoffeeLink")).toBeVisible();
+    await expect(page.getByTestId("buyMeCoffeeLink")).toHaveAttribute(
+      "target",
+      "_blank"
+    );
+    await expect(page.getByTestId("buyMeCoffeeLink")).toHaveAttribute(
+      "href",
+      "https://www.buymeacoffee.com/cap10chunks"
+    );
+
     // email link
+    await expect(page.getByTestId("emailMe")).toBeVisible();
+    await expect(page.getByTestId("emailMe")).toHaveAttribute(
+      "href",
+      "mailto:djreale@gmail.com?subject=Pediatric Heart Transplant Site"
+    );
   });
 });
