@@ -12,13 +12,17 @@ export default function RegionStates({ region, title = true }: Props) {
       <ul className="">
         <li key={region} className="text-center">
           {title && (
-            <Link to={`/charts/${region}`} className="underline text-xl">
+            <Link
+              to={`/charts/${region}`}
+              className="underline text-xl"
+              data-testid={`chart-region-${region}`}
+            >
               Region {region}
             </Link>
           )}
           <ul>
             {regionStates(region).map((s) => (
-              <li>{s}</li>
+              <li data-testid={s}>{s}</li>
             ))}
           </ul>
         </li>

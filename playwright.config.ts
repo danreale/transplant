@@ -4,7 +4,22 @@ import { defineConfig, devices } from "@playwright/test";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// require('dotenv').config();
+// require("dotenv").config();
+import "dotenv/config";
+
+export const getBaseUrl = () => {
+  const test_env = process.env.TEST_ENV;
+  switch (test_env) {
+    case "local":
+      return "http://localhost:5174";
+    case "dev":
+      return "";
+    case "prod":
+      return "https://heart-transplant.netlify.app";
+    default:
+      return "http://localhost:5174";
+  }
+};
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -38,7 +53,12 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"], headless: true },
+      use: {
+        ...devices["Desktop Chrome"],
+        headless: true,
+        // headless: false,
+        baseURL: getBaseUrl(),
+      },
     },
 
     // {

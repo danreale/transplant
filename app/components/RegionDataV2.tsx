@@ -8,30 +8,18 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useLayoutEffect, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { TimeBreakdown } from "~/utils";
+import { REGION_CHANGE_OBJ } from "~/data/change-data-smart.server";
 
 export default function RegionData({
-  transplantData,
   regionNumber,
   timeData,
+  transplantData,
+  waitListType,
 }: {
-  transplantData: RecordArray<
-    SelectedPick<
-      TransplantDataRecord,
-      (
-        | "region"
-        | "report_date"
-        | "wait_list_type"
-        | "wait_list_time"
-        | "blood_type_a"
-        | "blood_type_b"
-        | "blood_type_o"
-        | "blood_type_ab"
-        | "blood_type_all"
-      )[]
-    >
-  >;
   regionNumber: number;
   timeData: Array<TimeBreakdown>;
+  transplantData: REGION_CHANGE_OBJ;
+  waitListType: string;
 }) {
   const [regionFavorite, setRegionFavorite] = useState(false);
 
@@ -55,64 +43,87 @@ export default function RegionData({
 
   // Get wait list times for each blood type
   const bloodTypeWaitTimeData = (bloodType: string) =>
-    timeData.map((d) => {
-      if (bloodType === "A") {
-        return {
-          wait_list_time: d.wait_list_time,
-          count: d.blood_type_a,
-        };
-      }
-      if (bloodType === "B") {
-        return {
-          wait_list_time: d.wait_list_time,
-          count: d.blood_type_b,
-        };
-      }
-      if (bloodType === "AB") {
-        return {
-          wait_list_time: d.wait_list_time,
-          count: d.blood_type_ab,
-        };
-      }
-      if (bloodType === "O") {
-        return {
-          wait_list_time: d.wait_list_time,
-          count: d.blood_type_o,
-        };
-      }
-      if (bloodType === "ALL") {
-        return {
-          wait_list_time: d.wait_list_time,
-          count: d.blood_type_all,
-        };
-      }
-    });
+    timeData
+      .filter((t) => t.wait_list_type === waitListType)
+      .map((d) => {
+        if (bloodType === "A") {
+          return {
+            wait_list_time: d.wait_list_time,
+            count: d.blood_type_a,
+          };
+        }
+        if (bloodType === "B") {
+          return {
+            wait_list_time: d.wait_list_time,
+            count: d.blood_type_b,
+          };
+        }
+        if (bloodType === "AB") {
+          return {
+            wait_list_time: d.wait_list_time,
+            count: d.blood_type_ab,
+          };
+        }
+        if (bloodType === "O") {
+          return {
+            wait_list_time: d.wait_list_time,
+            count: d.blood_type_o,
+          };
+        }
+        if (bloodType === "ALL") {
+          return {
+            wait_list_time: d.wait_list_time,
+            count: d.blood_type_all,
+          };
+        }
+      });
+
+  const regionWaitListBloodTypeData = transplantData.wait_list_types.filter(
+    (w) => w.type === waitListType
+  )[0];
+
   return (
     <>
       <div className="flex justify-center items-center gap-x-2">
         <div className="flex justify-center text-center">
           <button
             onClick={() => handleSetRegionFavorite(`Region${regionNumber}`)}
+            data-testid={`favorite-region-${regionNumber}`}
           >
             {regionFavorite ? (
-              <FaStar className="text-yellow-400" />
+              <FaStar
+                className="text-yellow-400"
+                data-testid={`region${regionNumber}Star`}
+              />
             ) : (
-              <FaRegStar className="font-bold" />
+              <FaRegStar
+                className="font-bold"
+                data-testid={`region${regionNumber}NoStar`}
+              />
             )}
           </button>
         </div>
         {regionFavorite ? (
-          <h2 className="text-2xl text-center text-indigo-600 font-bold italic">
+          <h2
+            className="text-2xl text-center text-indigo-600 font-bold italic"
+            data-testid={`region${regionNumber}Favorited`}
+          >
             Region {regionNumber}
           </h2>
         ) : (
-          <h2 className="text-2xl text-center">Region {regionNumber}</h2>
+          <h2
+            className="text-2xl text-center"
+            data-testid={`region${regionNumber}NotFavorited`}
+          >
+            Region {regionNumber}
+          </h2>
         )}
         <Popover className="relative">
           {/* may need to be bigger for a11y */}
           <PopoverButton
             className="flex items-center"
             aria-label={`Show list of states for region ${regionNumber}`}
+            data-testid={`region-${regionNumber}-info`}
           >
             <InformationCircle className="size-8 fill-blue-600 stroke-white" />
           </PopoverButton>
@@ -121,73 +132,134 @@ export default function RegionData({
             modal
             focus
             className="flex flex-col bg-white border rounded p-2"
+            data-testid={`region-${regionNumber}-popover`}
           >
             <ul>
               {regionStates(regionNumber).map((state) => (
-                <li key={state}>{state}</li>
+                <li key={state} data-testid={state}>
+                  {state}
+                </li>
               ))}
             </ul>
           </PopoverPanel>
         </Popover>
       </div>
 
-      <div className="my-4">
+      <div className="my-4" data-testid={`region-${regionNumber}-section`}>
         <ul className="">
-          {transplantData.map((record, index: number) => (
-            <>
-              {/* <li key={index} className="flex justify-center space-x-2">
-                <p className="text-center text-rose-500 font-bold">
-                  {record.wait_list_type}
-                </p>
-              </li>
-              <li key={index} className="flex justify-center space-x-2">
-                <p className="text-center text-lime-600 font-bold">
-                  {record.wait_list_time}
-                </p>
-              </li> */}
-
-              <li
-                key={`record-${index}`}
-                className="flex justify-center flex-wrap gap-2"
-              >
-                <BloodTypeDataTile
-                  label="A"
-                  count={record.blood_type_a}
-                  change={record.blood_type_a_change}
-                  waitTimes={bloodTypeWaitTimeData("A")}
-                />
-                <BloodTypeDataTile
-                  label="B"
-                  count={record.blood_type_b}
-                  change={record.blood_type_b_change}
-                  waitTimes={bloodTypeWaitTimeData("B")}
-                />
-                <BloodTypeDataTile
-                  label="AB"
-                  count={record.blood_type_ab}
-                  change={record.blood_type_ab_change}
-                  waitTimes={bloodTypeWaitTimeData("AB")}
-                />
-                <BloodTypeDataTile
-                  label="O"
-                  count={record.blood_type_o}
-                  change={record.blood_type_o_change}
-                  waitTimes={bloodTypeWaitTimeData("O")}
-                />
-                <BloodTypeDataTile
-                  label="All"
-                  count={record.blood_type_all}
-                  change={record.blood_type_all_change}
-                  waitTimes={bloodTypeWaitTimeData("ALL")}
-                />
-              </li>
-            </>
-          ))}
+          <li key={`bloodtype`} className="flex justify-center flex-wrap gap-2">
+            <BloodTypeDataTile
+              label="A"
+              count={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "a"
+                )[0].today
+              }
+              change={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "a"
+                )[0].change
+              }
+              waitTimes={bloodTypeWaitTimeData("A")}
+            />
+            <BloodTypeDataTile
+              label="B"
+              count={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "b"
+                )[0].today
+              }
+              change={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "b"
+                )[0].change
+              }
+              waitTimes={bloodTypeWaitTimeData("B")}
+            />
+            <BloodTypeDataTile
+              label="AB"
+              count={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "ab"
+                )[0].today
+              }
+              change={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "ab"
+                )[0].change
+              }
+              waitTimes={bloodTypeWaitTimeData("AB")}
+            />
+            <BloodTypeDataTile
+              label="O"
+              count={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "o"
+                )[0].today
+              }
+              change={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "o"
+                )[0].change
+              }
+              waitTimes={bloodTypeWaitTimeData("O")}
+            />
+            <BloodTypeDataTile
+              label="All"
+              count={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "all"
+                )[0].today
+              }
+              change={
+                regionWaitListBloodTypeData.blood_types.filter(
+                  (bt) => bt.blood_type === "all"
+                )[0].change
+              }
+              waitTimes={bloodTypeWaitTimeData("ALL")}
+            />
+          </li>
         </ul>
+
+        <div className="flex justify-center py-2">
+          <ul>
+            {transplantData.messages.map((record, index: number) => (
+              <li>
+                {record === "Patient Received Transplant" ? (
+                  <p
+                    data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
+                    key={index}
+                    className="text-green-600 font-bold text-center"
+                  >
+                    🎉 {record} 🎉
+                  </p>
+                ) : record === "Patient Added To Waiting List" ? (
+                  <p
+                    data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
+                    key={index}
+                    className="text-red-600 font-bold text-center"
+                  >
+                    💔 {record} 💔
+                  </p>
+                ) : (
+                  <p
+                    data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
+                    key={index}
+                    className="text-slate-800 text-center"
+                  >
+                    {record}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className="flex justify-center">
           <Link
             className="font-semibold my-4 text-blue-600"
             to={`/charts/${regionNumber}`}
+            data-testid={`view-trends-region${regionNumber}`}
           >
             View Trends
           </Link>

@@ -23,6 +23,7 @@ export default function CenterDataChart({ data }) {
           left: 20,
           bottom: 5,
         }}
+        id="chart-center-data"
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="report_date" />

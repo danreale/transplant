@@ -23,6 +23,7 @@ export default function RegionChartV3({ data }) {
           left: 20,
           bottom: 5,
         }}
+        id="chart-wait-list-status"
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="report_date" />

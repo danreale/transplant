@@ -21,12 +21,15 @@ export default function BloodTypeDataTile({
 }: Props) {
   return (
     <div className="flex flex-col justify-center items-center">
-      <span className="font-semibold">{label}</span>
+      <span className="font-semibold" data-testid={`bloodType-${label}`}>
+        {label}
+      </span>
       {/* Tile */}
       <Popover className="relative">
         <PopoverButton
           className="flex items-center"
           aria-label={`Show waiting time breakdown`}
+          data-testid={`bloodType-${label}-button`}
         >
           <div
             className={clsx(
@@ -35,7 +38,9 @@ export default function BloodTypeDataTile({
               "flex flex-col justify-center items-center border rounded w-16 h-16 shadow-sm relative"
             )}
           >
-            <label htmlFor="">{count}</label>
+            <label htmlFor="" data-testid={`count-${label}`}>
+              {count}
+            </label>
             <div className="absolute bottom-1">
               <DataChange count={change} />
             </div>
@@ -46,6 +51,7 @@ export default function BloodTypeDataTile({
           modal
           focus
           className="flex flex-col bg-white border rounded p-2"
+          data-testid={`popover-${label}`}
         >
           <ul className="text-center">
             {waitTimes.map((d, index) => (
@@ -53,8 +59,15 @@ export default function BloodTypeDataTile({
                 key={index}
                 className="grid text-center justify-center border-2 bg-amber-50 px-1"
               >
-                <span className="italic">{d.wait_list_time}</span>
-                <span className="font-bold pb-0">{d.count}</span>
+                <span className="italic" data-testid={d.wait_list_time}>
+                  {d.wait_list_time}
+                </span>
+                <span
+                  className="font-bold pb-0"
+                  data-testid={`${d.wait_list_time} Count`}
+                >
+                  {d.count}
+                </span>
               </li>
             ))}
           </ul>

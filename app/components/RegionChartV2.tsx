@@ -23,6 +23,7 @@ export default function RegionChart({ data }) {
           left: 20,
           bottom: 5,
         }}
+        id="chart-blood-type"
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="report_date" />
