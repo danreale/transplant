@@ -1,3 +1,4 @@
+# These are playwright and k6 tests that run after new code has been deployed to main
 name: Smoke Tests
 on:
   push:
@@ -25,12 +26,16 @@ jobs:
         path: playwright-report/
         retention-days: 30
     - name: Run k6 tests
-        uses: grafana/k6-action@v0.3.1
-        with:
-          filename: load_tests/hearttransplant.js
-      - name: Store k6 report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: k6-summary-report.html
-          path: HeartTransplant.html
+      uses: grafana/setup-k6-action@v1
+      uses: grafana/run-k6-action@v1
+      with:
+        path: |
+          ./load_tests/hearttransplant.js
+    - name: Store k6 report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: k6-summary-report.html
+        path: HeartTransplant.html
+      env:
+        TEST_ENV: prod

@@ -1,3 +1,4 @@
+# these tests run every day at a certain time. ETL and smoke test after to check for errors
 name: Daily Transplant Run
 on:
   # 8 am 12 daylight savings time /13 standard time
@@ -5,7 +6,7 @@ on:
     - cron: "00 13 * * *"
   workflow_dispatch:
 jobs:
-  test:
+  build:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +47,37 @@ jobs:
       run: XATA_BRANCH=${{secrets.XATA_BRANCH}} XATA_API_KEY=${{secrets.XATA_API_KEY}} npm run dailyDataETL
     - name: Email Results
       run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+    - name: Run Playwright tests
+      run: npx playwright test E2E.spec.ts
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+    - name: Run k6 tests
+      uses: grafana/setup-k6-action@v1
+      uses: grafana/run-k6-action@v1
+      with:
+        path: |
+          ./load_tests/hearttransplant.js
+    - name: Store k6 report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: k6-summary-report.html
+        path: HeartTransplant.html
+      env:
+        TEST_ENV: prod
