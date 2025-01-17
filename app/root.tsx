@@ -8,6 +8,7 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 
 import stylesheet from "~/tailwind.css?url";
+import Footer from "./components/Footer";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -42,6 +43,7 @@ export default function App() {
       </head>
       <body className="px-5">
         <Outlet />
+        <Footer />
         <ScrollRestoration />
         <Scripts />
       </body>

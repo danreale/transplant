@@ -2,13 +2,18 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
+import RegionStates from "~/components/RegionStates";
 
 import { getTransplantDates } from "~/data/db.server";
+import { range } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Heart Transplant Waiting List" },
-    { name: "description", content: "Status 1A Blood Type B and O" },
+    { title: "Heart Transplant Waiting List - Home" },
+    {
+      name: "description",
+      content: "Wait list status data for each blood type and region",
+    },
   ];
 };
 
@@ -25,11 +30,28 @@ export default function Index() {
         </div>
       )}
       <h2 className="text-center text-2xl py-2">Past Transplant Data</h2>
+      <div className="text-center py-2 space-y-2">
+        <p>
+          <span className="italic">
+            Data is not updated on Saturday/Sunday*
+          </span>
+        </p>
+        <p className="italic">
+          <span className="italic">
+            Data is updated at 8:00 am EST Monday-Friday*
+          </span>
+        </p>
+        <p>
+          <span className="italic">
+            Access up to the past 1 years worth of data*
+          </span>
+        </p>
+      </div>
       <div className="py-5 flex justify-center">
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
             <li key={index}>
-              <Link to={`/day/${date.report_date}`}>
+              <Link to={`/day/${date.report_date}?waitListType=All+Types`}>
                 {date.report_date} (
                 {
                   DateTime.fromFormat(date.report_date, "yyyy-MM-dd")

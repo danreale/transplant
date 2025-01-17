@@ -1,6 +1,5 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
-  Form,
   useLoaderData,
   useNavigation,
   useParams,
@@ -12,15 +11,26 @@ import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
 import { getRealisticSmartChangeData } from "~/data/change-data-smart.server";
 import { getChangeData } from "~/data/change-data.server";
-import { getCenterData } from "~/data/db.server";
+import {
+  getAllTransplantDataWithWaitListTime,
+  getCenterData,
+} from "~/data/db.server";
 
-export default function Appointments() {
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - Daily" },
+    { name: "description", content: "Daily Waiting List Data" },
+  ];
+};
+
+export default function Daily() {
   const {
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
     waitListTimeData,
     transplantDailyData,
+
   } = useLoaderData<typeof loader>();
 
   const params = useParams();
@@ -32,9 +42,11 @@ export default function Appointments() {
   return (
     <div>
       <Header />
-      <h1 className="text-center text-4xl">Today's Data</h1>
-      <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {params.day}
+      <h1 className="text-center text-4xl">Day's Data</h1>
+      <h2 className="text-center text-4xl text-yellow-500 italic font-semibold pb-2">
+        {DateTime.fromFormat(params.day!!, "yyyy-MM-dd").toLocaleString(
+          DateTime.DATE_MED_WITH_WEEKDAY
+        )}
       </h2>
 
       {pageLoading && (
@@ -94,6 +106,7 @@ export default function Appointments() {
           timeData={waitListTimeData.filter(
             (d) => d.region === `Region  ${index + 1}`
           )}
+
           transplantData={data}
           waitListType={searchParams.get("waitListType")!!}
         />
@@ -144,6 +157,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
+
   const todayCenterData = await getCenterData(providedDate);
   const yesterdayCenterData = await getCenterData(dayBeforeProvidedDate);
 
@@ -162,10 +176,13 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     waitListType
   );
 
+
   const transplantDailyData = await getRealisticSmartChangeData(
     params.day!!,
     dayBeforeProvidedDate
   );
+
+
 
   return {
     todayCenterData,
@@ -173,5 +190,6 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     todaysCenterChange,
     waitListTimeData,
     transplantDailyData,
+
   };
 }

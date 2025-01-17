@@ -1,6 +1,5 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
-  Form,
   useLoaderData,
   useNavigation,
   useSearchParams,
@@ -11,14 +10,26 @@ import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
 import { getRealisticSmartChangeData } from "~/data/change-data-smart.server";
 import { getChangeData } from "~/data/change-data.server";
-import { getCenterData } from "~/data/db.server";
+import {
+  getAllTransplantDataWithWaitListTime,
+  getCenterData,
+  getSettingsDates,
+} from "~/data/db.server";
+import { isBetweenMidnightAndSeven } from "~/utils";
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
   .toFormat("MM-dd-yyyy");
-export default function Appointments() {
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Heart Transplant Waiting List - Today" },
+    { name: "description", content: "Todays Waiting List Data" },
+  ];
+};
+
+export default function Today() {
   const {
-    // changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
@@ -33,13 +44,37 @@ export default function Appointments() {
   const pageLoading = transition.state !== "idle";
   const [, setSearchParams] = useSearchParams();
 
+  const currentTime = DateTime.now().setZone("America/New_York");
+
   return (
     <div>
       <Header />
       <h1 className="text-center text-4xl">Today's Data</h1>
-      <h2 className="text-center text-4xl text-yellow-500 italic pb-2">
-        {params.get("reportDate") || todaysDate}
+      <h2 className="text-center text-4xl text-yellow-500 italic font-semibold pb-2">
+        {DateTime.fromFormat(
+          params.get("reportDate") || todaysDate,
+          "MM-dd-yyyy"
+        ).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
       </h2>
+
+      {isBetweenMidnightAndSeven() && (
+        <p className="text-center font-semibold grid justify-center">
+          <span className="italic">
+            The current time is {currentTime.toFormat("h:mm a")}. Please check
+            back after 8:00 am EST for updated data.*
+          </span>
+        </p>
+      )}
+      <p className="text-center font-semibold grid justify-center">
+        <span className="italic">*Based on data through</span>
+        <span className="italic">
+          {DateTime.fromFormat(
+            settingsDates?.last_data_refresh_date!!,
+            "yyyy-MM-dd"
+          ).toFormat("DDDD")}
+          *
+        </span>
+      </p>
 
       {pageLoading && (
         <div className="flex justify-center items-center text-center text-yellow-400 text-3xl pb-5">
@@ -47,48 +82,46 @@ export default function Appointments() {
         </div>
       )}
 
-      <div className="grid justify-center text-center py-5">
-        {/* <Form> */}
-        <div className="grid justify-center text-center">
-          <div className="grid justify-center text-center">
-            <label htmlFor="" className="font-bold py-1">
-              Choose Wait List Type
-            </label>
-            <select
-              name="waitListType"
-              id="waitListType"
-              className="text-center"
-              defaultValue={params.get("waitListType") || "All Types"}
-              onChange={(e) => {
-                setSearchParams((prev) => {
-                  prev.set("waitListType", e.target.value);
-                  return prev;
-                });
-              }}
-            >
-              <option value="Heart Status 1A">Heart Status 1A</option>
-              <option value="Heart Status 1B">Heart Status 1B</option>
-              <option value="Heart Status 2">Heart Status 2</option>
-              <option value="Heart Status 7 (Inactive)">
-                Heart Status 7 (Inactive)
-              </option>
-              <option value="All Types">All Types</option>
-            </select>
-          </div>
+      {!isBetweenMidnightAndSeven() && (
+        <>
+          <div className="grid justify-center text-center py-5">
+            {/* <Form> */}
+            <div className="grid justify-center text-center">
+              <div className="grid justify-center text-center">
+                <label htmlFor="" className="font-bold py-1">
+                  Choose Wait List Type
+                </label>
+                <select
+                  name="waitListType"
+                  id="waitListType"
+                  className="text-center"
+                  defaultValue={params.get("waitListType") || "All Types"}
+                  onChange={(e) => {
+                    setSearchParams((prev) => {
+                      prev.set("waitListType", e.target.value);
+                      return prev;
+                    });
+                  }}
+                >
+                  <option value="Heart Status 1A">Heart Status 1A</option>
+                  <option value="Heart Status 1B">Heart Status 1B</option>
+                  <option value="Heart Status 2">Heart Status 2</option>
+                  <option value="Heart Status 7 (Inactive)">
+                    Heart Status 7 (Inactive)
+                  </option>
+                  <option value="All Types">All Types</option>
+                </select>
+              </div>
 
-          {/* <button
+              {/* <button
               type="submit"
               className="text-blue-500 font-bold border-2 border-blue-500 rounded-xl"
             >
               Filter
             </button> */}
-        </div>
-        {/* </Form> */}
-      </div>
-
-      <p className="text-center text-rose-500 font-bold py-5">
-        {params.get("waitListType")}
-      </p>
+            </div>
+            {/* </Form> */}
+          </div>
 
       {/* Render Region Change Data */}
       {transplantDailyData.map((data, index) => (
@@ -132,6 +165,8 @@ export default function Appointments() {
           )}
         </div>
       </div>
+
+         
     </div>
   );
 }
@@ -150,11 +185,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
-  // const changeDataList = await getChangeData(
-  //   todaysDate,
-  //   yesterdaysDate,
-  //   waitListType
-  // );
+
 
   const todayCenterData = await getCenterData(todaysDate);
   const yesterdayCenterData = await getCenterData(yesterdaysDate);
@@ -176,19 +207,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
     waitListType
   );
 
+
   const transplantDailyData = isBetweenMidnightAndSeven()
     ? []
     : await getRealisticSmartChangeData(todaysDate, yesterdaysDate);
 
   // console.log(transplantDailyData);
 
+
   return {
-    // changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
     settingsDates,
     waitListTimeData,
     transplantDailyData,
+
   };
 }

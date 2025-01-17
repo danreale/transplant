@@ -1,0 +1,16 @@
+{
+  "id": "mig_crvt7tl4rshpd1p6c0e0",
+  "parentID": "mig_crvhj1rfrufaot3krtu0",
+  "checksum": "1:70b1c8119d4c139a9e19476ea38063ba993b015de5083f8d95b2299b458961ca",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "yesterday_from_data_refresh_date",
+          "type": "text"
+        },
+        "table": "settings"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mig_crvhj0akv9ogfdp0am8g",
+  "parentID": "mig_crvhiv7m9hr77jce1m90",
+  "checksum": "1:d6b51fa6531d9683678830ed6ad09ba968189808fe04b0d55391695905f7d991",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "blood_type_ab",
+          "type": "int"
+        },
+        "table": "transplant_data_adult"
+      }
+    }
+  ]
+}

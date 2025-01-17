@@ -10,16 +10,19 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { TimeBreakdown } from "~/utils";
 import { REGION_CHANGE_OBJ } from "~/data/change-data-smart.server";
 
+
 export default function RegionData({
   regionNumber,
   timeData,
   transplantData,
   waitListType,
+
 }: {
   regionNumber: number;
   timeData: Array<TimeBreakdown>;
   transplantData: REGION_CHANGE_OBJ;
   waitListType: string;
+
 }) {
   const [regionFavorite, setRegionFavorite] = useState(false);
 
@@ -43,6 +46,7 @@ export default function RegionData({
 
   // Get wait list times for each blood type
   const bloodTypeWaitTimeData = (bloodType: string) =>
+
     timeData
       .filter((t) => t.wait_list_type === waitListType)
       .map((d) => {
@@ -82,10 +86,28 @@ export default function RegionData({
     (w) => w.type === waitListType
   )[0];
 
+
   return (
     <>
       <div className="flex justify-center items-center gap-x-2">
-        <h2 className="text-2xl text-center">Region {regionNumber}</h2>
+        <div className="flex justify-center text-center">
+          <button
+            onClick={() => handleSetRegionFavorite(`Region${regionNumber}`)}
+          >
+            {regionFavorite ? (
+              <FaStar className="text-yellow-400" />
+            ) : (
+              <FaRegStar className="font-bold" />
+            )}
+          </button>
+        </div>
+        {regionFavorite ? (
+          <h2 className="text-2xl text-center text-indigo-600 font-bold italic">
+            Region {regionNumber}
+          </h2>
+        ) : (
+          <h2 className="text-2xl text-center">Region {regionNumber}</h2>
+        )}
         <Popover className="relative">
           {/* may need to be bigger for a11y */}
           <PopoverButton
@@ -184,6 +206,7 @@ export default function RegionData({
             />
           </li>
         </ul>
+
 
         <div className="flex justify-center py-2">
           <ul>

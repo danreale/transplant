@@ -1,0 +1,16 @@
+{
+  "id": "mig_crvhim7m9hr77jce1m80",
+  "parentID": "mig_crvhihvm9hr77jce1m70",
+  "checksum": "1:cd4f78848806f63ab966c5bd1dad176f8e106eccc0dc8bd95bc7f09f28e8bbe1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "report_date",
+          "type": "text"
+        },
+        "table": "transplant_data_adult"
+      }
+    }
+  ]
+}
