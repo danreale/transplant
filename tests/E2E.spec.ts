@@ -1,12 +1,18 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("End To End Tests", () => {
+  test("Home Page", async () => {
+    // Verify list of dates
+    // verify region tutorial
+    // verify analytics tutorial
+  });
   test("Today Page", async () => {
     // go to todays page
     // verify date format for todays date
     // change each wait list status and make sure the data is loaded and lable is updated
     // make sure the data refresh dates text is showing
     // make sure the region text is showing
+    // make sure smart analytic elements exists
   });
   test("Yesterday Page", async () => {
     // go to yesterday page
