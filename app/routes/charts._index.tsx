@@ -30,15 +30,27 @@ export default function Index() {
           Transplant Data Loading.....
         </div>
       )}
-      <h2 className="text-center text-2xl py-2">Region Charts</h2>
+      <h2 className="text-center text-2xl py-2" data-testid="page-heading">
+        Region Charts
+      </h2>
 
       <div className="grid justify-center text-center pb-5">
-        <h2 className="text-2xl text-center py-5">
+        <h2 className="text-2xl text-center py-5" data-testid="page-heading-2">
           Wait List Chart Totals (USA)
         </h2>
-        <h3 className="text-2xl text-center py-2">Blood Type</h3>
+        <h3
+          className="text-2xl text-center py-2"
+          data-testid="Chart-Blood-Type-Title"
+        >
+          Blood Type
+        </h3>
         <RegionChartV2 data={bloodTypeTotals} />
-        <h3 className="text-2xl text-center py-2">Wait List Type Type</h3>
+        <h3
+          className="text-2xl text-center py-2"
+          data-testid="Chart-Wait-List-Type-Title"
+        >
+          Wait List Type
+        </h3>
         <RegionChartV3 data={statusData} />
         {/* <h3 className="text-2xl text-center py-2">Donors</h3>
         <DonorDataChart data={donorData} /> */}

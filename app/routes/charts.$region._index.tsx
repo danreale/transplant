@@ -49,15 +49,30 @@ export default function Index() {
           <RegionStates region={parseInt(params.region!!)} title={false} />
         </div>
 
-        <h3 className="text-2xl text-center">Blood Types</h3>
+        <h3
+          className="text-2xl text-center"
+          data-testid="Chart-Blood-Type-Title"
+        >
+          Blood Types
+        </h3>
         <RegionChartV2 data={bloodTypeTotals} />
 
-        <h3 className="text-2xl text-center py-2">Wait List Type Type</h3>
+        <h3
+          className="text-2xl text-center py-2"
+          data-testid="Chart-Wait-List-Type-Title"
+        >
+          Wait List Types
+        </h3>
         <RegionChartV3 data={statusData} />
 
         {params.region === "2" && (
           <>
-            <h3 className="text-2xl text-center py-2">CHOP</h3>
+            <h3
+              className="text-2xl text-center py-2"
+              data-testid="Chart-Center-Title"
+            >
+              CHOP
+            </h3>
             <CenterDataChart data={centerData} />
 
             {/* <h3 className="text-2xl text-center py-2">Donors</h3>

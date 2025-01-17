@@ -29,7 +29,9 @@ export default function Index() {
           Transplant Data Loading.....
         </div>
       )}
-      <h2 className="text-center text-2xl py-2">Past Transplant Data</h2>
+      <h2 className="text-center text-2xl py-2" data-testid="page-heading">
+        Past Transplant Data
+      </h2>
       <div
         className="text-center py-2 space-y-2"
         data-testid="data-refresh-text"

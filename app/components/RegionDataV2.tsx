@@ -10,19 +10,16 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { TimeBreakdown } from "~/utils";
 import { REGION_CHANGE_OBJ } from "~/data/change-data-smart.server";
 
-
 export default function RegionData({
   regionNumber,
   timeData,
   transplantData,
   waitListType,
-
 }: {
   regionNumber: number;
   timeData: Array<TimeBreakdown>;
   transplantData: REGION_CHANGE_OBJ;
   waitListType: string;
-
 }) {
   const [regionFavorite, setRegionFavorite] = useState(false);
 
@@ -46,7 +43,6 @@ export default function RegionData({
 
   // Get wait list times for each blood type
   const bloodTypeWaitTimeData = (bloodType: string) =>
-
     timeData
       .filter((t) => t.wait_list_type === waitListType)
       .map((d) => {
@@ -86,33 +82,48 @@ export default function RegionData({
     (w) => w.type === waitListType
   )[0];
 
-
   return (
     <>
       <div className="flex justify-center items-center gap-x-2">
         <div className="flex justify-center text-center">
           <button
             onClick={() => handleSetRegionFavorite(`Region${regionNumber}`)}
+            data-testid={`favorite-region-${regionNumber}`}
           >
             {regionFavorite ? (
-              <FaStar className="text-yellow-400" />
+              <FaStar
+                className="text-yellow-400"
+                data-testid={`region${regionNumber}Star`}
+              />
             ) : (
-              <FaRegStar className="font-bold" />
+              <FaRegStar
+                className="font-bold"
+                data-testid={`region${regionNumber}NoStar`}
+              />
             )}
           </button>
         </div>
         {regionFavorite ? (
-          <h2 className="text-2xl text-center text-indigo-600 font-bold italic">
+          <h2
+            className="text-2xl text-center text-indigo-600 font-bold italic"
+            data-testid={`region${regionNumber}Favorited`}
+          >
             Region {regionNumber}
           </h2>
         ) : (
-          <h2 className="text-2xl text-center">Region {regionNumber}</h2>
+          <h2
+            className="text-2xl text-center"
+            data-testid={`region${regionNumber}NotFavorited`}
+          >
+            Region {regionNumber}
+          </h2>
         )}
         <Popover className="relative">
           {/* may need to be bigger for a11y */}
           <PopoverButton
             className="flex items-center"
             aria-label={`Show list of states for region ${regionNumber}`}
+            data-testid={`region-${regionNumber}-info`}
           >
             <InformationCircle className="size-8 fill-blue-600 stroke-white" />
           </PopoverButton>
@@ -121,17 +132,20 @@ export default function RegionData({
             modal
             focus
             className="flex flex-col bg-white border rounded p-2"
+            data-testid={`region-${regionNumber}-popover`}
           >
             <ul>
               {regionStates(regionNumber).map((state) => (
-                <li key={state}>{state}</li>
+                <li key={state} data-testid={state}>
+                  {state}
+                </li>
               ))}
             </ul>
           </PopoverPanel>
         </Popover>
       </div>
 
-      <div className="my-4">
+      <div className="my-4" data-testid={`region-${regionNumber}-section`}>
         <ul className="">
           <li key={`bloodtype`} className="flex justify-center flex-wrap gap-2">
             <BloodTypeDataTile
@@ -207,7 +221,6 @@ export default function RegionData({
           </li>
         </ul>
 
-
         <div className="flex justify-center py-2">
           <ul>
             {transplantData.messages.map((record, index: number) => (
@@ -216,7 +229,7 @@ export default function RegionData({
                   <p
                     data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
                     key={index}
-                    className="text-green-600 font-bold"
+                    className="text-green-600 font-bold text-center"
                   >
                     🎉 {record} 🎉
                   </p>
@@ -224,7 +237,7 @@ export default function RegionData({
                   <p
                     data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
                     key={index}
-                    className="text-red-600 font-bold"
+                    className="text-red-600 font-bold text-center"
                   >
                     💔 {record} 💔
                   </p>
@@ -232,7 +245,7 @@ export default function RegionData({
                   <p
                     data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
                     key={index}
-                    className="text-slate-800"
+                    className="text-slate-800 text-center"
                   >
                     {record}
                   </p>
@@ -246,6 +259,7 @@ export default function RegionData({
           <Link
             className="font-semibold my-4 text-blue-600"
             to={`/charts/${regionNumber}`}
+            data-testid={`view-trends-region${regionNumber}`}
           >
             View Trends
           </Link>
