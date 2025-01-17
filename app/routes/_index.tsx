@@ -30,7 +30,10 @@ export default function Index() {
         </div>
       )}
       <h2 className="text-center text-2xl py-2">Past Transplant Data</h2>
-      <div className="text-center py-2 space-y-2">
+      <div
+        className="text-center py-2 space-y-2"
+        data-testid="data-refresh-text"
+      >
         <p>
           <span className="italic">
             Data is not updated on Saturday/Sunday*
@@ -51,7 +54,10 @@ export default function Index() {
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
             <li key={index}>
-              <Link to={`/day/${date.report_date}?waitListType=All+Types`}>
+              <Link
+                to={`/day/${date.report_date}?waitListType=All+Types`}
+                data-testid={`report-date-${date.report_date}`}
+              >
                 {date.report_date} (
                 {
                   DateTime.fromFormat(date.report_date, "yyyy-MM-dd")
@@ -65,8 +71,10 @@ export default function Index() {
       </div>
 
       <div className="py-5 grid justify-center text-center">
-        <h2 className="py-2 font-semibold text-3xl">What Region Am I In?</h2>
-        <p>
+        <h2 className="py-2 font-semibold text-3xl" data-testid="region-header">
+          What Region Am I In?
+        </h2>
+        <p data-testid="region-information">
           Aside from accrued time on the waitlist, distance is an important
           factor. It's important to know what region you are in so you can see
           how many others in your general area are waiting for the same organ.
@@ -79,10 +87,13 @@ export default function Index() {
       </div>
 
       <div className="py-5 grid justify-center text-center">
-        <h2 className="py-2 font-semibold text-3xl">
+        <h2
+          className="py-2 font-semibold text-3xl"
+          data-testid="analysis-header"
+        >
           Transplant Data Analysis?
         </h2>
-        <p>
+        <p data-testid="analysis-information">
           We make our best attempt to analyze the waiting list data to determine
           if there has been a transplant or if patients are moving around the
           waiting list to different statuses. Without the actual data, these are

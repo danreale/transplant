@@ -36,7 +36,12 @@ export default function Index() {
       )}
 
       <div className="grid justify-center text-center pb-5">
-        <h2 className="text-2xl text-center">Region {params.region}</h2>
+        <h2
+          className="text-2xl text-center"
+          data-testid={`chart-region-${params.region}-heading`}
+        >
+          Region {params.region}
+        </h2>
         {/* <p className="pb-5">
           ({regionStates(parseInt(params.region!!)).join(", ")})
         </p> */}
