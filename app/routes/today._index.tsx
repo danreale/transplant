@@ -9,6 +9,7 @@ import { DateTime } from "luxon";
 
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
+import { getRealisticSmartChangeData } from "~/data/change-data-smart.server";
 import { getChangeData } from "~/data/change-data.server";
 import { getCenterData } from "~/data/db.server";
 
@@ -17,10 +18,13 @@ const todaysDate = DateTime.now()
   .toFormat("MM-dd-yyyy");
 export default function Appointments() {
   const {
-    changeDataList,
+    // changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    settingsDates,
+    waitListTimeData,
+    transplantDailyData,
   } = useLoaderData<typeof loader>();
 
   const [params] = useSearchParams();
@@ -87,8 +91,16 @@ export default function Appointments() {
       </p>
 
       {/* Render Region Change Data */}
-      {changeDataList.map((data, index) => (
-        <RegionDataV2 transplantData={data} regionNumber={index + 1} key={`region-${index + 1}`} />
+      {transplantDailyData.map((data, index) => (
+        <RegionDataV2
+          regionNumber={index + 1}
+          key={`region-${index + 1}`}
+          timeData={waitListTimeData.filter(
+            (d) => d.region === `Region  ${index + 1}`
+          )}
+          transplantData={data}
+          waitListType={params.get("waitListType")!!}
+        />
       ))}
 
       <div className="py-5 text-center">
@@ -127,7 +139,7 @@ export default function Appointments() {
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const waitListType = search.get("waitListType") as string
+  const waitListType = search.get("waitListType") as string;
 
   const todaysDate = DateTime.now()
     .setZone("America/New_York")
@@ -138,7 +150,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
 
-  const changeDataList = await getChangeData(todaysDate, yesterdaysDate, waitListType)
+  // const changeDataList = await getChangeData(
+  //   todaysDate,
+  //   yesterdaysDate,
+  //   waitListType
+  // );
 
   const todayCenterData = await getCenterData(todaysDate);
   const yesterdayCenterData = await getCenterData(yesterdaysDate);
@@ -153,10 +169,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const todaysCenterChange = centerChange();
 
+  const settingsDates = await getSettingsDates();
+
+  const waitListTimeData = await getAllTransplantDataWithWaitListTime(
+    todaysDate,
+    waitListType
+  );
+
+  const transplantDailyData = isBetweenMidnightAndSeven()
+    ? []
+    : await getRealisticSmartChangeData(todaysDate, yesterdaysDate);
+
+  // console.log(transplantDailyData);
+
   return {
-    changeDataList,
+    // changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    settingsDates,
+    waitListTimeData,
+    transplantDailyData,
   };
 }

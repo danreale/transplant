@@ -10,15 +10,17 @@ import { DateTime } from "luxon";
 
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
+import { getRealisticSmartChangeData } from "~/data/change-data-smart.server";
 import { getChangeData } from "~/data/change-data.server";
 import { getCenterData } from "~/data/db.server";
 
 export default function Appointments() {
   const {
-    changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    waitListTimeData,
+    transplantDailyData,
   } = useLoaderData<typeof loader>();
 
   const params = useParams();
@@ -85,8 +87,16 @@ export default function Appointments() {
       </p>
 
       {/* Render Region Change Data */}
-      {changeDataList.map((data, index) => (
-        <RegionDataV2 transplantData={data} regionNumber={index + 1} key={`region-${index + 1}`} />
+      {transplantDailyData.map((data, index) => (
+        <RegionDataV2
+          regionNumber={index + 1}
+          key={`region-${index + 1}`}
+          timeData={waitListTimeData.filter(
+            (d) => d.region === `Region  ${index + 1}`
+          )}
+          transplantData={data}
+          waitListType={searchParams.get("waitListType")!!}
+        />
       ))}
 
       <div className="py-5 text-center">
@@ -125,7 +135,7 @@ export default function Appointments() {
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const waitListType = search.get("waitListType") as string
+  const waitListType = search.get("waitListType") as string;
 
   // TODO: maybe should have a bail early error if bad date
   const providedDate = params.day!!;
@@ -133,8 +143,6 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const dayBeforeProvidedDate = DateTime.fromFormat(params.day!!, "yyyy-MM-dd")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
-
-  const changeDataList = await getChangeData(providedDate, dayBeforeProvidedDate, waitListType)
 
   const todayCenterData = await getCenterData(providedDate);
   const yesterdayCenterData = await getCenterData(dayBeforeProvidedDate);
@@ -149,10 +157,21 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 
   const todaysCenterChange = centerChange();
 
+  const waitListTimeData = await getAllTransplantDataWithWaitListTime(
+    providedDate,
+    waitListType
+  );
+
+  const transplantDailyData = await getRealisticSmartChangeData(
+    params.day!!,
+    dayBeforeProvidedDate
+  );
+
   return {
-    changeDataList,
     todayCenterData,
     yesterdayCenterData,
     todaysCenterChange,
+    waitListTimeData,
+    transplantDailyData,
   };
 }
