@@ -122,7 +122,8 @@ export default function Today() {
             </div>
             {/* </Form> */}
           </div>
-
+        </>
+      )}
       {/* Render Region Change Data */}
       {transplantDailyData.map((data, index) => (
         <RegionDataV2
@@ -165,8 +166,6 @@ export default function Today() {
           )}
         </div>
       </div>
-
-         
     </div>
   );
 }
@@ -184,8 +183,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .setZone("America/New_York")
     .minus({ days: 1 })
     .toFormat("yyyy-MM-dd");
-
-
 
   const todayCenterData = await getCenterData(todaysDate);
   const yesterdayCenterData = await getCenterData(yesterdaysDate);
@@ -207,13 +204,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     waitListType
   );
 
-
   const transplantDailyData = isBetweenMidnightAndSeven()
     ? []
     : await getRealisticSmartChangeData(todaysDate, yesterdaysDate);
 
   // console.log(transplantDailyData);
-
 
   return {
     todayCenterData,
@@ -222,6 +217,5 @@ export async function loader({ request }: LoaderFunctionArgs) {
     settingsDates,
     waitListTimeData,
     transplantDailyData,
-
   };
 }

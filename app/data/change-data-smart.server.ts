@@ -175,7 +175,7 @@ export async function getRealisticSmartChangeData(
       (accumulator, currentValue) => accumulator + currentValue.change,
       0
     );
-    console.log("Summer", summer);
+    // console.log("Summer", summer);
     if (summer >= 2) {
       regionChangesWithMessages
         .filter((r) => r.region === region)[0]
@@ -410,7 +410,7 @@ export async function getRealisticSmartChangeData(
       )[0].blood_types;
 
     const regionWaitListTypesFlat = [a20, a21, a22, a23].flat();
-    console.log("Flatter", regionWaitListTypesFlat);
+    // console.log("Flatter", regionWaitListTypesFlat);
 
     applyTransplantMessage(region, regionWaitListTypesFlat);
   }
