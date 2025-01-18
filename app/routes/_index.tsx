@@ -1,7 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { DateTime } from "luxon";
-import { DatePicker, DatePickerDemo } from "~/components/DatePicker";
 import Header from "~/components/Header";
 import RegionStates from "~/components/RegionStates";
 
@@ -21,7 +20,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const transition = useNavigation();
   const pageLoading = transition.state !== "idle";
-  const { dates, startDate } = useLoaderData<typeof loader>();
+  const { dates } = useLoaderData<typeof loader>();
   return (
     <>
       <Header />
@@ -53,12 +52,7 @@ export default function Index() {
           </span>
         </p>
       </div>
-
       <div className="py-5 flex justify-center">
-        <DatePicker startDate={startDate} />
-      </div>
-
-      {/* <div className="py-5 flex justify-center">
         <ul className="space-y-2">
           {dates.map((date: any, index: number) => (
             <li key={index}>
@@ -76,7 +70,7 @@ export default function Index() {
             </li>
           ))}
         </ul>
-      </div> */}
+      </div>
 
       <div className="py-5 grid justify-center text-center">
         <h2 className="py-2 font-semibold text-3xl" data-testid="region-header">
@@ -123,7 +117,6 @@ export default function Index() {
 
 export async function loader({}: LoaderFunctionArgs) {
   const dates = await getTransplantDates();
-  const startDate = "2024-07-01";
 
-  return { dates, startDate };
+  return { dates };
 }
