@@ -31,6 +31,7 @@ export function MyDatePicker({ startDate }: { startDate: string }) {
         before: new Date(startDate),
         after: new Date(),
       }}
+      classNames={{ footer: `text-fuchsia-600 font-bold` }}
     />
   );
 }
