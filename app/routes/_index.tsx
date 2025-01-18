@@ -1,7 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useNavigation } from "@remix-run/react";
-import { DateTime } from "luxon";
-import { DatePicker, DatePickerDemo } from "~/components/DatePicker";
+import { useLoaderData, useNavigation } from "@remix-run/react";
+import { DatePicker } from "~/components/DatePicker";
 import Header from "~/components/Header";
 import RegionStates from "~/components/RegionStates";
 
