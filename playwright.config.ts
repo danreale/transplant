@@ -57,7 +57,6 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         headless: true,
         // headless: false,
-        baseURL: getBaseUrl(),
       },
     },
 

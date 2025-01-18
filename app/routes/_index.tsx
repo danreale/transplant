@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { DateTime } from "luxon";
+import { MyDatePicker } from "~/components/DatePicker";
 import Header from "~/components/Header";
 import RegionStates from "~/components/RegionStates";
 
@@ -53,23 +54,7 @@ export default function Index() {
         </p>
       </div>
       <div className="py-5 flex justify-center">
-        <ul className="space-y-2">
-          {dates.map((date: any, index: number) => (
-            <li key={index}>
-              <Link
-                to={`/day/${date.report_date}?waitListType=All+Types`}
-                data-testid={`report-date-${date.report_date}`}
-              >
-                {date.report_date} (
-                {
-                  DateTime.fromFormat(date.report_date, "yyyy-MM-dd")
-                    .weekdayLong
-                }
-                )
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <MyDatePicker startDate="2024-06-20" />
       </div>
 
       <div className="py-5 grid justify-center text-center">
