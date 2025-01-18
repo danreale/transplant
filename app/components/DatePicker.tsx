@@ -35,6 +35,7 @@ export function MyDatePicker({ startDate }: { startDate: string }) {
         footer: `text-fuchsia-600 font-bold`,
         today: `text-blue-600 font-bold underline`,
       }}
+      data-testid="findPastDate"
     />
   );
 }
