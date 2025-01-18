@@ -1,5 +1,4 @@
 import { test, expect, Page } from "@playwright/test";
-import { DateTime } from "luxon";
 import { getBaseUrl } from "playwright.config";
 import { regionStates } from "~/data/states";
 
@@ -196,31 +195,6 @@ async function checkWaitListTimes(page: Page, times: number[]) {
   );
 }
 
-async function chooseDate(
-  page: Page,
-  year: string,
-  month: string,
-  day: string
-) {
-  const startDate = DateTime.fromISO(`${year}-${month}-${day}`);
-  const endDate = DateTime.now();
-
-  const formattedDay = day.charAt(0) === "0" ? day.substring(1) : day;
-
-  const diff = endDate.diff(startDate, "months");
-  const months = diff.toObject().months;
-
-  const roundedNumber = Math.floor(months!!);
-
-  await page.getByTestId("findPastDate").click();
-  await page.waitForTimeout(1000);
-  for (let index = 0; index < roundedNumber; index++) {
-    await page.getByLabel("Go to previous month").click();
-    await page.waitForTimeout(1000);
-  }
-  await page.getByRole("gridcell", { name: formattedDay, exact: true }).click();
-}
-
 test.describe("End To End Tests", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
@@ -229,16 +203,13 @@ test.describe("End To End Tests", () => {
       "Past Transplant Data"
     );
   });
-  test("Date Test", async ({ page }) => {
-    await chooseDate(page, "2024", "11", "04");
-    await expect(page).toHaveURL(
-      `${getBaseUrl()}/day/2024-11-04?waitListType=All+Types`
-    );
-    await expect(page.getByTestId(`page-heading`)).toHaveText("Day's Data");
-  });
   test("Home Page", async ({ page }) => {
     // Verify list of dates
-    await page.getByTestId(`findPastDate`).isVisible();
+    await page.getByTestId(`report-date-2025-01-15`).isVisible();
+    await expect(page.getByTestId(`report-date-2025-01-15`)).toHaveAttribute(
+      "href",
+      "/day/2025-01-15?waitListType=All+Types"
+    );
     // verify refresh information
     await expect(page.getByTestId("data-refresh-text")).toBeVisible();
     await expect(page.getByTestId("data-refresh-text")).toHaveText(
@@ -373,7 +344,7 @@ test.describe("End To End Tests", () => {
     await expect(page.getByTestId("Virginia")).toBeVisible();
   });
   test("Open Specific Days Data", async ({ page }) => {
-    await chooseDate(page, "2025", "01", "15");
+    await page.getByTestId(`report-date-2025-01-15`).click();
     await expect(page).toHaveURL(
       `${getBaseUrl()}/day/2025-01-15?waitListType=All+Types`
     );
@@ -442,7 +413,7 @@ test.describe("End To End Tests", () => {
     await checkWaitListTypeFilter(page);
   });
   test("Days Page", async ({ page }) => {
-    await chooseDate(page, "2024", "11", "04");
+    await page.getByTestId(`report-date-2024-11-04`).click();
     await expect(page).toHaveURL(
       `${getBaseUrl()}/day/2024-11-04?waitListType=All+Types`
     );
@@ -587,13 +558,16 @@ test.describe("End To End Tests", () => {
   });
   test("Verify Center Count Days Page", async ({ page }) => {
     // go to days page
-
-    await chooseDate(page, "2025", "01", "15");
+    await page.getByTestId(`report-date-2025-01-15`).isVisible();
+    await expect(page.getByTestId(`report-date-2025-01-15`)).toHaveAttribute(
+      "href",
+      "/day/2025-01-15?waitListType=All+Types"
+    );
+    await page.getByTestId(`report-date-2025-01-15`).click();
+    await expect(page.getByTestId("page-heading")).toHaveText("Day's Data");
     await expect(page).toHaveURL(
       `${getBaseUrl()}/day/2025-01-15?waitListType=All+Types`
     );
-    await expect(page.getByTestId(`page-heading`)).toHaveText("Day's Data");
-
     // verify counts are visible
     await expect(page.getByTestId("todaysCenterCount")).toContainText(
       "Today's Center Count"
@@ -631,12 +605,10 @@ test.describe("End To End Tests", () => {
   test("Verify Region Counts and Trends", async ({ page }) => {
     // for a specific day, check all region counts and trends
     // do this for each wait list type, 1a, 1b, 2, 7 and check all numbers
-
-    await chooseDate(page, "2024", "11", "04");
+    await page.getByTestId(`report-date-2024-11-04`).click();
     await expect(page).toHaveURL(
       `${getBaseUrl()}/day/2024-11-04?waitListType=All+Types`
     );
-    await expect(page.getByTestId(`page-heading`)).toHaveText("Day's Data");
 
     await expect(page.getByTestId("waitListType")).toHaveValue("All Types");
     await expect(
@@ -776,7 +748,7 @@ test.describe("End To End Tests", () => {
     ).toHaveText("48");
   });
   test("Verify Blood Type Wait List Times", async ({ page }) => {
-    await chooseDate(page, "2024", "11", "04");
+    await page.getByTestId(`report-date-2024-11-04`).click();
     await expect(page).toHaveURL(
       `${getBaseUrl()}/day/2024-11-04?waitListType=All+Types`
     );
@@ -863,7 +835,7 @@ test.describe("End To End Tests", () => {
     await expect(page.getByTestId("popover-All")).not.toBeVisible();
   });
   test("Verify Transplant Analyis Messages", async ({ page }) => {
-    await chooseDate(page, "2024", "11", "04");
+    await page.getByTestId(`report-date-2024-11-04`).click();
     await expect(page).toHaveURL(
       `${getBaseUrl()}/day/2024-11-04?waitListType=All+Types`
     );
