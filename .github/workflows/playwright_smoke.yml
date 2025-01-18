@@ -17,6 +17,9 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps chromium
+    - name: Wait for app to be deployed
+      run: sleep 60s
+      shell: bash
     - name: Run Playwright tests
       run: npx playwright test E2E.spec.ts
       env:
