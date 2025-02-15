@@ -13,11 +13,11 @@ console.log(todaysDate);
 
 import { readFile } from "fs/promises";
 const transplantData = JSON.parse(
-  await readFile(new URL("./DatabaseWaitingList.json", import.meta.url))
+  await readFile(new URL("./WaitingList.json", import.meta.url))
 );
 
 const transplantDataAdult = JSON.parse(
-  await readFile(new URL("./DatabaseWaitingListAdult.json", import.meta.url))
+  await readFile(new URL("./WaitingListAdult.json", import.meta.url))
 );
 
 const centerData = JSON.parse(
