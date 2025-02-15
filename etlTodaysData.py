@@ -1,5 +1,8 @@
 import pandas as pd
 from itertools import product
+import datetime
+import pytz
+
 
 df = pd.read_csv("WaitingList.csv")
 
@@ -8,10 +11,15 @@ print(df.info())
 # Rename columns
 df.rename(
     columns={
-        "Unnamed: 0": "Region",
-        "Unnamed: 1": "WaitListType",
-        "Unnamed: 2": "WaitListTime",
+        "Unnamed: 0": "region",
+        "Unnamed: 1": "wait_list_type",
+        "Unnamed: 2": "wait_list_time",
         "Unnamed: 3": "ExtraSpace",
+        "All ABO": "blood_type_all",
+        "O": "blood_type_o",
+        "A": "blood_type_a",
+        "B": "blood_type_b",
+        "AB": "blood_type_ab",
     },
     inplace=True,
 )
@@ -30,6 +38,17 @@ df.ffill(inplace=True, axis=0)
 
 # print info
 # print(df.info())
+
+# Define the list of WaitListTypes to remove
+wait_list_types_to_remove = [
+    "Heart Status 1A",
+    "Heart Status 1B",
+    "Heart Status 2",
+    "Heart Status 7 (Inactive)",
+]
+
+# Remove rows where WaitListType is in the list
+df = df[~df["wait_list_type"].isin(wait_list_types_to_remove)]
 
 # Create Row Conditions
 
@@ -76,14 +95,14 @@ def generate_combinations(regions, wait_list_types, wait_list_times):
     ):
         combinations.append(
             {
-                "Region": region,
-                "WaitListType": wait_list_type,
-                "WaitListTime": wait_list_time,
-                "All ABO": 0,
-                "A": 0,
-                "B": 0,
-                "O": 0,
-                "AB": 0,
+                "region": region,
+                "wait_list_type": wait_list_type,
+                "wait_list_time": wait_list_time,
+                "blood_type_all": 0,
+                "blood_type_a": 0,
+                "blood_type_b": 0,
+                "blood_type_o": 0,
+                "blood_type_ab": 0,
             }
         )
     return combinations
@@ -97,9 +116,9 @@ combinations = generate_combinations(regions, wait_list_types, wait_list_times)
 missing_combinations = []
 for combination in combinations:
     query = (
-        f"Region == '{combination['Region']}' and "
-        f"WaitListType == '{combination['WaitListType']}' and "
-        f"WaitListTime == '{combination['WaitListTime']}'"
+        f"region == '{combination['region']}' and "
+        f"wait_list_type == '{combination['wait_list_type']}' and "
+        f"wait_list_time == '{combination['wait_list_time']}'"
     )
     if df.query(query).empty:
         missing_combinations.append(combination)
@@ -113,21 +132,21 @@ for combination in missing_combinations:
 
 
 # Sort the DataFrame by Region, WaitListType, and WaitListTime in the specified order
-df["Region"] = pd.Categorical(df["Region"], categories=regions, ordered=True)
-df["WaitListType"] = pd.Categorical(
-    df["WaitListType"], categories=wait_list_types, ordered=True
+df["region"] = pd.Categorical(df["region"], categories=regions, ordered=True)
+df["wait_list_type"] = pd.Categorical(
+    df["wait_list_type"], categories=wait_list_types, ordered=True
 )
-df["WaitListTime"] = pd.Categorical(
-    df["WaitListTime"], categories=wait_list_times, ordered=True
+df["wait_list_time"] = pd.Categorical(
+    df["wait_list_time"], categories=wait_list_times, ordered=True
 )
 
 # Sort the DataFrame by Region, WaitListType, and WaitListTime
-df.sort_values(by=["Region", "WaitListType", "WaitListTime"], inplace=True)
+df.sort_values(by=["region", "wait_list_type", "wait_list_time"], inplace=True)
 
 
 # Check for duplicate records
 duplicates = df[
-    df.duplicated(subset=["Region", "WaitListType", "WaitListTime"], keep=False)
+    df.duplicated(subset=["region", "wait_list_type", "wait_list_time"], keep=False)
 ]
 # print("Duplicate records:")
 # print(duplicates)
@@ -135,7 +154,9 @@ duplicates = df[
 # Remove duplicate records if any exists
 if duplicates.empty == False:
     df.drop_duplicates(
-        subset=["Region", "WaitListType", "WaitListTime"], keep="first", inplace=True
+        subset=["region", "wait_list_type", "wait_list_time"],
+        keep="first",
+        inplace=True,
     )
 
 
@@ -145,6 +166,38 @@ print(f"Number of rows: {num_rows}")
 
 if num_rows != 540:
     raise Exception("Incorrect Number of rows added", num_rows, "Should be 540")
+
+# Set todays date as report date column
+# Get the current time with timezone information
+timezone = pytz.timezone("America/New_York")
+x = datetime.datetime.now(timezone)
+
+todays_date = x.strftime("%Y-%m-%d")
+print(todays_date)
+
+# todays_date = "2025-01-30"
+df["report_date"] = todays_date
+
+# Make the date column a date type
+# df.report_date = pd.to_datetime(df.report_date)
+
+
+# Make Blood Type columns integers
+columns_to_check_type = [
+    "blood_type_all",
+    "blood_type_a",
+    "blood_type_b",
+    "blood_type_o",
+    "blood_type_ab",
+]
+
+for column_name in columns_to_check_type:
+    if df[column_name].dtype == "object":
+        # # Action for string column
+        df[column_name] = df[column_name].str.replace(",", "", regex=False)
+        df[column_name] = pd.to_numeric(df[column_name])
+    # fill in nulls That used to be 0 as 0
+    df.fillna({column_name: 0}, inplace=True)
 
 
 # reindex data
