@@ -39,16 +39,6 @@ df.ffill(inplace=True, axis=0)
 # print info
 # print(df.info())
 
-# Define the list of WaitListTypes to remove
-wait_list_types_to_remove = [
-    "Heart Status 1A",
-    "Heart Status 1B",
-    "Heart Status 2",
-    "Heart Status 7 (Inactive)",
-]
-
-# Remove rows where WaitListType is in the list
-df = df[~df["wait_list_type"].isin(wait_list_types_to_remove)]
 
 # Create Row Conditions
 
@@ -98,11 +88,6 @@ def generate_combinations(regions, wait_list_types, wait_list_times):
                 "region": region,
                 "wait_list_type": wait_list_type,
                 "wait_list_time": wait_list_time,
-                "blood_type_all": 0,
-                "blood_type_a": 0,
-                "blood_type_b": 0,
-                "blood_type_o": 0,
-                "blood_type_ab": 0,
             }
         )
     return combinations
@@ -110,6 +95,7 @@ def generate_combinations(regions, wait_list_types, wait_list_times):
 
 # Generate all possible combinations
 combinations = generate_combinations(regions, wait_list_types, wait_list_times)
+# print("Combinations:")
 # print(combinations)
 
 # Check to see if the combination exists in the data
@@ -121,10 +107,25 @@ for combination in combinations:
         f"wait_list_time == '{combination['wait_list_time']}'"
     )
     if df.query(query).empty:
-        missing_combinations.append(combination)
+        missing_combinations.append(
+            {
+                "region": combination["region"],
+                "wait_list_type": combination["wait_list_type"],
+                "wait_list_time": combination["wait_list_time"],
+                "blood_type_all": 0,
+                "blood_type_a": 0,
+                "blood_type_b": 0,
+                "blood_type_o": 0,
+                "blood_type_ab": 0,
+            }
+        )
 
-# print("Missing combinations:")
-# print(missing_combinations)
+missing_combo_count = len(missing_combinations)
+print("Missing combinations:")
+print(missing_combo_count)
+
+if missing_combo_count == 540:
+    raise Exception("There should not be 540 missing combinations")
 
 # For each missing combination, add a row
 for combination in missing_combinations:
@@ -181,7 +182,6 @@ df["report_date"] = todays_date
 # Make the date column a date type
 # df.report_date = pd.to_datetime(df.report_date)
 
-
 # Make Blood Type columns integers
 columns_to_check_type = [
     "blood_type_all",
@@ -203,6 +203,7 @@ for column_name in columns_to_check_type:
 # reindex data
 df.reset_index()
 print(df.info())
+print(df.head(25))
 
 with open("WaitingList.json", "w") as f:
     f.write(df.to_json(orient="records"))

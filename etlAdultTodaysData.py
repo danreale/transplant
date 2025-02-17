@@ -100,11 +100,6 @@ def generate_combinations(regions, wait_list_types, wait_list_times):
                 "region": region,
                 "wait_list_type": wait_list_type,
                 "wait_list_time": wait_list_time,
-                "blood_type_all": 0,
-                "blood_type_a": 0,
-                "blood_type_b": 0,
-                "blood_type_o": 0,
-                "blood_type_ab": 0,
             }
         )
     return combinations
@@ -123,10 +118,25 @@ for combination in combinations:
         f"wait_list_time == '{combination['wait_list_time']}'"
     )
     if df.query(query).empty:
-        missing_combinations.append(combination)
+        missing_combinations.append(
+            {
+                "region": combination["region"],
+                "wait_list_type": combination["wait_list_type"],
+                "wait_list_time": combination["wait_list_time"],
+                "blood_type_all": 0,
+                "blood_type_a": 0,
+                "blood_type_b": 0,
+                "blood_type_o": 0,
+                "blood_type_ab": 0,
+            }
+        )
 
-# print("Missing combinations:")
-# print(missing_combinations)
+missing_combo_count = len(missing_combinations)
+print("Missing combinations:")
+print(missing_combo_count)
+
+if missing_combo_count == 756:
+    raise Exception("There should not be 756 missing combinations")
 
 # For each missing combination, add a row
 for combination in missing_combinations:
@@ -205,6 +215,7 @@ for column_name in columns_to_check_type:
 # reindex data
 df.reset_index()
 print(df.info())
+print(df.head(25))
 
 with open("WaitingListAdult.json", "w") as f:
     f.write(df.to_json(orient="records"))
