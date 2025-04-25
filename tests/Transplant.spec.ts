@@ -122,7 +122,7 @@ test("Get Adult Transplant Numbers", async ({ page }) => {
   await page.waitForTimeout(1000);
   await page
     .getByLabel("Choose report rows 2 of 3")
-    .selectOption("[Organ Custom].members;Waiting List Status;59;Organ Custom");
+    .selectOption("[Organ Custom].members;Waiting List Status;70;Organ Custom");
   await page.waitForTimeout(1000);
   await page
     .getByLabel("Choose report rows 3 of 3")
