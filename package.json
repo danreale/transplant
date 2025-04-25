@@ -15,7 +15,10 @@
     "transformHeaderDonors": "node donorHeaderTransformer.cjs",
     "transformDataDonors": "node donorTransformer.cjs",
     "etlTransformer": "tsx etlTransformer.ts",
-    "etlTransformerAdult": "tsx etlTransformerAdult.ts"
+    "etlTransformerAdult": "tsx etlTransformerAdult.ts",
+    "getSmartData": "tsx getSmartData.ts",
+    "testConditions": "tsx test_conditions.ts",
+    "testConditions2": "tsx test_conditions_2.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.5",

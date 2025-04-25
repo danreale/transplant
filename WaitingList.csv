@@ -1,0 +1,405 @@
+,,,,All ABO,O,A,B,AB
+All Regions,All Types,All Time,,529,296,147,73,13
+,,< 30 Days,,48,28,12,7,1
+,,30 to < 90 Days,,70,34,22,11,3
+,,90 Days to < 6 Months,,92,45,29,15,3
+,,6 Months to < 1 Year,,115,58,32,19,6
+,,1 Year to < 2 Years,,89,60,20,9,0
+,,2 Years to < 3 Years,,52,32,13,7,0
+,,3 Years to < 5 Years,,35,20,12,3,0
+,,5 or More Years,,28,19,7,2,0
+,Heart: Status 1A,All Time,,198,116,54,24,4
+,,< 30 Days,,33,19,9,4,1
+,,30 to < 90 Days,,39,21,11,6,1
+,,90 Days to < 6 Months,,54,30,16,8,0
+,,6 Months to < 1 Year,,41,23,12,4,2
+,,1 Year to < 2 Years,,18,13,3,2,0
+,,2 Years to < 3 Years,,7,6,1,0,0
+,,3 Years to < 5 Years,,4,2,2,0,0
+,,5 or More Years,,2,2,0,0,0
+,Heart: Status 1B,All Time,,135,84,31,16,4
+,,< 30 Days,,8,4,2,2,0
+,,30 to < 90 Days,,13,7,5,0,1
+,,90 Days to < 6 Months,,22,7,7,6,2
+,,6 Months to < 1 Year,,34,19,9,5,1
+,,1 Year to < 2 Years,,29,25,4,0,0
+,,2 Years to < 3 Years,,19,13,4,2,0
+,,3 Years to < 5 Years,,7,6,0,1,0
+,,5 or More Years,,3,3,0,0,0
+,Heart: Status 2,All Time,,70,34,22,13,1
+,,< 30 Days,,4,3,1,0,0
+,,30 to < 90 Days,,11,4,3,3,1
+,,90 Days to < 6 Months,,6,4,2,0,0
+,,6 Months to < 1 Year,,16,7,5,4,0
+,,1 Year to < 2 Years,,17,10,4,3,0
+,,2 Years to < 3 Years,,10,5,3,2,0
+,,3 Years to < 5 Years,,4,1,2,1,0
+,,5 or More Years,,2,0,2,0,0
+,Heart: Status 7 (Inactive),All Time,,126,62,40,20,4
+,,< 30 Days,,3,2,0,1,0
+,,30 to < 90 Days,,7,2,3,2,0
+,,90 Days to < 6 Months,,10,4,4,1,1
+,,6 Months to < 1 Year,,24,9,6,6,3
+,,1 Year to < 2 Years,,25,12,9,4,0
+,,
+,,2 Years to < 3 Years,,16,8,5,3,0
+,,3 Years to < 5 Years,,20,11,8,1,0
+,,5 or More Years,,21,14,5,2,0
+Region  1,All Types,All Time,,19,11,6,2,0
+,,< 30 Days,,1,0,1,0,0
+,,30 to < 90 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,4,0,2,2,0
+,,6 Months to < 1 Year,,4,2,2,0,0
+,,1 Year to < 2 Years,,3,3,0,0,0
+,,2 Years to < 3 Years,,2,1,1,0,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,,5 or More Years,,3,3,0,0,0
+,Heart: Status 1A,All Time,,8,1,6,1,0
+,,< 30 Days,,1,0,1,0,0
+,,30 to < 90 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,3,0,2,1,0
+,,6 Months to < 1 Year,,2,0,2,0,0
+,,2 Years to < 3 Years,,1,0,1,0,0
+,Heart: Status 1B,All Time,,7,6,0,1,0
+,,90 Days to < 6 Months,,1,0,0,1,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,,1 Year to < 2 Years,,3,3,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 7 (Inactive),All Time,,4,4,0,0,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,,5 or More Years,,2,2,0,0,0
+Region  2,All Types,All Time,,56,28,14,13,1
+,,< 30 Days,,3,2,1,0,0
+,,30 to < 90 Days,,6,1,3,2,0
+,,90 Days to < 6 Months,,12,4,3,4,1
+,,6 Months to < 1 Year,,14,5,5,4,0
+,,1 Year to < 2 Years,,12,9,1,2,0
+,,2 Years to < 3 Years,,4,3,1,0,0
+,,3 Years to < 5 Years,,4,3,0,1,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 1A,All Time,,19,9,6,4,0
+,,< 30 Days,,2,1,1,0,0
+,,30 to < 90 Days,,3,0,2,1,0
+,,90 Days to < 6 Months,,4,2,0,2,0
+,,
+,,6 Months to < 1 Year,,5,2,2,1,0
+,,1 Year to < 2 Years,,3,2,1,0,0
+,,3 Years to < 5 Years,,2,2,0,0,0
+,Heart: Status 1B,All Time,,14,8,2,4,0
+,,90 Days to < 6 Months,,4,1,1,2,0
+,,6 Months to < 1 Year,,3,2,0,1,0
+,,1 Year to < 2 Years,,3,3,0,0,0
+,,2 Years to < 3 Years,,3,2,1,0,0
+,,3 Years to < 5 Years,,1,0,0,1,0
+,Heart: Status 2,All Time,,6,3,2,1,0
+,,30 to < 90 Days,,2,1,0,1,0
+,,6 Months to < 1 Year,,2,0,2,0,0
+,,1 Year to < 2 Years,,2,2,0,0,0
+,Heart: Status 7 (Inactive),All Time,,17,8,4,4,1
+,,< 30 Days,,1,1,0,0,0
+,,30 to < 90 Days,,1,0,1,0,0
+,,90 Days to < 6 Months,,4,1,2,0,1
+,,6 Months to < 1 Year,,4,1,1,2,0
+,,1 Year to < 2 Years,,4,2,0,2,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,,5 or More Years,,1,1,0,0,0
+Region  3,All Types,All Time,,64,29,19,14,2
+,,< 30 Days,,10,4,2,3,1
+,,30 to < 90 Days,,11,4,4,2,1
+,,90 Days to < 6 Months,,13,4,7,2,0
+,,6 Months to < 1 Year,,12,8,1,3,0
+,,1 Year to < 2 Years,,7,2,3,2,0
+,,2 Years to < 3 Years,,7,4,1,2,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,,5 or More Years,,3,2,1,0,0
+,Heart: Status 1A,All Time,,23,7,9,6,1
+,,< 30 Days,,4,1,1,1,1
+,,30 to < 90 Days,,5,2,2,1,0
+,,90 Days to < 6 Months,,5,0,4,1,0
+,,6 Months to < 1 Year,,6,3,1,2,0
+,,1 Year to < 2 Years,,2,0,1,1,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,Heart: Status 1B,All Time,,16,8,4,4,0
+,,< 30 Days,,4,1,1,2,0
+,,30 to < 90 Days,,1,0,1,0,0
+,,
+,,90 Days to < 6 Months,,5,2,2,1,0
+,,6 Months to < 1 Year,,2,2,0,0,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,,2 Years to < 3 Years,,2,1,0,1,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,Heart: Status 2,All Time,,18,8,5,4,1
+,,< 30 Days,,2,2,0,0,0
+,,30 to < 90 Days,,5,2,1,1,1
+,,90 Days to < 6 Months,,3,2,1,0,0
+,,6 Months to < 1 Year,,2,1,0,1,0
+,,1 Year to < 2 Years,,2,0,1,1,0
+,,2 Years to < 3 Years,,3,1,1,1,0
+,,5 or More Years,,1,0,1,0,0
+,Heart: Status 7 (Inactive),All Time,,7,6,1,0,0
+,,6 Months to < 1 Year,,2,2,0,0,0
+,,1 Year to < 2 Years,,2,1,1,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,5 or More Years,,2,2,0,0,0
+Region  4,All Types,All Time,,73,41,22,7,3
+,,< 30 Days,,6,4,2,0,0
+,,30 to < 90 Days,,12,6,5,0,1
+,,90 Days to < 6 Months,,15,11,2,2,0
+,,6 Months to < 1 Year,,15,6,4,3,2
+,,1 Year to < 2 Years,,15,10,5,0,0
+,,2 Years to < 3 Years,,4,1,2,1,0
+,,3 Years to < 5 Years,,3,1,2,0,0
+,,5 or More Years,,3,2,0,1,0
+,Heart: Status 1A,All Time,,30,20,7,1,2
+,,< 30 Days,,6,4,2,0,0
+,,30 to < 90 Days,,7,3,3,0,1
+,,90 Days to < 6 Months,,10,8,1,1,0
+,,6 Months to < 1 Year,,4,2,1,0,1
+,,1 Year to < 2 Years,,3,3,0,0,0
+,Heart: Status 1B,All Time,,14,9,4,1,0
+,,30 to < 90 Days,,2,1,1,0,0
+,,90 Days to < 6 Months,,1,1,0,0,0
+,,6 Months to < 1 Year,,5,3,1,1,0
+,,1 Year to < 2 Years,,5,4,1,0,0
+,,2 Years to < 3 Years,,1,0,1,0,0
+,Heart: Status 2,All Time,,9,3,5,1,0
+,,30 to < 90 Days,,2,1,1,0,0
+,,
+,,90 Days to < 6 Months,,1,0,1,0,0
+,,6 Months to < 1 Year,,2,1,0,1,0
+,,1 Year to < 2 Years,,3,1,2,0,0
+,,2 Years to < 3 Years,,1,0,1,0,0
+,Heart: Status 7 (Inactive),All Time,,20,9,6,4,1
+,,30 to < 90 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,3,2,0,1,0
+,,6 Months to < 1 Year,,4,0,2,1,1
+,,1 Year to < 2 Years,,4,2,2,0,0
+,,2 Years to < 3 Years,,2,1,0,1,0
+,,3 Years to < 5 Years,,3,1,2,0,0
+,,5 or More Years,,3,2,0,1,0
+Region  5,All Types,All Time,,85,50,23,10,2
+,,< 30 Days,,7,5,2,0,0
+,,30 to < 90 Days,,17,8,5,4,0
+,,90 Days to < 6 Months,,8,3,4,1,0
+,,6 Months to < 1 Year,,15,9,4,0,2
+,,1 Year to < 2 Years,,19,13,3,3,0
+,,2 Years to < 3 Years,,8,5,2,1,0
+,,3 Years to < 5 Years,,9,6,2,1,0
+,,5 or More Years,,2,1,1,0,0
+,Heart: Status 1A,All Time,,38,23,11,3,1
+,,< 30 Days,,6,4,2,0,0
+,,30 to < 90 Days,,10,6,2,2,0
+,,90 Days to < 6 Months,,7,3,3,1,0
+,,6 Months to < 1 Year,,8,5,2,0,1
+,,1 Year to < 2 Years,,4,3,1,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,3 Years to < 5 Years,,1,0,1,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 1B,All Time,,22,17,4,0,1
+,,30 to < 90 Days,,2,2,0,0,0
+,,90 Days to < 6 Months,,1,0,1,0,0
+,,6 Months to < 1 Year,,4,1,2,0,1
+,,1 Year to < 2 Years,,9,9,0,0,0
+,,2 Years to < 3 Years,,3,2,1,0,0
+,,3 Years to < 5 Years,,3,3,0,0,0
+,Heart: Status 2,All Time,,14,6,3,5,0
+,,< 30 Days,,1,1,0,0,0
+,,30 to < 90 Days,,2,0,1,1,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,,
+,,1 Year to < 2 Years,,3,1,0,2,0
+,,2 Years to < 3 Years,,4,2,1,1,0
+,,3 Years to < 5 Years,,2,1,0,1,0
+,,5 or More Years,,1,0,1,0,0
+,Heart: Status 7 (Inactive),All Time,,11,4,5,2,0
+,,30 to < 90 Days,,3,0,2,1,0
+,,6 Months to < 1 Year,,2,2,0,0,0
+,,1 Year to < 2 Years,,3,0,2,1,0
+,,3 Years to < 5 Years,,3,2,1,0,0
+Region  6,All Types,All Time,,19,14,3,2,0
+,,< 30 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,5,3,2,0,0
+,,6 Months to < 1 Year,,6,3,1,2,0
+,,1 Year to < 2 Years,,4,4,0,0,0
+,,2 Years to < 3 Years,,2,2,0,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 1A,All Time,,8,5,2,1,0
+,,< 30 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,3,2,1,0,0
+,,6 Months to < 1 Year,,2,0,1,1,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,Heart: Status 1B,All Time,,7,6,1,0,0
+,,90 Days to < 6 Months,,2,1,1,0,0
+,,6 Months to < 1 Year,,2,2,0,0,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 2,All Time,,3,2,0,1,0
+,,6 Months to < 1 Year,,2,1,0,1,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,Heart: Status 7 (Inactive),All Time,,1,1,0,0,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+Region  7,All Types,All Time,,55,25,18,11,1
+,,< 30 Days,,5,2,0,3,0
+,,30 to < 90 Days,,5,2,1,2,0
+,,90 Days to < 6 Months,,7,4,1,1,1
+,,6 Months to < 1 Year,,13,6,5,2,0
+,,1 Year to < 2 Years,,7,3,3,1,0
+,,2 Years to < 3 Years,,3,1,2,0,0
+,,3 Years to < 5 Years,,7,3,3,1,0
+,,
+,,5 or More Years,,8,4,3,1,0
+,Heart: Status 1A,All Time,,15,9,0,6,0
+,,< 30 Days,,4,1,0,3,0
+,,30 to < 90 Days,,3,2,0,1,0
+,,90 Days to < 6 Months,,5,4,0,1,0
+,,6 Months to < 1 Year,,2,2,0,0,0
+,,1 Year to < 2 Years,,1,0,0,1,0
+,Heart: Status 1B,All Time,,15,9,4,1,1
+,,< 30 Days,,1,1,0,0,0
+,,30 to < 90 Days,,1,0,1,0,0
+,,90 Days to < 6 Months,,1,0,0,0,1
+,,6 Months to < 1 Year,,8,4,3,1,0
+,,1 Year to < 2 Years,,2,2,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 2,All Time,,4,1,2,1,0
+,,6 Months to < 1 Year,,2,0,1,1,0
+,,1 Year to < 2 Years,,2,1,1,0,0
+,Heart: Status 7 (Inactive),All Time,,21,6,12,3,0
+,,30 to < 90 Days,,1,0,0,1,0
+,,90 Days to < 6 Months,,1,0,1,0,0
+,,6 Months to < 1 Year,,1,0,1,0,0
+,,1 Year to < 2 Years,,2,0,2,0,0
+,,2 Years to < 3 Years,,2,0,2,0,0
+,,3 Years to < 5 Years,,7,3,3,1,0
+,,5 or More Years,,7,3,3,1,0
+Region  8,All Types,All Time,,44,23,14,4,3
+,,< 30 Days,,2,1,1,0,0
+,,30 to < 90 Days,,6,3,1,1,1
+,,90 Days to < 6 Months,,8,4,3,1,0
+,,6 Months to < 1 Year,,14,5,6,1,2
+,,1 Year to < 2 Years,,6,4,2,0,0
+,,2 Years to < 3 Years,,6,5,0,1,0
+,,3 Years to < 5 Years,,2,1,1,0,0
+,Heart: Status 1A,All Time,,15,9,5,1,0
+,,< 30 Days,,2,1,1,0,0
+,,30 to < 90 Days,,3,2,0,1,0
+,,90 Days to < 6 Months,,5,3,2,0,0
+,,6 Months to < 1 Year,,5,3,2,0,0
+,Heart: Status 1B,All Time,,14,7,4,2,1
+,,30 to < 90 Days,,3,1,1,0,1
+,,
+,,90 Days to < 6 Months,,2,0,1,1,0
+,,6 Months to < 1 Year,,2,1,1,0,0
+,,1 Year to < 2 Years,,2,1,1,0,0
+,,2 Years to < 3 Years,,4,3,0,1,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,Heart: Status 2,All Time,,5,2,3,0,0
+,,6 Months to < 1 Year,,2,0,2,0,0
+,,1 Year to < 2 Years,,2,2,0,0,0
+,,3 Years to < 5 Years,,1,0,1,0,0
+,Heart: Status 7 (Inactive),All Time,,10,5,2,1,2
+,,90 Days to < 6 Months,,1,1,0,0,0
+,,6 Months to < 1 Year,,5,1,1,1,2
+,,1 Year to < 2 Years,,2,1,1,0,0
+,,2 Years to < 3 Years,,2,2,0,0,0
+Region  9,All Types,All Time,,18,14,3,1,0
+,,< 30 Days,,3,3,0,0,0
+,,30 to < 90 Days,,2,2,0,0,0
+,,90 Days to < 6 Months,,2,1,1,0,0
+,,6 Months to < 1 Year,,3,2,1,0,0
+,,1 Year to < 2 Years,,3,3,0,0,0
+,,2 Years to < 3 Years,,3,1,1,1,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 1A,All Time,,9,7,2,0,0
+,,< 30 Days,,3,3,0,0,0
+,,30 to < 90 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,2,1,1,0,0
+,,6 Months to < 1 Year,,2,1,1,0,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,Heart: Status 1B,All Time,,1,1,0,0,0
+,,30 to < 90 Days,,1,1,0,0,0
+,Heart: Status 2,All Time,,1,1,0,0,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,Heart: Status 7 (Inactive),All Time,,7,5,1,1,0
+,,1 Year to < 2 Years,,2,2,0,0,0
+,,2 Years to < 3 Years,,3,1,1,1,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,,5 or More Years,,1,1,0,0,0
+Region  10,All Types,All Time,,23,19,2,2,0
+,,< 30 Days,,1,1,0,0,0
+,,30 to < 90 Days,,1,1,0,0,0
+,,
+,,90 Days to < 6 Months,,8,6,1,1,0
+,,6 Months to < 1 Year,,6,5,0,1,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,,2 Years to < 3 Years,,2,2,0,0,0
+,,3 Years to < 5 Years,,3,2,1,0,0
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 1A,All Time,,11,9,2,0,0
+,,< 30 Days,,1,1,0,0,0
+,,30 to < 90 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,6,5,1,0,0
+,,6 Months to < 1 Year,,2,2,0,0,0
+,,3 Years to < 5 Years,,1,0,1,0,0
+,Heart: Status 1B,All Time,,3,1,0,2,0
+,,90 Days to < 6 Months,,1,0,0,1,0
+,,6 Months to < 1 Year,,2,1,0,1,0
+,Heart: Status 2,All Time,,3,3,0,0,0
+,,90 Days to < 6 Months,,1,1,0,0,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,Heart: Status 7 (Inactive),All Time,,6,6,0,0,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,,1 Year to < 2 Years,,1,1,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,3 Years to < 5 Years,,2,2,0,0,0
+,,5 or More Years,,1,1,0,0,0
+Region  11,All Types,All Time,,73,42,23,7,1
+,,< 30 Days,,9,5,3,1,0
+,,30 to < 90 Days,,9,6,3,0,0
+,,90 Days to < 6 Months,,10,5,3,1,1
+,,6 Months to < 1 Year,,13,7,3,3,0
+,,1 Year to < 2 Years,,12,8,3,1,0
+,,2 Years to < 3 Years,,11,7,3,1,0
+,,3 Years to < 5 Years,,4,1,3,0,0
+,,5 or More Years,,5,3,2,0,0
+,Heart: Status 1A,All Time,,22,17,4,1,0
+,,< 30 Days,,3,2,1,0,0
+,,30 to < 90 Days,,5,3,2,0,0
+,,90 Days to < 6 Months,,4,2,1,1,0
+,,6 Months to < 1 Year,,3,3,0,0,0
+,,1 Year to < 2 Years,,3,3,0,0,0
+,,2 Years to < 3 Years,,3,3,0,0,0
+,,
+,,5 or More Years,,1,1,0,0,0
+,Heart: Status 1B,All Time,,22,12,8,1,1
+,,< 30 Days,,3,2,1,0,0
+,,30 to < 90 Days,,3,2,1,0,0
+,,90 Days to < 6 Months,,4,2,1,0,1
+,,6 Months to < 1 Year,,5,2,2,1,0
+,,1 Year to < 2 Years,,3,1,2,0,0
+,,2 Years to < 3 Years,,3,2,1,0,0
+,,3 Years to < 5 Years,,1,1,0,0,0
+,Heart: Status 2,All Time,,7,5,2,0,0
+,,< 30 Days,,1,0,1,0,0
+,,90 Days to < 6 Months,,1,1,0,0,0
+,,6 Months to < 1 Year,,1,1,0,0,0
+,,1 Year to < 2 Years,,2,2,0,0,0
+,,2 Years to < 3 Years,,1,1,0,0,0
+,,3 Years to < 5 Years,,1,0,1,0,0
+,Heart: Status 7 (Inactive),All Time,,22,8,9,5,0
+,,< 30 Days,,2,1,0,1,0
+,,30 to < 90 Days,,1,1,0,0,0
+,,90 Days to < 6 Months,,1,0,1,0,0
+,,6 Months to < 1 Year,,4,1,1,2,0
+,,1 Year to < 2 Years,,4,2,1,1,0
+,,2 Years to < 3 Years,,4,1,2,1,0
+,,3 Years to < 5 Years,,2,0,2,0,0
+,,5 or More Years,,4,2,2,0,0

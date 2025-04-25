@@ -56,7 +56,7 @@ export async function getRealisticSmartChangeData(
       wait_list_time: "All Time",
     })
     .getAll();
-  //   console.log("TodaysRecords", recordsToday);
+  console.log("TodaysRecords", recordsToday);
 
   // get yesterdays data
   const recordsYesterday = await xata.db.transplant_data
@@ -160,6 +160,8 @@ export async function getRealisticSmartChangeData(
         .change > 0 &&
       status1.blood_types.filter((bt) => bt.blood_type === bloodType)[0]
         .change < 0
+
+      // compare today vs yesterday wait list times to check what the differences are and add that to the message.
     ) {
       regionChangesWithMessages
         .filter((r) => r.region === region)[0]
@@ -417,3 +419,33 @@ export async function getRealisticSmartChangeData(
   //   console.log(regionChangesWithMessages);
   return regionChangesWithMessages;
 }
+
+export type baseObj = {
+  region: string;
+  report_date: string;
+  wait_list_type: string;
+  wait_list_time: string;
+  blood_type_a: number;
+  blood_type_b: number;
+  blood_type_ab: number;
+  blood_type_o: number;
+  blood_type_all: number;
+};
+
+type BLOOD_TYPE_OBJ_V2 = {
+  wait_list_time: string; // <30 days
+  blood_type: string; //A
+  today: number;
+  yesterday: number;
+  change: number;
+};
+
+type WAIT_LIST_OBJ_V2 = {
+  type: string; // Status 1A
+  wait_times: BLOOD_TYPE_OBJ[];
+};
+export type REGION_CHANGE_OBJ_V2 = {
+  region: string;
+  wait_list_types: WAIT_LIST_OBJ_V2[];
+  messages: [];
+};
