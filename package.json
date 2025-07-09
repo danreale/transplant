@@ -15,7 +15,8 @@
     "transformHeaderDonors": "node donorHeaderTransformer.cjs",
     "transformDataDonors": "node donorTransformer.cjs",
     "etlTransformer": "tsx etlTransformer.ts",
-    "etlTransformerAdult": "tsx etlTransformerAdult.ts"
+    "etlTransformerAdult": "tsx etlTransformerAdult.ts",
+    "fillmissingdata": "tsx fill_missing_data.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.5",
