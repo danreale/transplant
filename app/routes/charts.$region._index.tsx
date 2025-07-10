@@ -95,22 +95,21 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   const donorData = await getDonorCountDatesB();
 
-  const heartStatus1A = await getTransplantStatusCountDatesForRegion(
-    "Heart Status 1A",
-    region!!
-  );
-  const heartStatus1B = await getTransplantStatusCountDatesForRegion(
-    "Heart Status 1B",
-    region!!
-  );
-  const heartStatus2 = await getTransplantStatusCountDatesForRegion(
-    "Heart Status 2",
-    region!!
-  );
-  const heartStatus7 = await getTransplantStatusCountDatesForRegion(
-    "Heart Status 7 (Inactive)",
-    region!!
-  );
+  const heartStatus1A = (
+    await getTransplantStatusCountDatesForRegion("Heart Status 1A", region!!)
+  ).reverse();
+  const heartStatus1B = (
+    await getTransplantStatusCountDatesForRegion("Heart Status 1B", region!!)
+  ).reverse();
+  const heartStatus2 = (
+    await getTransplantStatusCountDatesForRegion("Heart Status 2", region!!)
+  ).reverse();
+  const heartStatus7 = (
+    await getTransplantStatusCountDatesForRegion(
+      "Heart Status 7 (Inactive)",
+      region!!
+    )
+  ).reverse();
 
   const statusData = [];
 
@@ -122,10 +121,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
     const obj = {
       report_date: element1.report_date,
-      heart_status_1a: element1.wlt,
-      heart_status_1b: element2.wlt,
-      heart_status_2: element3.wlt,
-      heart_status_7: element4.wlt,
+      heart_status_1a: element1.blood_type_all,
+      heart_status_1b: element2.blood_type_all,
+      heart_status_2: element3.blood_type_all,
+      heart_status_7: element4.blood_type_all,
     };
     statusData.push(obj);
   }

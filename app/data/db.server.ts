@@ -82,25 +82,25 @@ export async function bloodTypeTotalsChart(region: string) {
 
 export async function getTransplantCountDates() {
   const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date, "blood_type_a", "blood_type_b", "blood_type_o", "blood_type_ab" FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = 'All Types' and region = 'All Regions' order by report_date asc limit 365`;
+    .sql<TransplantDataRecord>`SELECT report_date, "blood_type_a", "blood_type_b", "blood_type_o", "blood_type_ab" FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = 'All Types' and region = 'All Regions' order by report_date desc limit 365`;
 
   return records;
 }
 
 export async function getTransplantStatusCountDates(
-  status:
+  heart_status:
     | "Heart Status 1A"
     | "Heart Status 1B"
     | "Heart Status 2"
     | "Heart Status 7 (Inactive)"
 ) {
   const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date, SUM("blood_type_a" + "blood_type_b" + "blood_type_o" + "blood_type_ab") as wlt FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${status} and region = 'All Regions' group by report_date order by report_date asc limit 365`;
+    .sql<TransplantDataRecord>`SELECT report_date, blood_type_all FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${heart_status} and region = 'All Regions' order by report_date desc limit 365`;
 
   return records;
 }
 export async function getTransplantStatusCountDatesForRegion(
-  status:
+  heart_status:
     | "Heart Status 1A"
     | "Heart Status 1B"
     | "Heart Status 2"
@@ -109,7 +109,7 @@ export async function getTransplantStatusCountDatesForRegion(
 ) {
   const usRegion = `Region  ${region}`;
   const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date, SUM("blood_type_a" + "blood_type_b" + "blood_type_o" + "blood_type_ab") as wlt FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${status} and region = ${usRegion} group by report_date order by report_date asc limit 365`;
+    .sql<TransplantDataRecord>`SELECT report_date, blood_type_all FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${heart_status} and region = ${usRegion} order by report_date desc limit 365`;
 
   return records;
 }

@@ -60,15 +60,23 @@ export default function Index() {
 }
 
 export async function loader({}: LoaderFunctionArgs) {
-  const bloodTypeTotals = await getTransplantCountDates();
+  const bloodTypeTotals = (await getTransplantCountDates()).reverse();
 
-  const donorData = await getDonorCountDatesB();
-  const heartStatus1A = await getTransplantStatusCountDates("Heart Status 1A");
-  const heartStatus1B = await getTransplantStatusCountDates("Heart Status 1B");
-  const heartStatus2 = await getTransplantStatusCountDates("Heart Status 2");
-  const heartStatus7 = await getTransplantStatusCountDates(
-    "Heart Status 7 (Inactive)"
-  );
+  // const donorData = await getDonorCountDatesB();
+  const donorData: any = [];
+  const heartStatus1A = (
+    await getTransplantStatusCountDates("Heart Status 1A")
+  ).reverse();
+
+  const heartStatus1B = (
+    await getTransplantStatusCountDates("Heart Status 1B")
+  ).reverse();
+  const heartStatus2 = (
+    await getTransplantStatusCountDates("Heart Status 2")
+  ).reverse();
+  const heartStatus7 = (
+    await getTransplantStatusCountDates("Heart Status 7 (Inactive)")
+  ).reverse();
 
   const statusData = [];
 
@@ -80,13 +88,15 @@ export async function loader({}: LoaderFunctionArgs) {
 
     const obj = {
       report_date: element1.report_date,
-      heart_status_1a: element1.wlt,
-      heart_status_1b: element2.wlt,
-      heart_status_2: element3.wlt,
-      heart_status_7: element4.wlt,
+      heart_status_1a: element1.blood_type_all,
+      heart_status_1b: element2.blood_type_all,
+      heart_status_2: element3.blood_type_all,
+      heart_status_7: element4.blood_type_all,
     };
     statusData.push(obj);
   }
+
+  console.dir(statusData, { maxArrayLength: null });
 
   return { bloodTypeTotals, donorData, statusData };
 }
