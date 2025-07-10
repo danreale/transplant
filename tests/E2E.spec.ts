@@ -211,7 +211,14 @@ async function chooseDate(
   const diff = endDate.diff(startDate, "months");
   const months = diff.toObject().months;
 
-  const roundedNumber = Math.floor(months!!);
+  const roundedNumber = Math.ceil(months!!);
+
+  // console.log(startDate);
+  // console.log(endDate);
+  // console.log(formattedDay);
+  // console.log(diff);
+  // console.log(months);
+  // console.log(roundedNumber);
 
   for (let index = 0; index < roundedNumber; index++) {
     await page.getByLabel("Go to the Previous Month").click();
