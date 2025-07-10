@@ -2,8 +2,12 @@ import { test, expect } from "@playwright/test";
 import fs from "fs";
 import { DateTime } from "luxon";
 
+test.describe.configure({ mode: "serial" });
+
 test("Get Pediatric Transplant Numbers", async ({ page }) => {
   await page.goto("/data/view-data-reports/build-advanced");
+  await page.waitForTimeout(5000);
+  await expect(page.locator("#category")).toBeVisible({ timeout: 30000 });
   await page
     .getByLabel("Donor Transplant Multiple")
     .selectOption("4;Waiting List");
@@ -61,10 +65,10 @@ test("Get Pediatric Transplant Numbers", async ({ page }) => {
   // #vac_id
   // Vascular Composite Allograft OPTN data as of September 13, 2023.
 
-  const vac = await page.locator("#vac_id").first().innerText();
-  const vacText = vac.split("Vascular Composite Allograft OPTN data as of ");
-  const vacStrDate = vacText[1].split(".")[0];
-  console.log(vacStrDate);
+  // const vac = await page.locator("#vac_id").first().innerText();
+  // const vacText = vac.split("Vascular Composite Allograft OPTN data as of ");
+  // const vacStrDate = vacText[1].split(".")[0];
+  // console.log(vacStrDate);
 
   const downloadPromise = page.waitForEvent("download");
   await page.locator("#tool_export").first().click();
@@ -79,11 +83,11 @@ test("Get Pediatric Transplant Numbers", async ({ page }) => {
   }).toFormat("yyyy-MM-dd");
   console.log(endDate);
 
-  const startDate = DateTime.fromFormat(vacStrDate, "LLLL d, yyyy", {
-    setZone: true,
-    zone: "America/New_York",
-  }).toFormat("yyyy-MM-dd");
-  console.log(startDate);
+  // const startDate = DateTime.fromFormat(vacStrDate, "LLLL d, yyyy", {
+  //   setZone: true,
+  //   zone: "America/New_York",
+  // }).toFormat("yyyy-MM-dd");
+  // console.log(startDate);
 
   fs.writeFile("LastReportDate.txt", lastReportUpdate, (err) => {
     if (err) {
@@ -94,7 +98,7 @@ test("Get Pediatric Transplant Numbers", async ({ page }) => {
   });
   fs.writeFile(
     "DataDates.json",
-    JSON.stringify({ startDate: startDate, endDate: endDate }, null, 2),
+    JSON.stringify({ startDate: endDate, endDate: endDate }, null, 2),
     (err) => {
       if (err) {
         console.error(err);
@@ -107,6 +111,8 @@ test("Get Pediatric Transplant Numbers", async ({ page }) => {
 
 test("Get Adult Transplant Numbers", async ({ page }) => {
   await page.goto("/data/view-data-reports/build-advanced");
+  await page.waitForTimeout(5000);
+  await expect(page.locator("#category")).toBeVisible({ timeout: 30000 });
   await page
     .getByLabel("Donor Transplant Multiple")
     .selectOption("4;Waiting List");
@@ -196,6 +202,8 @@ test("Get Center Numbers", async ({ page }) => {
 
 test("Get Donor Numbers", async ({ page }) => {
   await page.goto("/data/view-data-reports/build-advanced");
+  await page.waitForTimeout(5000);
+  await expect(page.locator("#category")).toBeVisible({ timeout: 30000 });
   await page.getByLabel("Donor Transplant Multiple").selectOption("1;Donor");
   await page.waitForTimeout(1000);
   await page
