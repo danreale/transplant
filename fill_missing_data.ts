@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 // Generated with CLI
-import { getXataClient } from "src/xata";
+import { DonorDataRecord, getXataClient, TransplantDataRecord } from "src/xata";
 const xata = getXataClient();
 
 // GET SPECIFIC DATE DATA IN DATABASE
@@ -10,24 +10,65 @@ const existing_date = "2025-06-24";
 // INSERT DATE
 
 const insert_dates = [
+  "2025-06-25",
+  "2025-06-26",
+  "2025-06-27",
+  "2025-06-28",
+  "2025-06-29",
+  "2025-06-30",
   "2025-07-01",
   "2025-07-02",
   "2025-07-03",
   "2025-07-04",
   "2025-07-05",
   "2025-07-06",
-  "2025-06-30",
-  "2025-06-29",
-  "2025-06-28",
-  "2025-06-27",
-  "2025-06-26",
-  "2025-06-25",
+  "2025-07-07",
+  "2025-07-08",
+  "2025-07-09",
 ];
 // const insert_date = "2025-07-07";
 
 for (let index = 0; index < insert_dates.length; index++) {
   const insert_date = insert_dates[index];
   console.log(insert_date);
+
+  //DELETE Existing Data
+  const records =
+    await xata.sql<TransplantDataRecord>`DELETE FROM "transplant_data"
+  WHERE id IN (
+      SELECT id
+      FROM transplant_data
+      WHERE "report_date" = ${insert_date}
+  );`;
+  console.log(records);
+
+  const recordsAdult =
+    await xata.sql<TransplantDataRecord>`DELETE FROM "transplant_data_adult"
+  WHERE id IN (
+      SELECT id
+      FROM transplant_data_adult
+      WHERE "report_date" = ${insert_date}
+  );`;
+  console.log(recordsAdult);
+
+  const records1 = await xata.sql<DonorDataRecord>`DELETE FROM "donor_data"
+  WHERE id IN (
+      SELECT id
+      FROM donor_data
+      WHERE "report_date" = ${insert_date}
+  );`;
+  console.log(records1);
+
+  const records2 =
+    await xata.sql<TransplantDataRecord>`DELETE FROM "center_data"
+  WHERE id IN (
+      SELECT id
+      FROM center_data
+      WHERE "report_date" = ${insert_date}
+  );`;
+  console.log(records2);
+
+  // INSERT Data
 
   // Pediatric Transplant Data
   const pediatricTransplantData = await xata.db.transplant_data
