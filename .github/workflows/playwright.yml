@@ -10,78 +10,77 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-    - run: pip3 install pandas
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
-    - name: Run Playwright tests
-      run: npx playwright test Transplant.spec.ts
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-    - name: Run Python Pediatric tests
-      run: python3 etl.py
-    - name: Run Python Adult tests
-      run: python3 etlAdult.py
-    - name: Transform Pediatric Data
-      run: npm run etlTransformer
-    - name: Transform Adult Data
-      run: npm run etlTransformerAdult
-    - name: Format Header Donors
-      run: npm run transformHeaderDonors
-    - name: Transform Data Donors
-      run: npm run transformDataDonors
-    - name: Load Data
-      run: XATA_BRANCH=${{secrets.XATA_BRANCH}} XATA_API_KEY=${{secrets.XATA_API_KEY}} npm run dailyDataETL
-    - name: Email Results
-      run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - run: pip3 install pandas
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        run: npx playwright test Transplant.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+      - name: Run Python Pediatric tests
+        run: python3 etlTodaysData.py
+      - name: Run Python Adult tests
+        run: python3 etlAdultTodaysData.py
+      # - name: Transform Pediatric Data
+      #   run: npm run etlTransformer
+      # - name: Transform Adult Data
+      #   run: npm run etlTransformerAdult
+      - name: Format Header Donors
+        run: npm run transformHeaderDonors
+      - name: Transform Data Donors
+        run: npm run transformDataDonors
+      - name: Load Data
+        run: XATA_BRANCH=${{secrets.XATA_BRANCH}} XATA_API_KEY=${{secrets.XATA_API_KEY}} npm run dailyDataETL
+      - name: Email Results
+        run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
-    - name: Run Playwright tests
-      run: npx playwright test E2E.spec.ts
-      env:
-        TEST_ENV: prod
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-    - name: Setup k6
-      uses: grafana/setup-k6-action@v1
-    - name: Run local k6 test
-      uses: grafana/run-k6-action@v1
-      env:
-        TEST_ENV: prod
-      with:
-        path: |
-          ./load_tests/hearttransplant.js
-    - name: Store k6 report
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: k6-summary-report.html
-        path: HeartTransplant.html
-      
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        run: npx playwright test E2E.spec.ts
+        env:
+          TEST_ENV: prod
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+      - name: Run local k6 test
+        uses: grafana/run-k6-action@v1
+        env:
+          TEST_ENV: prod
+        with:
+          path: |
+            ./load_tests/hearttransplant.js
+      - name: Store k6 report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k6-summary-report.html
+          path: HeartTransplant.html
