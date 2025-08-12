@@ -5,27 +5,11 @@ import { DonorDataRecord, getXataClient, TransplantDataRecord } from "src/xata";
 const xata = getXataClient();
 
 // GET SPECIFIC DATE DATA IN DATABASE
-const existing_date = "2025-06-24";
+const existing_date = "2025-08-08";
 
 // INSERT DATE
 
-const insert_dates = [
-  "2025-06-25",
-  "2025-06-26",
-  "2025-06-27",
-  "2025-06-28",
-  "2025-06-29",
-  "2025-06-30",
-  "2025-07-01",
-  "2025-07-02",
-  "2025-07-03",
-  "2025-07-04",
-  "2025-07-05",
-  "2025-07-06",
-  "2025-07-07",
-  "2025-07-08",
-  "2025-07-09",
-];
+const insert_dates = ["2025-08-09", "2025-08-10"];
 // const insert_date = "2025-07-07";
 
 for (let index = 0; index < insert_dates.length; index++) {

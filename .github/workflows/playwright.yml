@@ -66,7 +66,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-test
           path: playwright-report/
           retention-days: 30
       - name: Setup k6
