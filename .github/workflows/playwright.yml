@@ -48,6 +48,7 @@ jobs:
       - name: Email Results
         run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
   test:
+    needs: build # test depends on build
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
