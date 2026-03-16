@@ -1,6 +1,7 @@
 import { TransplantDataRecord, getXataClient } from "src/xata";
 import { DateTime } from "luxon";
 import { TimeBreakdown } from "~/utils";
+import { getSupabaseAdmin } from "./supabase.server";
 
 export async function getTransplantData(
   region: string,

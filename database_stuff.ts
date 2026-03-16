@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { DateTime } from "luxon";
 // Generated with CLI
-import { DonorDataRecord, TransplantDataRecord, getXataClient } from "src/xata";
-const xata = getXataClient();
+import { getSupabaseAdmin } from "./app/data/supabase.server";
+const supabase = getSupabaseAdmin();
 
 const todaysDate = DateTime.now()
   .setZone("America/New_York")
@@ -33,71 +33,68 @@ const datesData = JSON.parse(
 );
 // Delete Todays Data first in case needing to rerun
 
-const records =
-  await xata.sql<TransplantDataRecord>`DELETE FROM "transplant_data"
-WHERE id IN (
-    SELECT id
-    FROM transplant_data
-    WHERE "report_date" = ${todaysDate}
-);`;
+const records = await supabase
+  .from("transplant_data")
+  .delete()
+  .eq("report_date", todaysDate);
 console.log(records);
 
-const recordsAdult =
-  await xata.sql<TransplantDataRecord>`DELETE FROM "transplant_data_adult"
-WHERE id IN (
-    SELECT id
-    FROM transplant_data_adult
-    WHERE "report_date" = ${todaysDate}
-);`;
+const recordsAdult = await supabase
+  .from("transplant_data_adult")
+  .delete()
+  .eq("report_date", todaysDate);
 console.log(recordsAdult);
 
-const records1 = await xata.sql<DonorDataRecord>`DELETE FROM "donor_data"
-WHERE id IN (
-    SELECT id
-    FROM donor_data
-    WHERE "report_date" = ${todaysDate}
-);`;
+const records1 = await supabase
+  .from("donor_data")
+  .delete()
+  .eq("report_date", todaysDate);
 console.log(records1);
 
-const records2 = await xata.sql<TransplantDataRecord>`DELETE FROM "center_data"
-WHERE id IN (
-    SELECT id
-    FROM center_data
-    WHERE "report_date" = ${todaysDate}
-);`;
+const records2 = await supabase
+  .from("center_data")
+  .delete()
+  .eq("report_date", todaysDate);
 console.log(records2);
 
 // Insert Data
 
-const dater = await xata.db.transplant_data.create(transplantData);
+const dater = await supabase.from("transplant_data").insert(transplantData);
 
 console.log(dater);
 
-const adultData = await xata.db.transplant_data_adult.create(
-  transplantDataAdult
-);
+const adultData = await supabase
+  .from("transplant_data_adult")
+  .insert(transplantDataAdult);
 
 console.log(adultData);
 
-const center = await xata.db.center_data.create(centerData);
+const center = await supabase.from("center_data").insert(centerData);
 
 console.log(center);
 
-const donors = await xata.db.donor_data.create(donorData);
+const donors = await supabase.from("donor_data").insert(donorData);
 
 console.log(donors);
 
 // update data dates
 
-const settingsRecord = await xata.db.settings.getFirst();
+const { data: settingsRecord } = await supabase
+  .from("settings")
+  .select("*")
+  .limit(1)
+  .single();
 
 if (settingsRecord) {
-  const dates = await xata.db.settings.update(settingsRecord?.id, {
-    from_data_refresh_date: datesData.startDate,
-    last_data_refresh_date: datesData.endDate,
-    yesterday_from_data_refresh_date: settingsRecord.from_data_refresh_date,
-    yesterday_last_data_refresh_date: settingsRecord.last_data_refresh_date,
-  });
+  const { data: dates } = await supabase
+    .from("_transplant_settings")
+    .update({
+      from_data_refresh_date: datesData.startDate,
+      last_data_refresh_date: datesData.endDate,
+      yesterday_from_data_refresh_date: settingsRecord.from_data_refresh_date,
+      yesterday_last_data_refresh_date: settingsRecord.last_data_refresh_date,
+    })
+    .eq("id", settingsRecord.id);
   console.log(dates);
 } else {
   console.log("Settings Date Not Updated");

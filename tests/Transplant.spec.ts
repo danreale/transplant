@@ -53,7 +53,7 @@ test("Get Pediatric Transplant Numbers", async ({ page }) => {
 
   const informationData = await page
     .locator(
-      "#DataReportContainer > table:nth-child(1) > tbody > tr:nth-child(2) > td:nth-child(1) > div > p"
+      "#DataReportContainer > table:nth-child(2) > tbody > tr:nth-child(2) > td:nth-child(1) > div > p"
     )
     .first()
     .innerText();
