@@ -44,7 +44,7 @@ jobs:
       - name: Transform Data Donors
         run: npm run transformDataDonors
       - name: Load Data
-        run: XATA_BRANCH=${{secrets.XATA_BRANCH}} XATA_API_KEY=${{secrets.XATA_API_KEY}} npm run dailyDataETL
+        run: SUPABASE_URL=${{secrets.SUPABASE_URL}} SUPABASE_PUBLISHABLE_DEFAULT_KEY=${{secrets.SUPABASE_PUBLISHABLE_DEFAULT_KEY}} SUPABASE_SECRET_KEY=${{secrets.SUPABASE_SECRET_KEY}} npm run dailyDataETL
       - name: Email Results
         run: EMAIL_TO_ADDRESS=${{secrets.EMAIL_TO_ADDRESS}} EMAIL_FROM_ADDRESS=${{secrets.EMAIL_FROM_ADDRESS}} EMAIL_PASSWORD=${{secrets.EMAIL_PASSWORD}} npm run emailreport
   test:
