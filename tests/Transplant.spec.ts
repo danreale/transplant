@@ -222,13 +222,13 @@ test("Get Donor Numbers", async ({ page }) => {
 
   await page
     .getByLabel("Organ", { exact: true })
-    .selectOption("[Measures].[Heart];Heart;28;Count");
+    .selectOption("[Measures].[Heart];Heart;28;Organ");
   await page.waitForTimeout(1000);
   await page.getByLabel("Age").selectOption("Pediatric;Pediatric; 0;Age");
   await page.waitForTimeout(1000);
   await page
     .getByLabel("Year")
-    .selectOption("[Donation Year].[2024];2024;45;Donation Year");
+    .selectOption("[Donation Year].[2026];2026;45;Donation Year");
   await page.waitForTimeout(1000);
   await page.getByRole("button", { name: "Go" }).click();
   await page.waitForTimeout(5000);
