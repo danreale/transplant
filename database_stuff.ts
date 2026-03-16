@@ -87,7 +87,7 @@ const { data: settingsRecord } = await supabase
 
 if (settingsRecord) {
   const { data: dates } = await supabase
-    .from("_transplant_settings")
+    .from("transplant_settings")
     .update({
       from_data_refresh_date: datesData.startDate,
       last_data_refresh_date: datesData.endDate,
