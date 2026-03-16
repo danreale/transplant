@@ -80,7 +80,7 @@ console.log(donors);
 // update data dates
 
 const { data: settingsRecord } = await supabase
-  .from("settings")
+  .from("transplant_settings")
   .select("*")
   .limit(1)
   .single();
