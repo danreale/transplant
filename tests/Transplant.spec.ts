@@ -58,9 +58,14 @@ test("Get Pediatric Transplant Numbers", async ({ page }) => {
     .first()
     .innerText();
   // #DataReportContainer > table:nth-child(1) > tbody > tr:nth-child(2) > td:nth-child(1) > div > p
-  // Based on OPTN data as of September 12, 2024.
-  const dataText = informationData.split("Based on OPTN data as of ");
-  const strDate = dataText[1].split(".")[0];
+  // Report is based on OPTN data as of July 16, 2026.
+  const dateMatch = informationData.match(/based on OPTN data as of ([^.]+)\./i);
+  if (!dateMatch) {
+    throw new Error(
+      `Could not find "based on OPTN data as of" date in: ${informationData}`
+    );
+  }
+  const strDate = dateMatch[1].trim();
   console.log(strDate);
   // #vac_id
   // Vascular Composite Allograft OPTN data as of September 13, 2023.
