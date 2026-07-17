@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
@@ -56,6 +57,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers

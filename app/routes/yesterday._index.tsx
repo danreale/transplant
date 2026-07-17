@@ -12,7 +12,6 @@ import {
 import { DateTime } from "luxon";
 import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
-import { getChangeData } from "~/data/change-data.server";
 import { getRealisticSmartChangeData } from "~/data/change-data-smart.server";
 import CenterData from "~/components/CenterData";
 import FilterWaitListType from "~/components/FilterWaitListType";

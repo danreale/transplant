@@ -1,91 +1,49 @@
-import { TransplantDataRecord, getXataClient } from "src/xata";
-import { DateTime } from "luxon";
 import { TimeBreakdown } from "~/utils";
 import { getSupabaseAdmin } from "./supabase.server";
 
-export async function getTransplantData(
-  region: string,
-  date: string,
-  waitListType: string
-) {
-  // const todaysDate = DateTime.now()
-  //   .setZone("America/New_York")
-  //   .toFormat("yyyy-MM-dd");
-  // const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd")
-  //   .setZone("America/New_York")
-  //   .toUTC()
-  //   .toISO();
-  // console.log("Server Transplant Date From Client", date);
-  const transplantData = await getXataClient()
-    .db.transplant_data.select([
-      "region",
-      "report_date",
-      "wait_list_type",
-      "wait_list_time",
-      "blood_type_a",
-      "blood_type_b",
-      "blood_type_ab",
-      "blood_type_o",
-      "blood_type_all",
-    ])
-    .filter({
-      region,
-      report_date: date,
-      wait_list_type: waitListType,
-      wait_list_time: "All Time",
-    })
-    .sort("region", "asc")
-    .getAll();
-  return transplantData;
-}
-
-export async function bloodTypeTotals(bloodType: "B" | "O", date: string) {
-  // const formattedDate = DateTime.fromFormat(date, "yyyy-MM-dd").toUTC().toISO();
-  // console.log("Server Blood Type Date From Client", date);
-  const records = await getXataClient().db.transplant_data.aggregate(
-    {
-      sumWaitlist: {
-        sum: {
-          column: "heart_status_1A",
-        },
-      },
-    },
-    { report_date: date, blood_type: bloodType }
-  );
-  return records;
-}
+const TRANSPLANT_COLUMNS =
+  "region,report_date,wait_list_type,wait_list_time,blood_type_a,blood_type_b,blood_type_ab,blood_type_o,blood_type_all";
 
 export async function getTransplantDates() {
-  const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT distinct(report_date) FROM "transplant_data" order by report_date desc limit 365`;
-
-  return records;
+  const supabase = getSupabaseAdmin();
+  // one row per date at this filter combination, so no DISTINCT needed
+  const { data, error } = await supabase
+    .from("transplant_data")
+    .select("report_date")
+    .eq("region", "All Regions")
+    .eq("wait_list_type", "All Types")
+    .eq("wait_list_time", "All Time")
+    .order("report_date", { ascending: false })
+    .limit(365);
+  if (error) throw error;
+  return data ?? [];
 }
 
 export async function bloodTypeTotalsChart(region: string) {
-  const records = await getXataClient()
-    .db.transplant_data.select([
-      "blood_type_a",
-      "blood_type_ab",
-      "blood_type_b",
-      "blood_type_o",
-      "report_date",
-    ])
-    .filter({
-      wait_list_time: "All Time",
-      wait_list_type: "All Types",
-      region: region,
-    })
-    .sort("report_date", "asc")
-    .getAll();
-  return records;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("transplant_data")
+    .select("blood_type_a,blood_type_ab,blood_type_b,blood_type_o,report_date")
+    .eq("wait_list_time", "All Time")
+    .eq("wait_list_type", "All Types")
+    .eq("region", region)
+    .order("report_date", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
 }
 
 export async function getTransplantCountDates() {
-  const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date, "blood_type_a", "blood_type_b", "blood_type_o", "blood_type_ab" FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = 'All Types' and region = 'All Regions' order by report_date desc limit 365`;
-
-  return records;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("transplant_data")
+    .select("report_date,blood_type_a,blood_type_b,blood_type_o,blood_type_ab")
+    .eq("wait_list_time", "All Time")
+    .eq("wait_list_type", "All Types")
+    .eq("region", "All Regions")
+    .order("report_date", { ascending: false })
+    .limit(365);
+  if (error) throw error;
+  return data ?? [];
 }
 
 export async function getTransplantStatusCountDates(
@@ -95,11 +53,19 @@ export async function getTransplantStatusCountDates(
     | "Heart Status 2"
     | "Heart Status 7 (Inactive)"
 ) {
-  const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date, blood_type_all FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${heart_status} and region = 'All Regions' order by report_date desc limit 365`;
-
-  return records;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("transplant_data")
+    .select("report_date,blood_type_all")
+    .eq("wait_list_time", "All Time")
+    .eq("wait_list_type", heart_status)
+    .eq("region", "All Regions")
+    .order("report_date", { ascending: false })
+    .limit(365);
+  if (error) throw error;
+  return data ?? [];
 }
+
 export async function getTransplantStatusCountDatesForRegion(
   heart_status:
     | "Heart Status 1A"
@@ -109,137 +75,105 @@ export async function getTransplantStatusCountDatesForRegion(
   region: string
 ) {
   const usRegion = `Region  ${region}`;
-  const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date, blood_type_all FROM "transplant_data" where wait_list_time = 'All Time' and wait_list_type = ${heart_status} and region = ${usRegion} order by report_date desc limit 365`;
-
-  return records;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("transplant_data")
+    .select("report_date,blood_type_all")
+    .eq("wait_list_time", "All Time")
+    .eq("wait_list_type", heart_status)
+    .eq("region", usRegion)
+    .order("report_date", { ascending: false })
+    .limit(365);
+  if (error) throw error;
+  return data ?? [];
 }
 
 export async function getCenterData(date: string) {
-  const transplantData = await getXataClient()
-    .db.center_data.select(["heart", "report_date"])
-    .filter({
-      report_date: date,
-    })
-    .sort("report_date", "asc")
-    .getAll();
-  return transplantData;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("center_data")
+    .select("heart,report_date")
+    .eq("report_date", date)
+    .order("report_date", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
 }
 
 export async function centerDataTotalsChart() {
-  const transplantData = await getXataClient()
-    .db.center_data.select(["heart", "report_date"])
-    .sort("report_date", "asc")
-    .getAll();
-  return transplantData;
-}
-
-export async function getDonorData(date: string) {
-  const donor_dataData = await getXataClient()
-    .db.donor_data.select([
-      "gender",
-      "ethnicity",
-      "blood_type_o",
-      "blood_type_b",
-      "report_date",
-    ])
-    .filter({
-      report_date: date,
-      ethnicity: "All Ethnicities",
-    })
-    .getAll();
-  return donor_dataData;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("center_data")
+    .select("heart,report_date")
+    .order("report_date", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
 }
 
 export async function getDonorCountDatesB() {
-  const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date,sum("blood_type_b") as blood_type_b,sum("blood_type_o") as blood_type_o FROM "donor_data" where ethnicity = 'All Ethnicities' group by report_date order by report_date asc limit 365`;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("donor_data")
+    .select("report_date,blood_type_b,blood_type_o")
+    .eq("ethnicity", "All Ethnicities")
+    .order("report_date", { ascending: true })
+    .limit(365);
+  if (error) throw error;
 
-  return records;
-}
-export async function getDonorCountDatesO() {
-  const { records } = await getXataClient()
-    .sql<TransplantDataRecord>`SELECT report_date,sum("blood_type_o") FROM "donor_data" where ethnicity = 'All Ethnicities' group by report_date order by report_date asc limit 365`;
-
-  return records;
-}
-
-export async function getAllTransplantData(date: string, waitListType: string) {
-  const records = await getXataClient()
-    .db.transplant_data.select([
-      "region",
-      "report_date",
-      "wait_list_type",
-      "wait_list_time",
-      "blood_type_a",
-      "blood_type_b",
-      "blood_type_ab",
-      "blood_type_o",
-      "blood_type_all",
-    ])
-    .filter({
-      report_date: date,
-      $not: {
-        region: "All Regions",
-      },
-      wait_list_time: "All Time",
-      wait_list_type: waitListType,
-    })
-    .getAll();
-  return records;
+  // source rows can carry more than one record per date (e.g. split by
+  // gender) under the "All Ethnicities" filter, so sum client-side
+  const totalsByDate = new Map<
+    string,
+    { report_date: string; blood_type_b: number; blood_type_o: number }
+  >();
+  for (const row of data ?? []) {
+    const existing = totalsByDate.get(row.report_date) ?? {
+      report_date: row.report_date,
+      blood_type_b: 0,
+      blood_type_o: 0,
+    };
+    existing.blood_type_b += row.blood_type_b ?? 0;
+    existing.blood_type_o += row.blood_type_o ?? 0;
+    totalsByDate.set(row.report_date, existing);
+  }
+  return [...totalsByDate.values()];
 }
 
 export async function getSettingsDates() {
-  const dataRefreshDate = await getXataClient()
-    .db.settings.select([
-      "from_data_refresh_date",
-      "last_data_refresh_date",
-      "yesterday_from_data_refresh_date",
-      "yesterday_last_data_refresh_date",
-    ])
-    .getFirst();
-  return dataRefreshDate;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("transplant_settings")
+    .select(
+      "from_data_refresh_date,last_data_refresh_date,yesterday_from_data_refresh_date,yesterday_last_data_refresh_date"
+    )
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
 }
 
 export async function getAllTransplantDataWithWaitListTime(
   date: string,
   waitListType: string
 ) {
-  const records = await getXataClient()
-    .db.transplant_data.select([
-      "region",
-      "report_date",
-      "wait_list_type",
-      "wait_list_time",
-      "blood_type_a",
-      "blood_type_b",
-      "blood_type_ab",
-      "blood_type_o",
-      "blood_type_all",
-    ])
-    .filter({
-      report_date: date,
-      $not: {
-        region: "All Regions",
-      },
-      wait_list_type: waitListType,
-    })
-    .getAll();
-  // return records;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("transplant_data")
+    .select(TRANSPLANT_COLUMNS)
+    .eq("report_date", date)
+    .neq("region", "All Regions")
+    .eq("wait_list_type", waitListType);
+  if (error) throw error;
 
-  const filteredRecords = records.map((rec) => {
-    const data: TimeBreakdown = {
-      region: rec.region,
-      report_date: rec.report_date,
-      wait_list_type: rec.wait_list_type,
-      wait_list_time: rec.wait_list_time,
-      blood_type_a: rec.blood_type_a,
-      blood_type_ab: rec.blood_type_ab,
-      blood_type_all: rec.blood_type_all,
-      blood_type_b: rec.blood_type_b,
-      blood_type_o: rec.blood_type_o,
-    };
-    return data;
-  });
+  const filteredRecords: TimeBreakdown[] = (data ?? []).map((rec) => ({
+    region: rec.region,
+    report_date: rec.report_date,
+    wait_list_type: rec.wait_list_type,
+    wait_list_time: rec.wait_list_time,
+    blood_type_a: rec.blood_type_a,
+    blood_type_ab: rec.blood_type_ab,
+    blood_type_all: rec.blood_type_all,
+    blood_type_b: rec.blood_type_b,
+    blood_type_o: rec.blood_type_o,
+  }));
   return filteredRecords;
 }

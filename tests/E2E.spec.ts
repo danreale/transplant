@@ -854,65 +854,110 @@ test.describe("End To End Tests", () => {
     await expect(page.getByTestId("popover-All")).not.toBeVisible();
   });
   test("Verify Transplant Analyis Messages", async ({ page }) => {
-    await chooseDate(page, "2024", "11", "04");
+    await chooseDate(page, "2026", "05", "04");
 
     await expect(
       page.getByTestId(`region1_daily_smart_messages-0`)
     ).toBeVisible();
     await expect(page.getByTestId(`region1_daily_smart_messages-0`)).toHaveText(
-      "💔 Patient Added To Waiting List 💔"
+      "A blood type: 1 new patient was added to the waiting list"
     );
 
     await expect(
       page.getByTestId(`region2_daily_smart_messages-0`)
     ).toBeVisible();
     await expect(page.getByTestId(`region2_daily_smart_messages-0`)).toHaveText(
-      "O - 1B Patient might have been bumped to Status 1A"
+      "B blood type: 1 patient likely moved from Status 1A to Status 7 (Inactive)"
     );
     await expect(
       page.getByTestId(`region2_daily_smart_messages-1`)
     ).toBeVisible();
     await expect(page.getByTestId(`region2_daily_smart_messages-1`)).toHaveText(
-      "🎉 Patient Received Transplant 🎉"
+      "B blood type: 1 patient likely received a transplant, was discharged, or passed away"
     );
 
     await expect(
       page.getByTestId(`region3_daily_smart_messages-0`)
-    ).not.toBeVisible();
+    ).toBeVisible();
+    await expect(page.getByTestId(`region3_daily_smart_messages-0`)).toHaveText(
+      "A blood type: 1 patient likely moved from Status 2 to Status 7 (Inactive)"
+    );
+    await expect(
+      page.getByTestId(`region3_daily_smart_messages-1`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region3_daily_smart_messages-1`)).toHaveText(
+      "A blood type: 1 patient likely received a transplant, was discharged, or passed away"
+    );
+    await expect(
+      page.getByTestId(`region3_daily_smart_messages-2`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region3_daily_smart_messages-2`)).toHaveText(
+      "B blood type: 1 patient likely moved from Status 7 (Inactive) to Status 2"
+    );
+    await expect(
+      page.getByTestId(`region3_daily_smart_messages-3`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region3_daily_smart_messages-3`)).toHaveText(
+      "O blood type: 1 patient likely moved from Status 1A to Status 7 (Inactive)"
+    );
+    await expect(
+      page.getByTestId(`region3_daily_smart_messages-4`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region3_daily_smart_messages-4`)).toHaveText(
+      "AB blood type: 1 patient likely moved from Status 7 (Inactive) to Status 2"
+    );
 
     await expect(
-      page.getByTestId(`region3_daily_smart_messages-0`)
-    ).not.toBeVisible();
+      page.getByTestId(`region4_daily_smart_messages-0`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region4_daily_smart_messages-0`)).toHaveText(
+      "A blood type: 1 patient likely moved from Status 1A to Status 7 (Inactive)"
+    );
+    await expect(
+      page.getByTestId(`region4_daily_smart_messages-1`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region4_daily_smart_messages-1`)).toHaveText(
+      "A blood type: 1 patient likely received a transplant, was discharged, or passed away"
+    );
+    await expect(
+      page.getByTestId(`region4_daily_smart_messages-2`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region4_daily_smart_messages-2`)).toHaveText(
+      "O blood type: 1 patient likely moved from Status 1A to Status 7 (Inactive)"
+    );
+    await expect(
+      page.getByTestId(`region4_daily_smart_messages-3`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region4_daily_smart_messages-3`)).toHaveText(
+      "O blood type: 1 patient likely received a transplant, was discharged, or passed away"
+    );
 
     await expect(
       page.getByTestId(`region5_daily_smart_messages-0`)
-    ).toBeVisible();
-    await expect(page.getByTestId(`region5_daily_smart_messages-0`)).toHaveText(
-      "🎉 Patient Received Transplant 🎉"
-    );
-
-    await expect(
-      page.getByTestId(`region6_daily_smart_messages-0`)
     ).not.toBeVisible();
 
     await expect(
-      page.getByTestId(`region7_daily_smart_messages-0`)
+      page.getByTestId(`region6_daily_smart_messages-0`)
     ).toBeVisible();
-    await expect(page.getByTestId(`region7_daily_smart_messages-0`)).toHaveText(
-      "A - 1B Patient might have been bumped to Status 1A"
+    await expect(page.getByTestId(`region6_daily_smart_messages-0`)).toHaveText(
+      "O blood type: 1 patient likely moved from Status 7 (Inactive) to Status 1A"
     );
+
     await expect(
-      page.getByTestId(`region7_daily_smart_messages-1`)
-    ).toBeVisible();
-    await expect(page.getByTestId(`region7_daily_smart_messages-1`)).toHaveText(
-      "💔 Patient Added To Waiting List 💔"
-    );
+      page.getByTestId(`region7_daily_smart_messages-0`)
+    ).not.toBeVisible();
 
     await expect(
       page.getByTestId(`region8_daily_smart_messages-0`)
     ).toBeVisible();
     await expect(page.getByTestId(`region8_daily_smart_messages-0`)).toHaveText(
-      "O - 1A Patient might have dropped to Status 7"
+      "A blood type: 1 patient likely received a transplant, was discharged, or passed away"
+    );
+    await expect(
+      page.getByTestId(`region8_daily_smart_messages-1`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region8_daily_smart_messages-1`)).toHaveText(
+      "O blood type: 1 patient likely received a transplant, was discharged, or passed away"
     );
 
     await expect(
@@ -921,11 +966,29 @@ test.describe("End To End Tests", () => {
 
     await expect(
       page.getByTestId(`region10_daily_smart_messages-0`)
-    ).not.toBeVisible();
+    ).toBeVisible();
+    await expect(page.getByTestId(`region10_daily_smart_messages-0`)).toHaveText(
+      "A blood type: 1 new patient was added to the waiting list"
+    );
 
     await expect(
       page.getByTestId(`region11_daily_smart_messages-0`)
-    ).not.toBeVisible();
+    ).toBeVisible();
+    await expect(page.getByTestId(`region11_daily_smart_messages-0`)).toHaveText(
+      "A blood type: 2 new patients were added to the waiting list"
+    );
+    await expect(
+      page.getByTestId(`region11_daily_smart_messages-1`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region11_daily_smart_messages-1`)).toHaveText(
+      "B blood type: 1 patient likely moved from Status 1A to Status 1B"
+    );
+    await expect(
+      page.getByTestId(`region11_daily_smart_messages-2`)
+    ).toBeVisible();
+    await expect(page.getByTestId(`region11_daily_smart_messages-2`)).toHaveText(
+      "B blood type: 1 patient likely received a transplant, was discharged, or passed away"
+    );
   });
   test("Verify Footer Elements", async ({ page }) => {
     // buy me a coffe

@@ -12,7 +12,6 @@ import Header from "~/components/Header";
 import RegionDataV2 from "~/components/RegionDataV2";
 import RegionPageData from "~/components/RegionPageData";
 import { getRealisticSmartChangeData } from "~/data/change-data-smart.server";
-import { getChangeData } from "~/data/change-data.server";
 import {
   getAllTransplantDataWithWaitListTime,
   getCenterData,
