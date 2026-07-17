@@ -223,33 +223,18 @@ export default function RegionData({
 
         <div className="flex justify-center py-2">
           <ul>
-            {transplantData.messages.map((record, index: number) => (
-              <li>
-                {record === "Patient Received Transplant" ? (
-                  <p
-                    data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
-                    key={index}
-                    className="text-green-600 font-bold text-center"
-                  >
-                    🎉 {record} 🎉
-                  </p>
-                ) : record === "Patient Added To Waiting List" ? (
-                  <p
-                    data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
-                    key={index}
-                    className="text-red-600 font-bold text-center"
-                  >
-                    💔 {record} 💔
-                  </p>
-                ) : (
-                  <p
-                    data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
-                    key={index}
-                    className="text-slate-800 text-center"
-                  >
-                    {record}
-                  </p>
-                )}
+            {transplantData.messages.map((message, index: number) => (
+              <li key={index}>
+                <p
+                  data-testid={`region${regionNumber}_daily_smart_messages-${index}`}
+                  className={
+                    message.tone === "negative"
+                      ? "text-red-600 font-bold text-center"
+                      : "text-slate-800 text-center"
+                  }
+                >
+                  {message.text}
+                </p>
               </li>
             ))}
           </ul>
