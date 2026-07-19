@@ -41,19 +41,19 @@ export default function Header({}) {
       <header className=" py-4 space-y-5">
         <div className="flex text-center justify-center mx-4">
           {/* Application Name */}
-          <h1 className="text-red-600 text-4xl font-bold">
+          <div className="text-red-600 text-4xl font-bold">
             {" "}
             <Link to="/">
               <h1 className="" data-testid="nav-home">
                 Pediatric Heart Transplant Wait List Statistics
               </h1>
             </Link>
-          </h1>
+          </div>
 
           {/* Navigation Links */}
         </div>
         <div className="flex flex-row items-center justify-center mx-4 border-b border-gray-700 pb-4">
-          <nav className="flex flex-row space-x-4">
+          <nav className="flex flex-row space-x-4" aria-label="Site">
             <Link
               to="/today?waitListType=All+Types"
               data-testid="nav-today"

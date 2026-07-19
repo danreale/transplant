@@ -89,16 +89,23 @@ export default function RegionData({
           <button
             onClick={() => handleSetRegionFavorite(`Region${regionNumber}`)}
             data-testid={`favorite-region-${regionNumber}`}
+            aria-label={
+              regionFavorite
+                ? `Remove Region ${regionNumber} from favorites`
+                : `Add Region ${regionNumber} to favorites`
+            }
           >
             {regionFavorite ? (
               <FaStar
                 className="text-yellow-400"
                 data-testid={`region${regionNumber}Star`}
+                aria-hidden="true"
               />
             ) : (
               <FaRegStar
                 className="font-bold"
                 data-testid={`region${regionNumber}NoStar`}
+                aria-hidden="true"
               />
             )}
           </button>

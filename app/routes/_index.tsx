@@ -74,6 +74,30 @@ export default function Index() {
       </div>
 
       <div className="py-5 grid justify-center text-center">
+        <h2 className="py-2 font-semibold text-3xl" data-testid="status-header">
+          What Do The Statuses Mean?
+        </h2>
+        <p data-testid="status-information" className="max-w-2xl">
+          You'll see kids on this list grouped into Status 1A, 1B, 2, or 7
+          (Inactive). Here's what that actually means. Status 1A is the most
+          urgent, these are kids in the hospital right now, usually hooked up
+          to machines or medication just to keep their heart going. Status 1B
+          is still serious, but a step down, they usually need some ongoing
+          medicine or support, just not the same critical, hospital-bound
+          situation as 1A. Status 2 covers everyone else who's listed and
+          waiting but doesn't currently meet the 1A or 1B criteria, they still
+          need a new heart, they're just more stable for now. Status 7
+          (Inactive) means a child is on the list but can't receive a
+          transplant at this moment, maybe they have an infection, or they're
+          recovering from something else that has to be handled first. Once
+          that clears up, they go back to being active. None of this replaces
+          what your child's own medical team tells you, it's just here so the
+          numbers on this site actually mean something when you're looking at
+          them.
+        </p>
+      </div>
+
+      <div className="py-5 grid justify-center text-center">
         <h2
           className="py-2 font-semibold text-3xl"
           data-testid="analysis-header"

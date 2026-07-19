@@ -44,7 +44,9 @@ export default function App() {
         />
       </head>
       <body className="px-5">
-        <Outlet />
+        <main>
+          <Outlet />
+        </main>
         <Footer />
         <ScrollRestoration />
         <Scripts />

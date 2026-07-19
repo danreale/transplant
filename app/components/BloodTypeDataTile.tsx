@@ -38,9 +38,7 @@ export default function BloodTypeDataTile({
               "flex flex-col justify-center items-center border rounded w-16 h-16 shadow-sm relative"
             )}
           >
-            <label htmlFor="" data-testid={`count-${label}`}>
-              {count}
-            </label>
+            <span data-testid={`count-${label}`}>{count}</span>
             <div className="absolute bottom-1">
               <DataChange count={change} />
             </div>

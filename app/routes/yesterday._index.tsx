@@ -48,10 +48,10 @@ export default function Yesterday() {
   return (
     <div>
       <Header />
-      <h1 className="text-center text-4xl" data-testid="page-heading">
+      <h2 className="text-center text-4xl" data-testid="page-heading">
         Yesterday's Data
-      </h1>
-      <h2 className="text-center text-4xl text-yellow-500 italic font-semibold pb-2">
+      </h2>
+      <h2 className="text-center text-4xl text-yellow-700 italic font-semibold pb-2">
         {DateTime.fromFormat(
           params.get("reportDate") || todaysDate,
           "MM-dd-yyyy"

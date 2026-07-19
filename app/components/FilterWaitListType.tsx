@@ -12,7 +12,7 @@ export default function FilterWaitListType({
         {/* <Form> */}
         <div className="grid justify-center text-center">
           <div className="grid justify-center text-center">
-            <label htmlFor="" className="font-bold py-1">
+            <label htmlFor="waitListType" className="font-bold py-1">
               Choose Wait List Type
             </label>
             <select
@@ -49,7 +49,7 @@ export default function FilterWaitListType({
       </div>
 
       <p
-        className="text-center text-rose-500 font-bold py-5"
+        className="text-center text-rose-600 font-bold py-5"
         data-testid="selectedWaitListType"
       >
         {params.get("waitListType")}

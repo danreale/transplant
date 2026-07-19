@@ -264,6 +264,13 @@ test.describe("End To End Tests", () => {
     await expect(page.getByTestId("region-information")).toHaveText(
       "Aside from accrued time on the waitlist, distance is an important factor. It's important to know what region you are in so you can see how many others in your general area are waiting for the same organ."
     );
+    // verify status glossary
+    await expect(page.getByTestId("status-header")).toBeVisible();
+    await expect(page.getByTestId("status-header")).toHaveText(
+      "What Do The Statuses Mean?"
+    );
+    await expect(page.getByTestId("status-information")).toBeVisible();
+
     // verify analytics tutorial
     await expect(page.getByTestId("analysis-header")).toBeVisible();
     await expect(page.getByTestId("analysis-header")).toHaveText(

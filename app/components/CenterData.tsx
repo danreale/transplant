@@ -17,24 +17,24 @@ export default function CenterData({
   return (
     <div className="py-5 text-center">
       <div className="grid justify-center text-center space-x-2">
-        <label htmlFor="" className="" data-testid="todaysCenterCount">
+        <p data-testid="todaysCenterCount">
           Today's Center Count:{" "}
           <span data-testid="todayCount">
             {todayCenterData[0]?.heart?.toString() || "NA"}
           </span>
-        </label>
-        <label htmlFor="" className="" data-testid="yesterdaysCenterCount">
+        </p>
+        <p data-testid="yesterdaysCenterCount">
           Yesterday's Center Count:{" "}
           <span data-testid="yesterdayCount">
             {" "}
             {yesterdayCenterData[0]?.heart?.toString() || "NA"}
           </span>
-        </label>
+        </p>
       </div>
       <div className="flex justify-center text-center space-x-2">
         {todaysCenterChange === 0 && (
           <p
-            className="text-yellow-600 font-bold"
+            className="text-yellow-700 font-bold"
             data-testid="todaysCenterChange"
           >
             Center Change: ({todaysCenterChange})
@@ -50,7 +50,7 @@ export default function CenterData({
         )}
         {todaysCenterChange < 0 && (
           <p
-            className="text-green-500 font-bold"
+            className="text-green-700 font-bold"
             data-testid="todaysCenterChange"
           >
             Center Change: ({todaysCenterChange})

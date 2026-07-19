@@ -6,6 +6,7 @@ export default function InformationCircle(props) {
       stroke="currentColor"
       strokeWidth="1.5"
       viewBox="0 0 24 24"
+      aria-hidden="true"
       {...props}
     >
       <path
